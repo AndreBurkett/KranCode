@@ -114,7 +114,7 @@ function roomController(room) {
         }
     }
     else {
-        for (i in depoCreeps) {
+        for (var i in depoCreeps) {
             var c = Game.getObjectById(depoCreeps[i].memory.target);
             if ((c && c.store[RESOURCE_ENERGY] == c.storeCapacity) || (depoCreeps[i].path && depoCreeps[i].path.incomplete)) {
                 depoCreeps[i].memory.task = 'withdraw';
