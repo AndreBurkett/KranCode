@@ -62,7 +62,6 @@ function roomController(room) {
         }
     }
     for (let sToC in Memory.paths.myPath.path) {
-        console.log('rd: ' + Memory.paths.myPath.path[sToC].y);
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
     for (let s = 0; s < sourceLen; s++) {
@@ -128,13 +127,12 @@ function roomController(room) {
     mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' || c.memory.task === 'deposit' });
     if (mineCreeps && mineCreeps.length >= maxWorkers && numContainers > 0) {
         if (ctrlContainer[0]) {
-            console.log(ctrlContainer[0]);
             let lCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || c.memory.task === 'withdraw' || c.memory.task === 'harvest' });
             let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' });
-            console.log(uCreeps);
             let uMax = 3;
             let maxAssign = Math.min(uMax - uCreeps.length, iCreeps.length);
             if (!uCreeps || uCreeps.length <= uMax && iCreeps && iCreeps.length >= 1 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
+                console.log('assign uCreep');
                 for (let i = 0; i < maxAssign; i++) {
                     iCreeps[i].memory.taskQ = 'upgrade';
                     iCreeps[i].memory.task = 'withdraw';
@@ -156,8 +154,7 @@ function roomController(room) {
         else {
             let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' });
             let maxAssign = Math.min(1, iCreeps.length);
-            console.log(uCreeps && uCreeps.length < maxAssign);
-            if (uCreeps && uCreeps.length < maxAssign) {
+            if (!uCreeps || uCreeps.length < maxAssign) {
                 for (let i = 0; i < maxAssign; i++) {
                     iCreeps[i].memory.taskQ = 'upgrade';
                     iCreeps[i].memory.task = 'withdraw';
