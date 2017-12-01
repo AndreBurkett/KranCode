@@ -69,7 +69,7 @@ function roomController(room) {
             if (!sourceContainer[0] || sourceContainer[0] && sourceContainer[0].store[RESOURCE_ENERGY] < sourceContainer[0].storeCapacity) {
                 var idleCreeps = room.find(FIND_MY_CREEPS, { filter: function (c) { return c.memory.task == 'idle'; } });
                 var num = Math.min(sources[s].freeSpaceCount - sources[s].workers, idleCreeps.length);
-                for (i = 0; i < num; i++) {
+                for (var i = 0; i < num; i++) {
                     var idleCreeps = room.find(FIND_MY_CREEPS, { filter: function (c) { return c.memory.task == 'idle'; } });
                     var iCreep = sources[s].pos.findClosestByRange(idleCreeps);
                     iCreep.memory.task = 'mine';

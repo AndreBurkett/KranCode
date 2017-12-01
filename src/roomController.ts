@@ -1,16 +1,14 @@
-//require('prototype.source');
-
 function roomController(room: Room) {
     let sourceLen = room.sources.length;
     let sources = room.find(FIND_SOURCES);
-    let containers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+    let containers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
     let numContainers = containers.length || 0;
     let maxWorkers = 0
     let ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
-    let spawns = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN});
+    let spawns = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
-    
+
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
@@ -19,8 +17,8 @@ function roomController(room: Room) {
         room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
 
-    
-    let rSpawn = room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_SPAWN});
+
+    let rSpawn = room.find(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
     for(let i in rSpawn){
         //Create Road Blueprints around room spawns
         room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
@@ -66,7 +64,7 @@ function roomController(room: Room) {
     //Get Spawn to Controller Path
     if(!Memory.paths.myPath){
         let startPos = room.controller.pos;
-        let endPos = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN});
+        let endPos = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
         for(let i in endPos){
             //let myPath = room.findPath(startPos,endPos[i].pos, {ignoreCreeps: true, ignoreRoads: true, });
             let myPath = PathFinder.search(startPos, endPos[i].pos, {swampCost: 1})
@@ -77,7 +75,7 @@ function roomController(room: Room) {
     for(let i in Memory.paths.myPath.path) {
         room.createConstructionSite(Memory.paths.myPath.path[i], Memory.paths.myPath[i], STRUCTURE_ROAD);
     }
-    
+
 
 
 
@@ -86,10 +84,10 @@ function roomController(room: Room) {
         if (sources[s].workers <= sources[s].freeSpaceCount) {
             let sourceContainer = room.lookForAt(LOOK_STRUCTURES, sources[s].containerSpot[0], sources[s].containerSpot[1], { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
             if (!sourceContainer[0] || sourceContainer[0] && sourceContainer[0].store[RESOURCE_ENERGY] < sourceContainer[0].storeCapacity) {
-                var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' });
+                var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'idle' });
                 let num = Math.min(sources[s].freeSpaceCount - sources[s].workers, idleCreeps.length);
-                for (i = 0; i < num; i++) {
-                    var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' });
+                for (let i = 0; i < num; i++) {
+                    var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'idle' });
                     let iCreep = sources[s].pos.findClosestByRange(idleCreeps);
                     iCreep.memory.task = 'mine';
                     iCreep.memory.sourceTarget = room.sources[s].id;
@@ -108,7 +106,7 @@ function roomController(room: Room) {
     //Assign Build Task
     let sites = room.find(FIND_CONSTRUCTION_SITES);
     let numBuilders = buildCreeps.length || 0;
-    let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle'});
+    let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task === 'idle'});
     if (sites && sites.length > 0 && numBuilders <= 4 && iCreeps && iCreeps.length > 0) {
         if (numContainers == 0) {
             let depoCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'deposit' });
@@ -142,7 +140,7 @@ function roomController(room: Room) {
             if((c && c.store[RESOURCE_ENERGY] == c.storeCapacity) || (depoCreeps[i].path && depoCreeps[i].path.incomplete)){
                 depoCreeps[i].memory.task = 'withdraw';
                 delete depoCreeps[i].memory.sourceTarget
-            } 
+            }
         }
     }
 
