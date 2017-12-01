@@ -1,5 +1,5 @@
 var taskMining = {
-    run: function(creep) {
+    run: function(creep: Creep) {
         var target;
         /*if(creep.carry.energy === creep.carryCapacity) {
             creep.memory.task = 'deposit';

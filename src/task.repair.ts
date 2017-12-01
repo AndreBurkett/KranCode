@@ -1,5 +1,6 @@
 var taskRepair = {
-    run: function(creep) {
+    run: function(creep: Creep) {
+        var target;
         if(creep.memory.repairTarget){
             target = Game.getObjectById(creep.memory.repairTarget);
         }

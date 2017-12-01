@@ -1,5 +1,6 @@
 var taskUpgrade = {
     run: function(creep) {
+        let target;
         //target = Game.getObjectById(creep.memory.buildTarget);
         target = creep.room.controller
         if (creep.upgradeController(target) == ERR_NOT_IN_RANGE) {

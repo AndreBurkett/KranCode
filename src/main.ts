@@ -1,19 +1,3 @@
-/*import * as taskBuild;
-import * as taskDeposit;
-import * as taskHarvest;
-import * as taskMine;
-import * as taskRepair;
-import * as taskTransport;
-import * as taskUpgrade;
-import * as taskWithdraw;
-import * as creepName;
-import * as roomController;
-import "./prototype.room";
-import "./prototype.source";
-import "./prototype.spawn";
-import "./prototype.container";
-import "./prototype.controller";*/
-//import * as creepName from "./util.nameBuilder";
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -39,7 +23,7 @@ module.exports.loop = function()
     Memory.paths = {};
     if(!Memory.paths.sourceC)
     Memory.paths.sourceC = {};
-    
+
     //Clear Memory on Respawn
     /*var room = Game.spawns.Spawn1.room;
     if(room.survivalInfo.score == 0) {

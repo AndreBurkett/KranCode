@@ -3,7 +3,7 @@
     "module": "commonjs",
     "target": "es5",
     "removeComments": true,
-    "noEmitOnError": true,
+    //"noEmitOnError": true,
     "noResolve": false,
     "experimentalDecorators": true,
     "strict": true,
@@ -11,7 +11,7 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "baseUrl": "./src/",
-    "outDir": "./tsc-out/",
+    "outDir": "./dev/",
     "types": ["lodash", "typed-screeps", "screeps-profiler"]
   },
   "compileOnSave": false,

@@ -1,6 +1,7 @@
 var taskWithdraw = {
     run: function(creep) {
         //target = Game.getObjectById(creep.memory.buildTarget);
+        let target: string;
         if(creep.memory.target){
             target = Game.getObjectById(creep.memory.target)
         }

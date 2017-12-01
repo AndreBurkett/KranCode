@@ -3,7 +3,7 @@ var utilNameBuilder = {
         if (Memory.nameIndex === undefined)
             Memory.nameIndex = {};
 
-        if ((Memory.nameIndex[role] === undefined) || (Memory.nameIndex[role] > 995))
+        if ((Memory.nameIndex[role] === undefined) || (Memory.nameIndex[role] > 996))
             Memory.nameIndex[role] = 0;
         Memory.nameIndex[role] += 1;
         return role + (Memory.nameIndex[role] + 1);

@@ -1,6 +1,7 @@
 var taskHarvest = {
-    run: function (creep) {
+    run: function (creep: Creep) {
         //console.log('harvesting');
+        var target: string;
         if (creep.carry.energy == 0) {
             delete creep.memory.sourceTarget;
             creep.memory.task = 'idle';
