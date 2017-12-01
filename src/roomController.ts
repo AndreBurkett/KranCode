@@ -37,12 +37,12 @@ function roomController(room: Room) {
     if(ctrlContainer[0]) {
         ctrlContainer[0].transportTarget = true;
     }
-    else {
+    else if(room.controller) {
         room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
 
     //Get Spawn to Source Containers Paths
-    if(!Memory.paths.sourceC || !Memory.paths.sourceC.length || Memory.paths.sourceC.length < numContainers) {
+    if(!Memory.paths.sourceC || Memory.paths.sourceC.length < numContainers) {
         let pathNum = 0;
         for(let i in containers){
             for(let j in spawns){

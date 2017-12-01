@@ -30,10 +30,10 @@ function roomController(room) {
     if (ctrlContainer[0]) {
         ctrlContainer[0].transportTarget = true;
     }
-    else {
+    else if (room.controller) {
         room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
-    if (!Memory.paths.sourceC || !Memory.paths.sourceC.length || Memory.paths.sourceC.length < numContainers) {
+    if (!Memory.paths.sourceC || Memory.paths.sourceC.length < numContainers) {
         var pathNum = 0;
         for (var i in containers) {
             for (var j in spawns) {
@@ -52,7 +52,7 @@ function roomController(room) {
             }
         }
     }
-    if (!Memory.paths.myPath) {
+    if (!Memory.paths.myPath && room.controller) {
         var startPos = room.controller.pos;
         var endPos = room.find(FIND_STRUCTURES, { filter: function (s) { return s.structureType == STRUCTURE_SPAWN; } });
         for (var i in endPos) {
