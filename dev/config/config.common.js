@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var path = require("path");
-var webpack = require("webpack");
-var Config = require("webpack-chain");
-var screeps_webpack_sources_1 = require("../libs/screeps-webpack-sources");
-var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-var CleanWebpackPlugin = require("clean-webpack-plugin");
-var git = require("git-rev-sync");
+const fs = require("fs");
+const path = require("path");
+const webpack = require("webpack");
+const Config = require("webpack-chain");
+const screeps_webpack_sources_1 = require("../libs/screeps-webpack-sources");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const git = require("git-rev-sync");
 function init(options) {
-    var ENV = options.ENV || "dev";
-    var ROOT = options.ROOT || __dirname;
-    var config = new Config();
-    var gitRepoExists = fs.existsSync("../.git");
+    const ENV = options.ENV || "dev";
+    const ROOT = options.ROOT || __dirname;
+    const config = new Config();
+    const gitRepoExists = fs.existsSync("../.git");
     config
         .entry("main")
         .add("./src/main.ts");
@@ -45,7 +45,7 @@ function init(options) {
         .use(ForkTsCheckerWebpackPlugin);
     config.plugin("clean")
         .use(CleanWebpackPlugin, [
-        ["dist/" + options.ENV + "/*"],
+        [`dist/${options.ENV}/*`],
         { root: options.ROOT },
     ]);
     config.plugin("define")

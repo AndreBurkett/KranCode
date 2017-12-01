@@ -1,16 +1,16 @@
 "use strict";
 var taskWithdraw = {
     run: function (creep) {
-        var target;
+        let target;
         if (creep.memory.target) {
             target = Game.getObjectById(creep.memory.target);
         }
-        else if (creep.memory.taskQ && creep.memory.taskQ == 'upgrade') {
-            target = creep.room.controller.pos.findClosestByRange(FIND_STRUCTURES, { filter: function (s) { return s.structureType === STRUCTURE_CONTAINER; } });
+        else if (creep.memory.taskQ && creep.memory.taskQ == 'upgrade' && creep.room.controller) {
+            target = creep.room.controller.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
             creep.memory.target = target.id || null;
         }
         else {
-            target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: function (s) { return s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > creep.carryCapacity; } });
+            target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > creep.carryCapacity });
             if (target)
                 creep.memory.target = target.id;
         }

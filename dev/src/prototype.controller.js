@@ -23,14 +23,13 @@ Object.defineProperty(StructureController.prototype, 'memory', {
 });
 Object.defineProperty(StructureController.prototype, 'containerSpot', {
     get: function () {
-        var _this = this;
         if (this._containerSpot == undefined) {
             if (this.memory.containerSpot == undefined) {
-                [this.pos.x - 1, this.pos.x + 1].forEach(function (x) {
-                    [_this.pos.y - 1, _this.pos.y + 1].forEach(function (y) {
-                        if (Game.map.getTerrainAt(x, y, _this.pos.roomName) != 'wall')
-                            _this.memory.containerSpot = [x, y];
-                    }, _this);
+                [this.pos.x - 1, this.pos.x + 1].forEach(x => {
+                    [this.pos.y - 1, this.pos.y + 1].forEach(y => {
+                        if (Game.map.getTerrainAt(x, y, this.pos.roomName) != 'wall')
+                            this.memory.containerSpot = [x, y];
+                    }, this);
                 }, this);
             }
             this._containerSpot = this.memory.containerSpot;

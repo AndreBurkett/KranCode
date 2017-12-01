@@ -1,7 +1,7 @@
 "use strict";
 var taskUpgrade = {
     run: function (creep) {
-        var target;
+        let target;
         target = creep.room.controller;
         if (creep.upgradeController(target) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);

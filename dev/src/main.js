@@ -25,41 +25,41 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
         }
     }
-    for (var spawnName in Game.spawns) {
-        var spawn = Game.spawns[spawnName];
+    for (let spawnName in Game.spawns) {
+        let spawn = Game.spawns[spawnName];
         if (spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], { dryRun: true }) && spawn.spawnEnabled)
             ;
         spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], creepName.getName('c'), { memory: { task: 'idle' } });
     }
     Memory.rooms = Game.rooms;
     for (var roomName in Game.rooms) {
-        var myRoom = new roomController(Game.rooms[roomName]);
+        let myRoom = new roomController(Game.rooms[roomName]);
     }
-    for (var name_1 in Game.creeps) {
-        switch (Game.creeps[name_1].memory.task) {
+    for (let name in Game.creeps) {
+        switch (Game.creeps[name].memory.task) {
             case 'build':
-                taskBuild.run(Game.creeps[name_1]);
+                taskBuild.run(Game.creeps[name]);
                 break;
             case 'deposit':
-                taskDeposit.run(Game.creeps[name_1]);
+                taskDeposit.run(Game.creeps[name]);
                 break;
             case 'harvest':
-                taskHarvest.run(Game.creeps[name_1]);
+                taskHarvest.run(Game.creeps[name]);
                 break;
             case 'mine':
-                taskMine.run(Game.creeps[name_1]);
+                taskMine.run(Game.creeps[name]);
                 break;
             case 'repair':
-                taskRepair.run(Game.creeps[name_1]);
+                taskRepair.run(Game.creeps[name]);
                 break;
             case 'transport':
-                taskTransport.run(Game.creeps[name_1]);
+                taskTransport.run(Game.creeps[name]);
                 break;
             case 'upgrade':
-                taskUpgrade.run(Game.creeps[name_1]);
+                taskUpgrade.run(Game.creeps[name]);
                 break;
             case 'withdraw':
-                taskWithdraw.run(Game.creeps[name_1]);
+                taskWithdraw.run(Game.creeps[name]);
                 break;
         }
     }

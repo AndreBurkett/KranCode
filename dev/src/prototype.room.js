@@ -4,14 +4,14 @@ Object.defineProperty(Room.prototype, 'sources', {
         if (!this._sources) {
             if (!this.memory.sourceIds) {
                 this.memory.sourceIds = this.find(FIND_SOURCES)
-                    .map(function (source) { return source.id; });
+                    .map(source => source.id);
             }
-            this._sources = this.memory.sourceIds.map(function (id) { return Game.getObjectById(id); });
+            this._sources = this.memory.sourceIds.map(id => Game.getObjectById(id));
         }
         return this._sources;
     },
     set: function (newValue) {
-        this.memory.sources = newValue.map(function (source) { return source.id; });
+        this.memory.sources = newValue.map(source => source.id);
         this._sources = newValue;
     },
     enumerable: false,

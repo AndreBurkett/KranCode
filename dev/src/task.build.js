@@ -1,8 +1,8 @@
 "use strict";
 var taskBuild = {
     run: function (creep) {
-        var target;
-        var containerPrint = creep.room.find(FIND_CONSTRUCTION_SITES, { filter: function (s) { return s.structureType === STRUCTURE_CONTAINER; } });
+        let target;
+        let containerPrint = creep.room.find(FIND_CONSTRUCTION_SITES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
         if (containerPrint && containerPrint.length > 0)
             target = creep.pos.findClosestByRange(containerPrint);
         else

@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var CommonConfig = require("./config.common");
-var ScreepsWebpackPlugin = require("screeps-webpack-plugin");
-function webpackConfig(options) {
-    if (options === void 0) { options = {}; }
-    var config = CommonConfig.init(options);
-    var credentials = require("./credentials.json");
+const CommonConfig = require("./config.common");
+const ScreepsWebpackPlugin = require("screeps-webpack-plugin");
+function webpackConfig(options = {}) {
+    const config = CommonConfig.init(options);
+    const credentials = require("./credentials.json");
     credentials.branch = "dev";
     config.plugin("screeps")
         .use(ScreepsWebpackPlugin, [credentials]);
-    config.plugin("define").tap(function (args) {
+    config.plugin("define").tap((args) => {
         args[0].PRODUCTION = JSON.stringify(false);
         return args;
     });

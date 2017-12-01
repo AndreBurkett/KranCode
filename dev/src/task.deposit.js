@@ -9,7 +9,7 @@ var taskDeposit = {
         }
         else {
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: function (structure) { return structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_LINK && structure.energy < structure.energyCapacity; }
+                filter: (structure) => { return structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_LINK && structure.energy < structure.energyCapacity; }
             });
             if (target)
                 creep.memory.target = target.id;

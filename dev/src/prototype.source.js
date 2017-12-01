@@ -24,8 +24,7 @@ Object.defineProperty(Source.prototype, 'memory', {
 Object.defineProperty(Source.prototype, 'workers', {
     configurable: true,
     get: function () {
-        var _this = this;
-        return this.memory.workers = _.filter(Game.creeps, function (c) { return c.memory.sourceTarget === _this.id; }).length;
+        return this.memory.workers = _.filter(Game.creeps, (c) => c.memory.sourceTarget === this.id).length;
     },
     set: function (value) {
         if (value < 0) {
@@ -36,17 +35,16 @@ Object.defineProperty(Source.prototype, 'workers', {
 });
 Object.defineProperty(Source.prototype, 'freeSpaceCount', {
     get: function () {
-        var _this = this;
         if (this._freeSpaceCount == undefined) {
             if (this.memory.freeSpaceCount == undefined) {
-                var freeSpaceCount_1 = 0;
-                [this.pos.x - 1, this.pos.x, this.pos.x + 1].forEach(function (x) {
-                    [_this.pos.y - 1, _this.pos.y, _this.pos.y + 1].forEach(function (y) {
-                        if (Game.map.getTerrainAt(x, y, _this.pos.roomName) != 'wall')
-                            freeSpaceCount_1++;
-                    }, _this);
+                let freeSpaceCount = 0;
+                [this.pos.x - 1, this.pos.x, this.pos.x + 1].forEach(x => {
+                    [this.pos.y - 1, this.pos.y, this.pos.y + 1].forEach(y => {
+                        if (Game.map.getTerrainAt(x, y, this.pos.roomName) != 'wall')
+                            freeSpaceCount++;
+                    }, this);
                 }, this);
-                this.memory.freeSpaceCount = freeSpaceCount_1;
+                this.memory.freeSpaceCount = freeSpaceCount;
             }
             this._freeSpaceCount = this.memory.freeSpaceCount;
         }
@@ -57,14 +55,13 @@ Object.defineProperty(Source.prototype, 'freeSpaceCount', {
 });
 Object.defineProperty(Source.prototype, 'containerSpot', {
     get: function () {
-        var _this = this;
         if (this._containerSpot == undefined) {
             if (this.memory.containerSpot == undefined) {
-                [this.pos.x - 1, this.pos.x + 1].forEach(function (x) {
-                    [_this.pos.y - 1, _this.pos.y + 1].forEach(function (y) {
-                        if (Game.map.getTerrainAt(x, y, _this.pos.roomName) != 'wall')
-                            _this.memory.containerSpot = [x, y];
-                    }, _this);
+                [this.pos.x - 1, this.pos.x + 1].forEach(x => {
+                    [this.pos.y - 1, this.pos.y + 1].forEach(y => {
+                        if (Game.map.getTerrainAt(x, y, this.pos.roomName) != 'wall')
+                            this.memory.containerSpot = [x, y];
+                    }, this);
                 }, this);
             }
             this._containerSpot = this.memory.containerSpot;
