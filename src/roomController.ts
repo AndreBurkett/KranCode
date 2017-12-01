@@ -154,6 +154,13 @@ function roomController(room: Room) {
             let uCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task  === 'upgrade' || c.memory.taskQ === 'upgrade'});
             let uMax = 3;
             let maxAssign = Math.min(uMax-uCreeps.length, iCreeps.length);
+            if(uCreeps && uCreeps.length <= uMax && iCreeps && iCreeps.length >= 1 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0){
+                for(let i = 0; i < maxAssign; i++){
+                    iCreeps[i].memory.taskQ = 'upgrade';
+                    iCreeps[i].memory.task = 'withdraw';
+                }
+                iCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task === 'idle'});
+            }
             if(uCreeps && uCreeps.length <= uMax && lCreeps && lCreeps.length >= 3 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0){
                 for(let i = 0; i < maxAssign; i++){
                     iCreeps[i].memory.taskQ = 'upgrade';
