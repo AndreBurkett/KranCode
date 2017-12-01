@@ -4,7 +4,8 @@ function roomController(room: Room) {
     let containers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
     let numContainers = containers.length || 0;
     let maxWorkers = 0
-    let ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
+    if (room.controller)
+    var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
     let spawns = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
