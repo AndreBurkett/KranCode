@@ -145,7 +145,7 @@ function roomController(room) {
         }
         else {
             let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' });
-            let maxAssign = 1;
+            let maxAssign = Math.min(1, iCreeps.length);
             if (uCreeps && uCreeps.length < maxAssign) {
                 for (let i = 0; i < maxAssign; i++) {
                     iCreeps[i].memory.taskQ = 'upgrade';
