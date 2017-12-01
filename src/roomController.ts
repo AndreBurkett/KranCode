@@ -42,8 +42,7 @@ function roomController(room: Room) {
     }
 
     //Get Spawn to Source Containers Paths
-    console.log(!Memory.paths.sourceC.length);
-    if(!Memory.paths.sourceC || !Memory.paths.sourceC.length || Memory.paths.sourceC.length == 0) {
+    if(!Memory.paths.sourceC || !Memory.paths.sourceC.length || Memory.paths.sourceC.length < numContainers) {
         let pathNum = 0;
         for(let i in containers){
             for(let j in spawns){
@@ -63,7 +62,7 @@ function roomController(room: Room) {
         }
     }
     //Get Spawn to Controller Path
-    if(!Memory.paths.myPath){
+    if(!Memory.paths.myPath && room.controller){
         let startPos = room.controller.pos;
         let endPos = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
         for(let i in endPos){
