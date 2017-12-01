@@ -1,5 +1,6 @@
 var taskDeposit = {
     run: function (creep) {
+        var target;
         if(creep.memory.target){
             target = Game.getObjectById(creep.memory.target)
             if(!target)

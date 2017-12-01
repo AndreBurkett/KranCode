@@ -1,6 +1,6 @@
-require('prototype.source');
+//require('prototype.source');
 
-function roomController(room) {
+function roomController(room: Room) {
     let sourceLen = room.sources.length;
     let sources = room.find(FIND_SOURCES);
     let containers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
@@ -8,8 +8,8 @@ function roomController(room) {
     let maxWorkers = 0
     let ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
     let spawns = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN});
-    let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'mine' });
-    let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
+    let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
+    let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
     
     for (let s in sources) {
         sources[s].memory.get;

@@ -1,18 +1,36 @@
-require('prototype.room');
-require('prototype.source');
-require('prototype.spawn');
-require('prototype.container');
-require('prototype.controller');
-var taskBuild = require('task.build');
-var taskDeposit = require('task.deposit');
-var taskHarvest = require('task.harvest');
-var taskMine = require('task.mining');
-var taskRepair = require('task.repair');
-var taskTransport = require('task.transport');
-var taskUpgrade = require('task.upgrade');
-var taskWithdraw = require('task.withdraw');
-var creepName = require('util.nameBuilder');
-var roomController = require('roomController');
+/*import * as taskBuild;
+import * as taskDeposit;
+import * as taskHarvest;
+import * as taskMine;
+import * as taskRepair;
+import * as taskTransport;
+import * as taskUpgrade;
+import * as taskWithdraw;
+import * as creepName;
+import * as roomController;
+import "./prototype.room";
+import "./prototype.source";
+import "./prototype.spawn";
+import "./prototype.container";
+import "./prototype.controller";*/
+//import * as creepName from "./util.nameBuilder";
+var creepName = require('./util.nameBuilder');
+require('./prototype.room');
+require('./prototype.source');
+require('./prototype.spawn');
+require('./prototype.container');
+require('./prototype.controller');
+
+var taskBuild = require('./task.build');
+var taskDeposit = require('./task.deposit');
+var taskHarvest = require('./task.harvest');
+var taskMine = require('./task.mining');
+var taskRepair = require('./task.repair');
+var taskTransport = require('./task.transport');
+var taskUpgrade = require('./task.upgrade');
+var taskWithdraw = require('./task.withdraw');
+var creepName = require('./util.nameBuilder');
+var roomController = require('./roomController');
 
 module.exports.loop = function()
 {

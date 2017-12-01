@@ -1,5 +1,5 @@
 var utilNameBuilder = {
-    getName: function(role) {
+    getName: function(role: string) {
         if (Memory.nameIndex === undefined)
             Memory.nameIndex = {};
 
@@ -9,7 +9,7 @@ var utilNameBuilder = {
         return role + (Memory.nameIndex[role] + 1);
     },
 
-    commitName: function(role) {
+    commitName: function(role: string) {
         var newIndex = Memory.nameIndex[role] + 1;
         Memory.nameIndex[role] = newIndex;
     }
