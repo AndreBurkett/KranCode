@@ -146,7 +146,7 @@ function roomController(room) {
                 }
                 iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
             }
-            if (uCreeps && uCreeps.length <= uMax && lCreeps && lCreeps.length >= 3 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
+            if (uCreeps && uCreeps.length <= maxAssign && lCreeps && lCreeps.length >= 3 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
                 for (let i = 0; i < maxAssign; i++) {
                     iCreeps[i].memory.taskQ = 'upgrade';
                     iCreeps[i].memory.task = 'withdraw';
