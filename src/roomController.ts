@@ -117,6 +117,15 @@ function roomController(room: Room) {
         }
     }
 
+    //Assign Build Creeps
+    let buildPrints = room.find(FIND_CONSTRUCTION_SITES);
+    if(!buildPrints){
+        let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task === 'build'});
+        for(let i in bCreeps){
+            bCreeps[i].memory.task = 'withdraw';
+        }
+    }
+
     //Assign Depo Creeps
     let depoCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'deposit' && c.carry.energy == c.carryCapacity});
     if(depoCreeps && depoCreeps.length > 0 && numContainers == 0){
