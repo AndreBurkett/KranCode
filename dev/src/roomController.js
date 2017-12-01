@@ -134,7 +134,7 @@ function roomController(room) {
             console.log(uCreeps);
             let uMax = 3;
             let maxAssign = Math.min(uMax - uCreeps.length, iCreeps.length);
-            if (uCreeps && uCreeps.length <= uMax && iCreeps && iCreeps.length >= 1 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
+            if (!uCreeps || uCreeps.length <= uMax && iCreeps && iCreeps.length >= 1 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
                 for (let i = 0; i < maxAssign; i++) {
                     iCreeps[i].memory.taskQ = 'upgrade';
                     iCreeps[i].memory.task = 'withdraw';
