@@ -75,7 +75,7 @@ function roomController(room: Room) {
     //Place Spawn to Controller Roads
     for(let sToC in Memory.paths.myPath.path) {
         console.log('rd: ' +room.createConstructionSite(Memory.paths.myPath.path[sToC], Memory.paths.myPath[sToC], STRUCTURE_ROAD));
-        room.createConstructionSite(Memory.paths.myPath.path[sToC], Memory.paths.myPath[sToC], STRUCTURE_ROAD);
+        room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath[sToC].y, STRUCTURE_ROAD);
     }
 
 
