@@ -33,7 +33,7 @@ function roomController(room) {
     else {
         room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
-    console.log(Memory.paths.sourceC.length);
+    console.log(!Memory.paths.sourceC.length);
     if (!Memory.paths.sourceC || Memory.paths.sourceC.length == 0) {
         var pathNum = 0;
         for (var i in containers) {
