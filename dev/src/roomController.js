@@ -62,8 +62,8 @@ function roomController(room) {
         }
     }
     for (let sToC in Memory.paths.myPath.path) {
-        console.log('rd: ' + Memory.paths.myPath.path[sToC].x);
-        room.createConstructionSite(Memory.paths.myPath.path[sToC], STRUCTURE_ROAD);
+        console.log('rd: ' + Memory.paths.myPath.path[sToC].y);
+        room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
     for (let s = 0; s < sourceLen; s++) {
         if (sources[s].workers <= sources[s].freeSpaceCount) {
