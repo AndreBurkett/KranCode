@@ -187,6 +187,7 @@ function roomController(room: Room) {
     let withdrawCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'withdraw' && c.carry.energy == c.carryCapacity});
     if (withdrawCreeps) {
         let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task === 'withdraw' && c.memory.taskQ === 'upgrade' && c.carry.energy == c.carryCapacity});
+        console.log('uc: '+ uCreeps);
         if (uCreeps && uCreeps.length > 0) {
             for (let i in uCreeps) {
                 delete uCreeps[i].memory.target;
