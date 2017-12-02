@@ -82,7 +82,7 @@ function roomController(room) {
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle' }).length;
     if (hCreeps < 3)
         AssignTask('withdraw', 2, 'harvest');
-    let wCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
+    let wCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
     for (let i in wCreeps) {
         wCreeps[i].memory.task = wCreeps.memory.taskQ;
         delete wCreeps[i].memory.taskQ;
