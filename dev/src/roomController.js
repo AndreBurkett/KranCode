@@ -4,6 +4,7 @@ function roomController(room) {
     let sourceLen = room.sources.length;
     let sources = room.find(FIND_SOURCES);
     let containers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+    let filledContainers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0 });
     let numContainers = containers.length || 0;
     let maxWorkers = 0;
     if (room.controller)
@@ -95,7 +96,7 @@ function roomController(room) {
         wCreeps[i].memory.task = wCreeps[i].memory.taskQ;
         delete wCreeps[i].memory.taskQ;
     }
-    let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.carry[RESOURCE_ENERGY] === 0 && c.memory.task === 'build' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' });
+    let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.carry[RESOURCE_ENERGY] === 0 && c.memory.task === 'build' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' || (c.memory.task === 'withdraw' && !filledContainers) });
     for (let i in iCreeps) {
         iCreeps[i].setTask('idle');
         delete iCreeps[i].memory.target;
