@@ -17,8 +17,10 @@ var taskDeposit = {
             if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 if(!creep.memory.path)
                     creep.memory.path = PathFinder.search(creep.pos, target.pos, {maxCost: 10})
-                if(creep.memory.path && !creep.memory.path.incomplete)
-                creep.moveByPath(creep.memory.path);
+                if(creep.memory.path && !creep.memory.path.incomplete){
+                    console.log(creep.memory.path)
+                    creep.moveByPath(creep.memory.path);
+                }
             }
         }
     }
