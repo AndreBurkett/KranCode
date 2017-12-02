@@ -21,7 +21,7 @@ var taskDeposit = {
                 if (creep.memory.path && !creep.memory.path.incomplete) {
                     console.log(creep + ' ' + creep.moveByPath(creep.memory.path));
                     if (creep.moveByPath(creep.memory.path.path) !== OK) {
-                        delete creep.memory.path;
+                        creep.moveTo(target.pos);
                     }
                 }
             }
