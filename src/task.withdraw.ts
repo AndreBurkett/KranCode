@@ -7,7 +7,8 @@ var taskWithdraw = {
         }
         else if(creep.memory.taskQ && creep.memory.taskQ == 'upgrade' && creep.room.controller){
             target = creep.room.controller.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > creep.carryCapacity});
-            creep.memory.target = target.id || null;
+            if(target)
+            creep.memory.target = target.id;
         }
         else {
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > creep.carryCapacity});
