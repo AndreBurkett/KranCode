@@ -89,15 +89,12 @@ function roomController(room) {
     }
     let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.carry[RESOURCE_ENERGY] === 0 && c.memory.task === 'build' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' });
     for (let i in iCreeps) {
-        console.log('assign idle' + iCreeps[i].getTask());
         iCreeps[i].setTask('idle');
         delete iCreeps[i].memory.target;
     }
     function AssignTask(task, maxAssign, taskQ, target) {
         let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
-        console.log('idle creeps: ' + creep);
         let num = Math.min(maxAssign, creep.length);
-        console.log(num);
         for (let i = 0; i < num; i++) {
             creep[i].setTask(task);
             if (taskQ)
