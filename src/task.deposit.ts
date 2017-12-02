@@ -18,8 +18,8 @@ var taskDeposit = {
                 if(!creep.memory.path)
                     creep.memory.path = PathFinder.search(creep.pos, target.pos, {maxCost: 10})
                 if(creep.memory.path && !creep.memory.path.incomplete){
-                    console.log(creep + ' '+ creep.moveByPath(creep.memory.path))
-                    if(creep.moveByPath(creep.memory.path.path) == ERR_INVALID_ARGS){
+                    //console.log(creep + ' '+ creep.moveByPath(creep.memory.path))
+                    if(creep.moveByPath(creep.memory.path.path) !== OK){
                         delete creep.memory.path;
                     }
                 }
