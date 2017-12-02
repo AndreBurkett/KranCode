@@ -12,7 +12,7 @@ function roomController(room: Room) {
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
 
-    let testCreep: Creep = Game.creeps['c842'];
+    let testCreep: Creep = mineCreeps[0];
     testCreep.setTask('idle');
 
     console.log(testCreep.getTask());
