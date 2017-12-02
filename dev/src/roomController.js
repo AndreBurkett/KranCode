@@ -67,6 +67,7 @@ function roomController(room) {
     }
     for (let s = 0; s < sourceLen; s++) {
         let num = sources[s].freeSpaceCount - sources[s].workers.length;
+        console.log(num);
         if (containers)
             AssignTask('mine', num, 'deposit', sources[s].id);
     }

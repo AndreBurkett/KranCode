@@ -84,6 +84,7 @@ function roomController(room: Room) {
     //Assign Mine Task
     for(let s = 0; s < sourceLen; s++){
         let num: number = sources[s].freeSpaceCount - sources[s].workers.length;
+        console.log(num);
         //let cont = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < s.storeCapacity});
         if(containers)
         AssignTask('mine',num, 'deposit', sources[s].id);
