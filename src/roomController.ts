@@ -11,7 +11,7 @@ function roomController(room: Room) {
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
 
-    let testCreep = new Creep(mineCreeps[0]);
+    let testCreep = new Creep(mineCreeps[0].id);
     console.log(testCreep);
 
     for (let s in sources) {
