@@ -1,6 +1,10 @@
 interface Creep {
-    task():void;
+    task(str:String): void;
 }
 
+Creep.prototype.task = function(cTask: String){
+    let creep = this as Creep;
+    let memory = creep._memory;
+    memory.task = cTask;
 
-Creep.prototype.task = function(){};
+};
