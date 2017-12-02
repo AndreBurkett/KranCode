@@ -116,7 +116,7 @@ function roomController(room: Room) {
 
     //Assign Build Task
     let sites = room.find(FIND_CONSTRUCTION_SITES);
-    if(sites){
+    if(sites && sites.length > 0){
         let bCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'build' || c.memory.taskQ === 'build'}).length;
         if (bCreeps < 3)
             AssignTask('withdraw', 3, 'build');

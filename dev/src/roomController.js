@@ -91,7 +91,7 @@ function roomController(room) {
     if (hCreeps < 3)
         AssignTask('withdraw', 3, 'harvest');
     let sites = room.find(FIND_CONSTRUCTION_SITES);
-    if (sites) {
+    if (sites && sites.length > 0) {
         let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' || c.memory.taskQ === 'build' }).length;
         if (bCreeps < 3)
             AssignTask('withdraw', 3, 'build');
