@@ -70,7 +70,7 @@ function roomController(room) {
     let mdCreeps = room.find(FIND_MY_CREEPS, {
         filter: (c) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit') && c.carry[RESOURCE_ENERGY] === c.carryCapacity
     }).length;
-    if (mdCreeps < (2 * sourceLen)) {
+    if (mdCreeps < (2 * sourceLen) + 1) {
         for (let s = 0; s < sourceLen; s++) {
             let num = Math.min(sources[s].freeSpaceCount - sources[s].workers, 2);
             if (containers && allCreeps && allCreeps > mCreeps + 1)
