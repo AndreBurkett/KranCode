@@ -12,8 +12,8 @@ var taskDeposit = {
             });
             if(target)
                 creep.memory.target = target.id;
-            else
-                creep.memory.task = 'idle';
+            //else
+                //creep.memory.task = 'idle';
         }
         if (target) {
             if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
