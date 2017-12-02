@@ -82,14 +82,58 @@ function roomController(room: Room) {
     ////////////////////////////////// Task Priority ////////////////////////////////////////////
 
     //Assign Mine Task
+    for(let s = 0; s < sourceLen; s++){
+        let num: number = sources[s].freeSpaceCount - sources[s].workers.length;
+        //let cont = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < s.storeCapacity});
+        if(containers)
+        AssignTask('mine',num, 'deposit', sources[s].id);
+    }
 
+    //Assign Deposit Task
+    let dCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit'}).length;
+    AssignQTask('deposit',dCreeps);
+
+    //Assign Upgrade Task
+
+
+
+
+
+
+
+
+    function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
+        let creep = room.iCreep;
+        let num = Math.min(maxAssign, creep.length);
+        for(let i=0; i < num; i++){
+            creep[i].memory.task = task;
+            if(taskQ)
+                creep[i].memory.taskQ = taskQ;
+            if(target)
+                creep[i].memory.target = target; //Todo assign closest creep to target
+        }
+    }
+
+    function AssignQTask(task: String, maxAssign: number, taskQ?: String, target?: string){
+        let creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.taskQ == task && c.carry[RESOURCE_ENERGY] === c.carryCapacity})
+        let num = Math.min(maxAssign, creep.length);
+        for(let i=0; i< num; i++){
+            creep[i].memory.task = task;
+            if(taskQ)
+                creep[i].memory.taskQ = taskQ;
+            else
+                delete creep[i].memory.taskQ;
+            if(target)
+                creep[i].memory.target = target; //Todo assign closest creep to target
+        }
+    }
 
 
 
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
     //Assign Mine Task
     for (let s = 0; s < sourceLen; s++) {
         if (sources[s].workers <= sources[s].freeSpaceCount) {
@@ -114,6 +158,8 @@ function roomController(room: Room) {
             mineCreeps[c].memory.task = 'deposit';
         }
     }
+*/
+
     //Assign Build Task
     let sites = room.find(FIND_CONSTRUCTION_SITES);
     let numBuilders = buildCreeps.length || 0;

@@ -5,7 +5,7 @@ var taskMining = {
             creep.memory.task = 'deposit';
             //Memory.sources[Game.getObjectById(creep.memory.target).name] --;
         }*/
-        target = Game.getObjectById(creep.memory.sourceTarget);
+        target = Game.getObjectById(creep.memory.target);
         if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
         }

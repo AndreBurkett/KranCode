@@ -5,7 +5,9 @@ interface Creep {
 }
 
 interface CreepMemory{
-    task: String
+    task: String;
+    taskQ: String;
+    target: string;
 }
 
 Creep.prototype.getTask = function(){

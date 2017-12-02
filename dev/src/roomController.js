@@ -66,24 +66,34 @@ function roomController(room) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
     for (let s = 0; s < sourceLen; s++) {
-        if (sources[s].workers <= sources[s].freeSpaceCount) {
-            let sourceContainer = room.lookForAt(LOOK_STRUCTURES, sources[s].containerSpot[0], sources[s].containerSpot[1], { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
-            if (!sourceContainer[0] || sourceContainer[0] && sourceContainer[0].store[RESOURCE_ENERGY] < sourceContainer[0].storeCapacity) {
-                var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' });
-                let num = Math.min(sources[s].freeSpaceCount - sources[s].workers, idleCreeps.length);
-                for (let i = 0; i < num; i++) {
-                    var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' });
-                    let iCreep = sources[s].pos.findClosestByRange(idleCreeps);
-                    iCreep.memory.task = 'mine';
-                    iCreep.memory.sourceTarget = room.sources[s].id;
-                }
-            }
+        let num = sources[s].freeSpaceCount - sources[s].workers.length;
+        if (containers)
+            AssignTask('mine', num, 'deposit', sources[s].id);
+    }
+    let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit' }).length;
+    AssignQTask('deposit', dCreeps);
+    function AssignTask(task, maxAssign, taskQ, target) {
+        let creep = room.iCreep;
+        let num = Math.min(maxAssign, creep.length);
+        for (let i = 0; i < num; i++) {
+            creep[i].memory.task = task;
+            if (taskQ)
+                creep[i].memory.taskQ = taskQ;
+            if (target)
+                creep[i].memory.target = target;
         }
     }
-    for (let c in mineCreeps) {
-        if (mineCreeps[c].carry.energy == mineCreeps[c].carryCapacity) {
-            delete mineCreeps[c].memory.path;
-            mineCreeps[c].memory.task = 'deposit';
+    function AssignQTask(task, maxAssign, taskQ, target) {
+        let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ == task && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
+        let num = Math.min(maxAssign, creep.length);
+        for (let i = 0; i < num; i++) {
+            creep[i].memory.task = task;
+            if (taskQ)
+                creep[i].memory.taskQ = taskQ;
+            else
+                delete creep[i].memory.taskQ;
+            if (target)
+                creep[i].memory.target = target;
         }
     }
     let sites = room.find(FIND_CONSTRUCTION_SITES);
