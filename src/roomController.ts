@@ -134,7 +134,7 @@ function roomController(room: Room) {
         let num = Math.min(maxAssign, creep);
         console.log(num);
         for(let i=0; i < num; i++){
-            creep[i].memory.task = task;
+            creep[i].setTask(task);
             if(taskQ)
                 creep[i].memory.taskQ = taskQ;
             if(target)
