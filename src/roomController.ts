@@ -12,11 +12,6 @@ function roomController(room: Room) {
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
 
-    let testCreep: Creep = mineCreeps[0];
-    testCreep.setTask('idle');
-
-    console.log(testCreep.getTask());
-
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
@@ -114,7 +109,7 @@ function roomController(room: Room) {
         if (mineCreeps[c].carry.energy == mineCreeps[c].carryCapacity) {
             let i = room.sources.indexOf(Game.getObjectById(mineCreeps[c].memory.sourceTarget));
             delete mineCreeps[c].memory.path;
-            mineCreeps[c].memory.task = 'deposit';
+            mineCreeps[c].setTask('deposit');// = 'deposit';
         }
     }
     //Assign Build Task
