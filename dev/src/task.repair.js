@@ -4,6 +4,8 @@ var taskRepair = {
         var target;
         if (creep.memory.repairTarget) {
             target = Game.getObjectById(creep.memory.repairTarget);
+            if (target.hits == target.hitsMax)
+                delete creep.memory.repairTarget;
         }
         else {
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === (STRUCTURE_CONTAINER || STRUCTURE_ROAD) && s.hits < .75 * s.hitsMax });
