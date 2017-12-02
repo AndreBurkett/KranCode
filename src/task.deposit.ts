@@ -22,6 +22,8 @@ var taskDeposit = {
                     }
                 }
             }
+            else
+                delete creep.memory.target;
         }
     }
 }
