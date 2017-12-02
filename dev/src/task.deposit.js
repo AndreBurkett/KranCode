@@ -9,22 +9,18 @@ var taskDeposit = {
         }
         else {
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: (s) => { return s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE || s.structureType == STRUCTURE_LINK && s.store[RESOURCE_ENERGY] < s.storeCapacity; }
+                filter: (s) => { return (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE || s.structureType == STRUCTURE_LINK) && s.store[RESOURCE_ENERGY] < s.storeCapacity; }
             });
             if (target)
                 creep.memory.target = target.id;
         }
         if (target) {
             if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                if (!creep.memory.path)
-                    creep.memory.path = PathFinder.search(creep.pos, target.pos, { maxCost: 10 });
-                if (creep.memory.path && !creep.memory.path.incomplete) {
-                    creep.moveTo(target);
-                }
+                creep.moveTo(target);
             }
+            else
+                delete creep.memory.target;
         }
-        else
-            delete creep.memory.target;
     }
 };
 module.exports = taskDeposit;
