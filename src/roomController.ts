@@ -4,7 +4,7 @@ function roomController(room: Room) {
     let sourceLen = room.sources.length;
     let sources = room.find(FIND_SOURCES);
     let containers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
-    let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0});
+    let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50});
     let numContainers = containers.length || 0;
     let maxWorkers = 0
     if (room.controller)
@@ -134,6 +134,7 @@ function roomController(room: Room) {
     for(let i in iCreeps){
         iCreeps[i].setTask('idle');
         delete iCreeps[i].memory.target;
+        delete iCreeps[i].memory.taskQ;
     }
 
 
