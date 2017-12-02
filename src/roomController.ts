@@ -86,7 +86,7 @@ function roomController(room: Room) {
     let allCreeps = room.find(FIND_MY_CREEPS).length;
     let mCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'mine'}).length;
     let mdCreeps: number = room.find(FIND_MY_CREEPS, {
-        filter: (c: Creep) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit') && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
+        filter: (c: Creep) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')}).length;
     console.log(mdCreeps);
     if (mdCreeps < (2 * sourceLen)-1) {
         for (let s = 0; s < sourceLen; s++) {
