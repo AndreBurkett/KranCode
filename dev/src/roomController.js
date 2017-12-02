@@ -90,9 +90,12 @@ function roomController(room) {
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle' }).length;
     if (hCreeps < 3)
         AssignTask('withdraw', 3, 'harvest');
-    let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' || c.memory.taskQ === 'build' }).length;
-    if (bCreeps < 3)
-        AssignTask('withdraw', 3, 'build');
+    let sites = room.find(FIND_CONSTRUCTION_SITES);
+    if (sites) {
+        let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' || c.memory.taskQ === 'build' }).length;
+        if (bCreeps < 3)
+            AssignTask('withdraw', 3, 'build');
+    }
     let rCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'repair' || c.memory.taskQ === 'repair' }).length;
     if (rCreeps < 1)
         AssignTask('withdraw', 1, 'repair');

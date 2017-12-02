@@ -7,6 +7,8 @@ var taskBuild = {
         target = creep.pos.findClosestByRange(containerPrint);
         else
         target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+        if(!target)
+            creep.memory.task = 'idle';
 
         if (creep.build(target) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
