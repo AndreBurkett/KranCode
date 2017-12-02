@@ -94,13 +94,31 @@ function roomController(room: Room) {
     AssignQTask('deposit',dCreeps);
 
     //Assign Upgrade Task
+    let uCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade'}).length;
+    if(uCreeps < 1){
+        AssignTask('withdraw', 1, 'upgrade');
+    }
 
+    //Assign Build Task
+    let bCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'build' || c.memory.taskQ === 'build'}).length;
+    if (bCreeps < 3)
+        AssignTask('withdraw', 3, 'build');
 
+    //Assign Repair Task
 
+    //Assign Harvest Task
+    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle'}).length;
+    if(hCreeps < 3)
+        AssignTask('withdraw', 2, 'harvest');
 
+    //Assign Transport Task
 
-
-
+    //Assign Withdraw Task
+    let wCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
+    for(let i in wCreeps){
+        wCreeps[i].memory.task = wCreeps.memory.taskQ;
+        delete wCreeps[i].memory.taskQ;
+    }
 
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
         let creep = room.iCreep;
@@ -158,7 +176,7 @@ function roomController(room: Room) {
             mineCreeps[c].memory.task = 'deposit';
         }
     }
-*/
+
 
     //Assign Build Task
     let sites = room.find(FIND_CONSTRUCTION_SITES);
@@ -305,6 +323,8 @@ function roomController(room: Room) {
         iCreeps[i].memory.task = 'idle';
         delete iCreeps[i].memory.sourceTarget;
     }
+
+*/
 
     //Start & Stop Spawning
     var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest'});

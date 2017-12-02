@@ -72,6 +72,21 @@ function roomController(room) {
     }
     let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit' }).length;
     AssignQTask('deposit', dCreeps);
+    let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' }).length;
+    if (uCreeps < 1) {
+        AssignTask('withdraw', 1, 'upgrade');
+    }
+    let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' || c.memory.taskQ === 'build' }).length;
+    if (bCreeps < 3)
+        AssignTask('withdraw', 3, 'build');
+    let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle' }).length;
+    if (hCreeps < 3)
+        AssignTask('withdraw', 2, 'harvest');
+    let wCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
+    for (let i in wCreeps) {
+        wCreeps[i].memory.task = wCreeps.memory.taskQ;
+        delete wCreeps[i].memory.taskQ;
+    }
     function AssignTask(task, maxAssign, taskQ, target) {
         let creep = room.iCreep;
         let num = Math.min(maxAssign, creep.length);
@@ -95,136 +110,6 @@ function roomController(room) {
             if (target)
                 creep[i].memory.target = target;
         }
-    }
-    let sites = room.find(FIND_CONSTRUCTION_SITES);
-    let numBuilders = buildCreeps.length || 0;
-    let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
-    if (sites && sites.length > 0 && numBuilders <= 4 && iCreeps && iCreeps.length > 0) {
-        if (numContainers == 0) {
-            let depoCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'deposit' });
-            for (let i in depoCreeps) {
-                depoCreeps[i].memory.task = 'build';
-                delete depoCreeps[i].memory.sourceTarget;
-            }
-        }
-    }
-    let buildPrints = room.find(FIND_CONSTRUCTION_SITES);
-    if (!buildPrints) {
-        let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' });
-        for (let i in bCreeps) {
-            bCreeps[i].memory.task = 'withdraw';
-        }
-    }
-    let depoCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'deposit' && c.carry.energy == c.carryCapacity });
-    if (depoCreeps && depoCreeps.length > 0 && numContainers == 0) {
-        iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
-        if (iCreeps && iCreeps.length >= 5) {
-            for (let i in depoCreeps) {
-                depoCreeps[i].memory.task = 'upgrade';
-                delete depoCreeps[i].memory.sourceTarget;
-            }
-        }
-        else {
-            for (let i in depoCreeps) {
-                depoCreeps[i].memory.task = 'harvest';
-                delete depoCreeps[i].memory.sourceTarget;
-            }
-        }
-    }
-    else {
-        for (let i in depoCreeps) {
-            let c = Game.getObjectById(depoCreeps[i].memory.target);
-            if ((c && c.store[RESOURCE_ENERGY] == c.storeCapacity) || (depoCreeps[i].path && depoCreeps[i].path.incomplete)) {
-                depoCreeps[i].memory.task = 'withdraw';
-                delete depoCreeps[i].memory.sourceTarget;
-            }
-        }
-    }
-    iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
-    mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' || c.memory.task === 'deposit' });
-    if (mineCreeps && mineCreeps.length >= maxWorkers && numContainers > 0) {
-        if (ctrlContainer[0]) {
-            let lCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || c.memory.task === 'withdraw' || c.memory.task === 'harvest' });
-            let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' });
-            let uMax = 3;
-            let maxAssign = Math.min(uMax - uCreeps.length, iCreeps.length);
-            if (uCreeps && uCreeps.length <= maxAssign && lCreeps && lCreeps.length >= 3 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
-                for (let i = 0; i < maxAssign; i++) {
-                    iCreeps[i].memory.taskQ = 'upgrade';
-                    iCreeps[i].memory.task = 'withdraw';
-                }
-            }
-            else {
-                for (let i in iCreeps) {
-                    iCreeps[i].memory.task = 'withdraw';
-                }
-            }
-        }
-        else {
-            let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' });
-            let maxAssign = Math.min(1, iCreeps.length);
-            if (!uCreeps || uCreeps.length < maxAssign) {
-                for (let i = 0; i < maxAssign; i++) {
-                    iCreeps[i].memory.taskQ = 'upgrade';
-                    iCreeps[i].memory.task = 'withdraw';
-                }
-                iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
-            }
-            for (let i in iCreeps) {
-                iCreeps[i].memory.task = 'withdraw';
-            }
-        }
-    }
-    let withdrawCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'withdraw' && c.carry.energy == c.carryCapacity });
-    if (withdrawCreeps) {
-        let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.memory.taskQ === 'upgrade' });
-        if (!uCreeps || uCreeps.length == 0) {
-            for (let i in withdrawCreeps) {
-                withdrawCreeps[i].memory.task = 'upgrade';
-            }
-            withdrawCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'withdraw' && c.carry.energy == c.carryCapacity });
-        }
-        let lCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || c.memory.task === 'withdraw' || c.memory.task === 'harvest' });
-        if (lCreeps && lCreeps.length >= 4) {
-            let numBuilders = buildCreeps.length || 0;
-            if (sites && sites.length > 0 && numBuilders <= 4) {
-                for (let i in withdrawCreeps) {
-                    if (withdrawCreeps[i].carry.energy == withdrawCreeps[i].carryCapacity) {
-                        delete withdrawCreeps[i].memory.target;
-                        withdrawCreeps[i].memory.task = 'build';
-                    }
-                }
-            }
-            else {
-                withdrawCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'withdraw' });
-                for (let i in withdrawCreeps) {
-                    if (withdrawCreeps[i].carry.energy == withdrawCreeps[i].carryCapacity) {
-                        delete withdrawCreeps[i].memory.target;
-                        withdrawCreeps[i].memory.task = 'transport';
-                    }
-                }
-            }
-        }
-        else {
-            for (let i in withdrawCreeps) {
-                if (withdrawCreeps[i].carry.energy == withdrawCreeps[i].carryCapacity) {
-                    delete withdrawCreeps[i].memory.target;
-                    delete withdrawCreeps[i].memory.taskQ;
-                    withdrawCreeps[i].memory.task = 'harvest';
-                }
-            }
-        }
-    }
-    if (ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] == ctrlContainer[0].storeCapacity) {
-        let tCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'transport' });
-        for (let i in tCreeps) {
-            tCreeps[i].memory.task = 'idle';
-        }
-    }
-    iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => (c.memory.task == 'deposit' || c.memory.task == 'build' || c.memory.task == 'upgrade' || c.memory.task === 'transport' || !c.memory.task) && c.carry.energy == 0 });
-    for (let i in iCreeps) {
-        iCreeps[i].memory.task = 'idle';
-        delete iCreeps[i].memory.sourceTarget;
     }
     var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest' });
     if (idleCreeps && idleCreeps.length >= 5) {
