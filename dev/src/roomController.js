@@ -68,12 +68,14 @@ function roomController(room) {
     let allCreeps = room.find(FIND_MY_CREEPS).length;
     let mCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' }).length;
     let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
-    for (let s = 0; s < sourceLen; s++) {
-        let num = Math.min(sources[s].freeSpaceCount - sources[s].workers, 2);
-        if (containers && allCreeps && allCreeps > mCreeps + 1 && dCreeps < (2 * sourceLen))
-            AssignTask('mine', num, 'deposit', sources[s].id);
-        else
-            AssignTask('mine', mCreeps, 'harvest', sources[s].id);
+    if (dCreeps < (2 * sourceLen)) {
+        for (let s = 0; s < sourceLen; s++) {
+            let num = Math.min(sources[s].freeSpaceCount - sources[s].workers, 2);
+            if (containers && allCreeps && allCreeps > mCreeps + 1)
+                AssignTask('mine', num, 'deposit', sources[s].id);
+            else
+                AssignTask('mine', mCreeps, 'harvest', sources[s].id);
+        }
     }
     AssignQTask('deposit', dCreeps);
     let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' }).length;
