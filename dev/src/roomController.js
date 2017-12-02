@@ -11,8 +11,9 @@ function roomController(room) {
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
-    let testCreep = Game.creeps['c587'];
-    console.log(testCreep.task);
+    let testCreep = Game.creeps['c842'];
+    testCreep.setTask('idle');
+    console.log(testCreep.getTask);
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
