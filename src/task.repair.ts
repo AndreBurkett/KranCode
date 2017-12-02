@@ -6,6 +6,7 @@ var taskRepair = {
         }
         else{
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType === (STRUCTURE_CONTAINER || STRUCTURE_ROAD) && s.hit < .75*s.hitsMax});
+            if(target)
             creep.memory.repairTarget = target.id;
         }
         if (creep.repair(target) == ERR_NOT_IN_RANGE) {
