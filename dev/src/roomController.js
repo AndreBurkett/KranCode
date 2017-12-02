@@ -65,8 +65,6 @@ function roomController(room) {
     for (let sToC in Memory.paths.myPath.path) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
-    let m = room.mCreep();
-    console.log(m[0].hits);
     for (let s = 0; s < sourceLen; s++) {
         if (sources[s].workers <= sources[s].freeSpaceCount) {
             let sourceContainer = room.lookForAt(LOOK_STRUCTURES, sources[s].containerSpot[0], sources[s].containerSpot[1], { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
