@@ -13,7 +13,7 @@ function roomController(room) {
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
     let testCreep = Game.creeps['c842'];
     testCreep.setTask('idle');
-    console.log(testCreep.getTask);
+    console.log(testCreep.getTask());
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;

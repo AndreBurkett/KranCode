@@ -15,7 +15,7 @@ function roomController(room: Room) {
     let testCreep: Creep = Game.creeps['c842'];
     testCreep.setTask('idle');
 
-    console.log(testCreep.getTask);
+    console.log(testCreep.getTask());
 
     for (let s in sources) {
         sources[s].memory.get;
