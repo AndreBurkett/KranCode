@@ -6,7 +6,7 @@ var taskRepair = {
             target = Game.getObjectById(creep.memory.repairTarget);
         }
         else {
-            target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === (STRUCTURE_CONTAINER || STRUCTURE_ROAD) && s.hit < .75 * s.hitsMax });
+            target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === (STRUCTURE_CONTAINER || STRUCTURE_ROAD) && s.hits < .75 * s.hitsMax });
             if (target)
                 creep.memory.repairTarget = target.id;
         }
