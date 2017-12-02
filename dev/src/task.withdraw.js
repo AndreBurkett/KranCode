@@ -6,7 +6,7 @@ var taskWithdraw = {
             target = Game.getObjectById(creep.memory.target);
         }
         else if (creep.memory.taskQ && creep.memory.taskQ == 'upgrade' && creep.room.controller) {
-            target = creep.room.controller.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+            target = creep.room.controller.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > creep.carryCapacity });
             creep.memory.target = target.id || null;
         }
         else {
