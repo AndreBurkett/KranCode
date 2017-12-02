@@ -99,6 +99,11 @@ function roomController(room: Room) {
         AssignTask('withdraw', 1, 'upgrade');
     }
 
+    //Assign Harvest Task
+    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle'}).length;
+    if(hCreeps < 3)
+        AssignTask('withdraw', 2, 'harvest');
+
     //Assign Build Task
     let bCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'build' || c.memory.taskQ === 'build'}).length;
     if (bCreeps < 3)
@@ -106,12 +111,12 @@ function roomController(room: Room) {
 
     //Assign Repair Task
 
-    //Assign Harvest Task
-    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle'}).length;
-    if(hCreeps < 3)
-        AssignTask('withdraw', 2, 'harvest');
+
 
     //Assign Transport Task
+    let tCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'transport' || c.memory.taskQ === 'transport'}).length;
+    if(tCreeps < 2)
+        AssignTask('withdraw', 2, 'transport');
 
     //Assign Withdraw Task
     let wCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity});
@@ -127,8 +132,10 @@ function roomController(room: Room) {
         delete iCreeps[i].memory.target;
     }
 
+
+    //Assign Task Functions
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
-        let creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle'});
+        let creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
         let num = Math.min(maxAssign, creep.length);
         for(let i=0; i < num; i++){
             creep[i].setTask(task);
