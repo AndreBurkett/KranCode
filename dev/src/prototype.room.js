@@ -1,6 +1,6 @@
 "use strict";
 Room.prototype.iCreep = function () {
-    return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
+    return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || !c.memory.task });
 };
 Room.prototype.mCreep = function () {
     return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' });

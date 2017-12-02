@@ -9,7 +9,7 @@ interface Room {
 }*/
 
 Room.prototype.iCreep = function(){
-    return this.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle'});
+    return this.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
 }
 
 Room.prototype.mCreep = function(){
