@@ -4,6 +4,7 @@ require('./prototype.source');
 require('./prototype.spawn');
 require('./prototype.container');
 require('./prototype.controller');
+require('./prototype.creep');
 
 var taskBuild = require('./task.build');
 var taskDeposit = require('./task.deposit');

@@ -10,6 +10,8 @@ function roomController(room) {
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
+    let testCreep = new myCreep(mineCreeps[0]);
+    console.log(testCreep);
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
@@ -136,17 +138,6 @@ function roomController(room) {
         if (ctrlContainer[0]) {
             let lCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || c.memory.task === 'withdraw' || c.memory.task === 'harvest' });
             let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' });
-            let uMax = 3;
-            let maxAssign = Math.min(uMax - uCreeps.length, iCreeps.length);
-            if ((!uCreeps || uCreeps.length <= uMax) && iCreeps && iCreeps.length >= 1 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
-                console.log('assign uCreep');
-                for (let i = 0; i < maxAssign; i++) {
-                    iCreeps[i].memory.taskQ = 'upgrade';
-                    iCreeps[i].memory.task = 'withdraw';
-                }
-                iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
-                maxAssign = Math.min(uMax - uCreeps.length, iCreeps.length);
-            }
             if (uCreeps && uCreeps.length <= maxAssign && lCreeps && lCreeps.length >= 3 && ctrlContainer[0].store[RESOURCE_ENERGY] > 0) {
                 for (let i = 0; i < maxAssign; i++) {
                     iCreeps[i].memory.taskQ = 'upgrade';

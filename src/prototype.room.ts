@@ -4,7 +4,7 @@ Object.defineProperty(Room.prototype, 'sources', {
         if (!this._sources) {
                 // If we dont have the value stored in memory
             if (!this.memory.sourceIds) {
-                    // Find the sources and store their id's in memory, 
+                    // Find the sources and store their id's in memory,
                     // NOT the full objects
                 this.memory.sourceIds = this.find(FIND_SOURCES)
                                         .map(source => source.id);
