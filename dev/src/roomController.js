@@ -10,7 +10,6 @@ function roomController(room) {
     if (room.controller)
         var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
-    let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
     for (let s in sources) {
         sources[s].memory.get;
@@ -66,10 +65,14 @@ function roomController(room) {
     for (let sToC in Memory.paths.myPath.path) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
+    let allCreeps = room.find(FIND_MY_CREEPS).length;
+    let mCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' }).length;
     for (let s = 0; s < sourceLen; s++) {
         let num = sources[s].freeSpaceCount - sources[s].workers;
-        if (containers)
+        if (containers && allCreeps && allCreeps > mCreeps + 1)
             AssignTask('mine', num, 'deposit', sources[s].id);
+        else
+            AssignTask('mine', num, 'harvest', sources[s].id);
     }
     let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('deposit', dCreeps);

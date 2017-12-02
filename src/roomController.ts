@@ -10,7 +10,7 @@ function roomController(room: Room) {
     if (room.controller)
     var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
     let spawns = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
-    let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
+    //let mCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
 
     for (let s in sources) {
@@ -83,10 +83,14 @@ function roomController(room: Room) {
     ////////////////////////////////// Task Priority ////////////////////////////////////////////
 
     //Assign Mine Task
+    let allCreeps = room.find(FIND_MY_CREEPS).length;
+    let mCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'mine'}).length;
     for(let s = 0; s < sourceLen; s++){
         let num: number = sources[s].freeSpaceCount - sources[s].workers;
-        if(containers)
-        AssignTask('mine',num,'deposit',sources[s].id);
+        if(containers && allCreeps && allCreeps > mCreeps + 1)
+            AssignTask('mine',num,'deposit',sources[s].id);
+        else
+            AssignTask('mine',num,'harvest',sources[s].id);
     }
 
     //Assign Deposit Task
