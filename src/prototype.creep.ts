@@ -1,3 +1,6 @@
-class myCreep extends Creep{
-    task:string
+interface Creep {
+    task():void;
 }
+
+
+Creep.prototype.task = function(){};

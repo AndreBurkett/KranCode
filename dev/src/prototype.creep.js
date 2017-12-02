@@ -1,4 +1,3 @@
 "use strict";
-class myCreep extends Creep {
-}
+Creep.prototype.task = function () { };
 //# sourceMappingURL=prototype.creep.js.map
