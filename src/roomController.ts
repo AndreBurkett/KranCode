@@ -128,7 +128,7 @@ function roomController(room: Room) {
 
     //Assign Transport Task
     let tCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'transport' || c.memory.taskQ === 'transport'}).length;
-    if(tCreeps < 2)
+    if(ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity && tCreeps < 2)
         AssignTask('withdraw', 2, 'transport');
 
     //Assign Upgrade Task
