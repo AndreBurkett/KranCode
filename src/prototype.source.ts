@@ -7,7 +7,7 @@ Object.defineProperty(Source.prototype, 'memory', {
         if(!_.isObject(Memory.mySourcesMemory)) {
             return undefined;
         }
-        return Memory.mySourcesMemory[this.id] = 
+        return Memory.mySourcesMemory[this.id] =
                 Memory.mySourcesMemory[this.id] || {};
     },
     set: function(value) {
@@ -31,7 +31,7 @@ Object.defineProperty(Source.prototype, 'workers', {
         }*/
         //console.log(Game.creeps);
         //console.log(_.filter(Game.creeps, (c) => c.memory.sourceTarget === this.id).length);
-        return this.memory.workers = _.filter(Game.creeps, (c) => c.memory.sourceTarget === this.id).length;
+        return this.memory.workers = _.filter(Game.creeps, (c) => c.memory.target === this.id).length;
         //return this.memory.workers;
     },
     set: function(value) {

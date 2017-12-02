@@ -24,7 +24,7 @@ Object.defineProperty(Source.prototype, 'memory', {
 Object.defineProperty(Source.prototype, 'workers', {
     configurable: true,
     get: function () {
-        return this.memory.workers = _.filter(Game.creeps, (c) => c.memory.sourceTarget === this.id).length;
+        return this.memory.workers = _.filter(Game.creeps, (c) => c.memory.target === this.id).length;
     },
     set: function (value) {
         if (value < 0) {
