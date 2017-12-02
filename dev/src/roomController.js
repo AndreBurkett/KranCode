@@ -101,7 +101,7 @@ function roomController(room) {
     if (rCreeps < 1)
         AssignTask('withdraw', 1, 'repair');
     let tCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'transport' || c.memory.taskQ === 'transport' }).length;
-    if (ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity && tCreeps < 2))
+    if (ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity) && tCreeps < 2)
         AssignTask('withdraw', 2, 'transport');
     let iCreep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' }).length;
     AssignTask('withdraw', iCreep, 'upgrade');
