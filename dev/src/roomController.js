@@ -10,7 +10,7 @@ function roomController(room) {
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
-    let testCreep = new myCreep(mineCreeps[0]);
+    let testCreep = new Creep(mineCreeps[0]);
     console.log(testCreep);
     for (let s in sources) {
         sources[s].memory.get;
