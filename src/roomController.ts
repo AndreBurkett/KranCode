@@ -107,7 +107,7 @@ function roomController(room: Room) {
     //Assign Deposit Task
     for (let c in mineCreeps) {
         if (mineCreeps[c].carry.energy == mineCreeps[c].carryCapacity) {
-            let i = room.sources.indexOf(Game.getObjectById(mineCreeps[c].memory.sourceTarget));
+            //let i = room.sources.indexOf(Game.getObjectById(mineCreeps[c].memory.sourceTarget));
             delete mineCreeps[c].memory.path;
             mineCreeps[c].setTask('deposit');// = 'deposit';
         }

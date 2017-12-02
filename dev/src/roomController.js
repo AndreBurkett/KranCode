@@ -11,9 +11,6 @@ function roomController(room) {
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
-    let testCreep = mineCreeps[0];
-    testCreep.setTask('idle');
-    console.log(testCreep.getTask());
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
@@ -85,9 +82,8 @@ function roomController(room) {
     }
     for (let c in mineCreeps) {
         if (mineCreeps[c].carry.energy == mineCreeps[c].carryCapacity) {
-            let i = room.sources.indexOf(Game.getObjectById(mineCreeps[c].memory.sourceTarget));
             delete mineCreeps[c].memory.path;
-            mineCreeps[c].memory.task = 'deposit';
+            mineCreeps[c].setTask('deposit');
         }
     }
     let sites = room.find(FIND_CONSTRUCTION_SITES);
