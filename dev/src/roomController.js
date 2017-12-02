@@ -99,55 +99,55 @@ function roomController(room) {
     let tCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'transport' || c.memory.taskQ === 'transport' }).length;
     if (tCreeps < 2)
         AssignTask('withdraw', 2, 'transport');
-    let idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' }).length;
-    AssignTask('withdraw', idleCreeps, 'upgrade');
-}
-let wCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
-for (let i in wCreeps) {
-    wCreeps[i].memory.task = wCreeps[i].memory.taskQ;
-    delete wCreeps[i].memory.taskQ;
-}
-let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.carry[RESOURCE_ENERGY] === 0 && (c.memory.task === 'build' || c.memory.task === 'deposit' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' || (c.memory.task === 'withdraw' && !filledContainers)) });
-for (let i in iCreeps) {
-    iCreeps[i].setTask('idle');
-    delete iCreeps[i].memory.target;
-    delete iCreeps[i].memory.taskQ;
-}
-function AssignTask(task, maxAssign, taskQ, target) {
-    let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || !c.memory.task });
-    let num = Math.min(maxAssign, creep.length);
-    for (let i = 0; i < num; i++) {
-        creep[i].setTask(task);
-        if (taskQ)
-            creep[i].memory.taskQ = taskQ;
-        if (target)
-            creep[i].memory.target = target;
+    let iCreep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' }).length;
+    AssignTask('withdraw', iCreep, 'upgrade');
+    let wCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
+    for (let i in wCreeps) {
+        wCreeps[i].memory.task = wCreeps[i].memory.taskQ;
+        delete wCreeps[i].memory.taskQ;
     }
-}
-function AssignQTask(task, maxAssign, taskQ, target) {
-    let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ == task && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
-    let num = Math.min(maxAssign, creep.length);
-    for (let i = 0; i < num; i++) {
-        creep[i].memory.task = task;
-        if (taskQ)
-            creep[i].memory.taskQ = taskQ;
-        else
-            delete creep[i].memory.taskQ;
-        if (target)
-            creep[i].memory.target = target;
-        else
-            delete creep[i].memory.target;
+    let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.carry[RESOURCE_ENERGY] === 0 && (c.memory.task === 'build' || c.memory.task === 'deposit' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' || (c.memory.task === 'withdraw' && !filledContainers)) });
+    for (let i in iCreeps) {
+        iCreeps[i].setTask('idle');
+        delete iCreeps[i].memory.target;
+        delete iCreeps[i].memory.taskQ;
     }
-}
-var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest' });
-if (idleCreeps && idleCreeps.length >= 5) {
-    for (let spawnName in Game.spawns) {
-        Game.spawns[spawnName].spawnEnabled = false;
+    function AssignTask(task, maxAssign, taskQ, target) {
+        let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || !c.memory.task });
+        let num = Math.min(maxAssign, creep.length);
+        for (let i = 0; i < num; i++) {
+            creep[i].setTask(task);
+            if (taskQ)
+                creep[i].memory.taskQ = taskQ;
+            if (target)
+                creep[i].memory.target = target;
+        }
     }
-}
-else {
-    for (let spawnName in Game.spawns) {
-        Game.spawns[spawnName].spawnEnabled = true;
+    function AssignQTask(task, maxAssign, taskQ, target) {
+        let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ == task && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
+        let num = Math.min(maxAssign, creep.length);
+        for (let i = 0; i < num; i++) {
+            creep[i].memory.task = task;
+            if (taskQ)
+                creep[i].memory.taskQ = taskQ;
+            else
+                delete creep[i].memory.taskQ;
+            if (target)
+                creep[i].memory.target = target;
+            else
+                delete creep[i].memory.target;
+        }
+    }
+    var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest' });
+    if (idleCreeps && idleCreeps.length >= 5) {
+        for (let spawnName in Game.spawns) {
+            Game.spawns[spawnName].spawnEnabled = false;
+        }
+    }
+    else {
+        for (let spawnName in Game.spawns) {
+            Game.spawns[spawnName].spawnEnabled = true;
+        }
     }
 }
 module.exports = roomController;
