@@ -65,6 +65,7 @@ function roomController(room) {
     for (let sToC in Memory.paths.myPath.path) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
+    console.log(room.mCreep());
     for (let s = 0; s < sourceLen; s++) {
         if (sources[s].workers <= sources[s].freeSpaceCount) {
             let sourceContainer = room.lookForAt(LOOK_STRUCTURES, sources[s].containerSpot[0], sources[s].containerSpot[1], { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
@@ -83,7 +84,7 @@ function roomController(room) {
     for (let c in mineCreeps) {
         if (mineCreeps[c].carry.energy == mineCreeps[c].carryCapacity) {
             delete mineCreeps[c].memory.path;
-            mineCreeps[c].setTask('deposit');
+            mineCreeps[c].memory.task = 'deposit';
         }
     }
     let sites = room.find(FIND_CONSTRUCTION_SITES);
@@ -168,7 +169,6 @@ function roomController(room) {
     let withdrawCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'withdraw' && c.carry.energy == c.carryCapacity });
     if (withdrawCreeps) {
         let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.memory.taskQ === 'upgrade' });
-        console.log(!uCreeps || uCreeps.length == 0);
         if (!uCreeps || uCreeps.length == 0) {
             for (let i in withdrawCreeps) {
                 withdrawCreeps[i].memory.task = 'upgrade';

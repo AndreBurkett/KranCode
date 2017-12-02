@@ -1,3 +1,23 @@
+interface Room {
+    iCreep(): Creep;
+    mCreep(): Creep;
+    memory: RoomMemory;
+}
+/*interface RoomMemory{
+    iCreep(): Creep;
+    mCreep(): Creep;
+}*/
+
+Room.prototype.iCreep = function(){
+    return this.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle'});
+}
+
+Room.prototype.mCreep = function(){
+    return this.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'mine'});
+}
+
+
+
 Object.defineProperty(Room.prototype, 'sources', {
     get: function() {
             // If we dont have the value stored locally

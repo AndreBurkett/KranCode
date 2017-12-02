@@ -1,4 +1,10 @@
 "use strict";
+Room.prototype.iCreep = function () {
+    return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
+};
+Room.prototype.mCreep = function () {
+    return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' });
+};
 Object.defineProperty(Room.prototype, 'sources', {
     get: function () {
         if (!this._sources) {
