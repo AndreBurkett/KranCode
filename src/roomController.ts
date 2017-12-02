@@ -91,7 +91,8 @@ function roomController(room: Room) {
     }
 
     //Assign Deposit Task
-    let dCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit'}).length;
+
+    let dCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
     AssignQTask('deposit',dCreeps);
 
     //Assign Upgrade Task
