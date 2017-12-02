@@ -90,7 +90,7 @@ function roomController(room: Room) {
         if(containers && allCreeps && allCreeps > mCreeps + 1)
             AssignTask('mine',num,'deposit',sources[s].id);
         else
-            AssignTask('mine',num,'harvest',sources[s].id);
+            AssignTask('mine',mCreeps,'harvest',sources[s].id);
     }
 
     //Assign Deposit Task

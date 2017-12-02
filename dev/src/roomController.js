@@ -72,7 +72,7 @@ function roomController(room) {
         if (containers && allCreeps && allCreeps > mCreeps + 1)
             AssignTask('mine', num, 'deposit', sources[s].id);
         else
-            AssignTask('mine', num, 'harvest', sources[s].id);
+            AssignTask('mine', mCreeps, 'harvest', sources[s].id);
     }
     let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task !== 'deposit' && c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('deposit', dCreeps);
