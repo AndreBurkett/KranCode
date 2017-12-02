@@ -95,6 +95,7 @@ function roomController(room) {
     }
     function AssignTask(task, maxAssign, taskQ, target) {
         let creep = room.iCreep;
+        console.log(creep);
         let num = Math.min(maxAssign, creep.length);
         console.log(num);
         for (let i = 0; i < num; i++) {
