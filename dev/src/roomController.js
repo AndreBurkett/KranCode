@@ -81,6 +81,7 @@ function roomController(room) {
         AssignTask('withdraw', 1, 'upgrade');
     }
     let harvCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
+    AssignQTask('harvest', harvCreeps);
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle' }).length;
     if (hCreeps < 3)
         AssignTask('withdraw', 3, 'harvest');
