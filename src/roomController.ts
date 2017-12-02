@@ -131,7 +131,7 @@ function roomController(room: Room) {
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
         let creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle'}).length;
         console.log('idle creeps: '+ creep);
-        let num = Math.min(maxAssign, creep.length);
+        let num = Math.min(maxAssign, creep);
         console.log(num);
         for(let i=0; i < num; i++){
             creep[i].memory.task = task;
