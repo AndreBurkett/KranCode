@@ -88,9 +88,9 @@ function roomController(room) {
         delete wCreeps[i].memory.taskQ;
     }
     function AssignTask(task, maxAssign, taskQ, target) {
-        let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' }).length;
+        let creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' });
         console.log('idle creeps: ' + creep);
-        let num = Math.min(maxAssign, creep);
+        let num = Math.min(maxAssign, creep.length);
         console.log(num);
         for (let i = 0; i < num; i++) {
             creep[i].setTask(task);
