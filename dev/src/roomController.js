@@ -68,8 +68,6 @@ function roomController(room) {
     }
     for (let s = 0; s < sourceLen; s++) {
         let num = sources[s].freeSpaceCount - sources[s].workers;
-        console.log(sources[s].freeSpaceCount);
-        console.log(sources[s].workers);
         if (containers)
             AssignTask('mine', num, 'deposit', sources[s].id);
     }
@@ -124,6 +122,8 @@ function roomController(room) {
                 delete creep[i].memory.taskQ;
             if (target)
                 creep[i].memory.target = target;
+            else
+                delete creep[i].memory.target;
         }
     }
     var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest' });
