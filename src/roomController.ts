@@ -82,7 +82,8 @@ function roomController(room: Room) {
     ////////////////////////////////// Task Priority ////////////////////////////////////////////
 
     //Assign Mine Task
-    console.log(room.mCreep());
+    let m = room.mCreep()
+    console.log(m[0].hits);
 
 
 
