@@ -66,9 +66,9 @@ function roomController(room) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
     for (let s = 0; s < sourceLen; s++) {
-        let num = sources[s].freeSpaceCount - sources[s].workers.length;
+        let num = sources[s].freeSpaceCount - sources[s].workers;
         console.log(sources[s].freeSpaceCount);
-        console.log(sources[s].workers.length);
+        console.log(sources[s].workers);
         if (containers)
             AssignTask('mine', num, 'deposit', sources[s].id);
     }
