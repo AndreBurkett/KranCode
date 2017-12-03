@@ -84,20 +84,20 @@ function roomController(room) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if (deliveryCreeps < 3) {
+    else if (deliveryCreeps < 4) {
         spawnRole = 'deliveryWorker';
         for (let i in spawns) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if (upgradeCreeps < 1) {
+    else if (upgradeCreeps < 2) {
         spawnRole = 'statWorker';
         spawnSpecialty = 'upgrader';
         for (let i in spawns) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if (roomCreeps < 35) {
+    else if (roomCreeps < 30) {
         for (let i in spawns) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
@@ -131,8 +131,8 @@ function roomController(room) {
     AssignQTask('deposit', dCreeps);
     let specUpgraders = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'upgrade' });
     for (let i in specUpgraders) {
-        specUpgraders[i].memory.task = 'upgrade';
-        delete specUpgraders[i].memory.taskQ;
+        specUpgraders[i].memory.task = 'withdraw';
+        specUpgraders[i].memory.taskQ = 'upgrade';
     }
     let harvCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('harvest', harvCreeps);
