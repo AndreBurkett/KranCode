@@ -18,6 +18,9 @@ var towerFill = {
             case ERR_FULL:
                 delete creep.memory.target;
                 break;
+            case ERR_INVALID_TARGET:
+                delete creep.memory.target;
+                break;
         }
     }
 }
