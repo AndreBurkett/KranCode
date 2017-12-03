@@ -9,10 +9,13 @@ var taskDeposit = {
         }
         else {
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: (s) => { return (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE || s.structureType == STRUCTURE_LINK) && s.store[RESOURCE_ENERGY] < s.storeCapacity; }
+                filter: (s) => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE || s.structureType == STRUCTURE_LINK) &&
+                    (s.store[RESOURCE_ENERGY] + creep.carryCapacity) < s.storeCapacity
             });
             if (target)
                 creep.memory.target = target.id;
+            else
+                creep.memory.task = 'idle';
         }
         if (!creep.memory.taskQ && creep.memory.specialty === 'miner')
             creep.memory.taskQ = 'mine';
