@@ -93,11 +93,14 @@ function roomController(room) {
         AssignTask('mine', (maxMiners - mdCreeps), 'harvest', sources[getMinSource()].id);
     }
     function getMinSource() {
+        let sources = room.find(FIND_SOURCES);
         let minSource = 0;
         let minWorkers = 99;
         for (let s in sources) {
-            if (minWorkers > sources[s].workers)
+            if (minWorkers > sources[s].workers) {
+                minWorkers = sources[s].workers;
                 minSource = s;
+            }
         }
         return minSource;
     }
