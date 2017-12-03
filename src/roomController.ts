@@ -85,9 +85,13 @@ function roomController(room: Room) {
     var spawnSpecialty;
     let maxMiners = 2 * sourceLen;
     let mineCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner'}).length;
+    let deliveryCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'deliveryWorker'}).length;
     if(mineCreeps < maxMiners){
         spawnRole = 'statWorker';
         spawnSpecialty = 'miner';
+    }
+    else if(deliveryCreeps < 2){
+        spawnRole = 'deliveryWorker';
     }
     for(let i in spawns){
         spawns[i].sCreep(spawnRole, spawnSpecialty);
@@ -187,7 +191,11 @@ function roomController(room: Room) {
 
     //Assign Task Functions
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
-        let creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
+        let creep;
+        if(task === ('mine' || 'build' || 'repair' || 'upgrade') || taskQ === ('mine' || 'build' || 'repair' || 'upgrade'))
+            creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
+        else
+            creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
         let num = Math.min(maxAssign, creep.length);
         for(let i=0; i < num; i++){
             creep[i].setTask(task);
