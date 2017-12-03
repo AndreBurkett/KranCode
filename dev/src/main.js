@@ -11,6 +11,7 @@ var taskDeposit = require('./task.deposit');
 var taskHarvest = require('./task.harvest');
 var taskMine = require('./task.mining');
 var taskRepair = require('./task.repair');
+var towerFill = require('./task.towerFill');
 var taskTransport = require('./task.transport');
 var taskUpgrade = require('./task.upgrade');
 var taskWithdraw = require('./task.withdraw');
@@ -46,6 +47,8 @@ module.exports.loop = function () {
             case 'repair':
                 taskRepair.run(Game.creeps[name]);
                 break;
+            case 'towerFill':
+                towerFill.run(Game.creeps[name]);
             case 'transport':
                 taskTransport.run(Game.creeps[name]);
                 break;
