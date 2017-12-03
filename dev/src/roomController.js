@@ -86,7 +86,7 @@ function roomController(room) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if (ugradeCreeps < 1) {
+    else if (upgradeCreeps < 1) {
         spawnRole = 'statWorker';
         spawnSpecialty = 'upgrader';
         for (let i in spawns) {
