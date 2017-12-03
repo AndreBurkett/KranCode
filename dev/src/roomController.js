@@ -85,6 +85,7 @@ function roomController(room) {
     for (let i in specMiners) {
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;
+        delete specMiners[i].memory.taskQ;
     }
     let mdCreeps = room.find(FIND_MY_CREEPS, {
         filter: (c) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')

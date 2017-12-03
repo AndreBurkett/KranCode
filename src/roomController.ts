@@ -106,6 +106,7 @@ function roomController(room: Room) {
     for(let i in specMiners){
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;
+        delete specMiners[i].memory.taskQ;
     }
 
     //let allCreeps = room.find(FIND_MY_CREEPS).length;
