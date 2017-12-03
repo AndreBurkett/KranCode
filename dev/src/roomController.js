@@ -163,6 +163,7 @@ function roomController(room) {
     for (let i in wCreeps) {
         wCreeps[i].memory.task = wCreeps[i].memory.taskQ;
         delete wCreeps[i].memory.taskQ;
+        delete wCreeps[i].memory.target;
     }
     let iCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.carry[RESOURCE_ENERGY] === 0 && (c.memory.task === 'build' || c.memory.task === 'deposit' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' || (c.memory.task === 'withdraw' && !filledContainers)) });
     for (let i in iCreeps) {

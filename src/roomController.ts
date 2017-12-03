@@ -206,10 +206,11 @@ function roomController(room: Room) {
     AssignTask('withdraw', iCreep, 'upgrade');
 
     //Assign Withdraw Task
-    let wCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity});
+    let wCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity});
     for(let i in wCreeps){
         wCreeps[i].memory.task = wCreeps[i].memory.taskQ;
         delete wCreeps[i].memory.taskQ;
+        delete wCreeps[i].memory.target;
     }
 
     //Assign Idle Task
