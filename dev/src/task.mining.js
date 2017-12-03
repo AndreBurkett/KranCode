@@ -4,7 +4,7 @@ var taskMine = {
         var target;
         target = Game.getObjectById(creep.memory.target);
         if (!creep.memory.taskQ) {
-            if (creep.pos.findInRange(STRUCTURE_CONTAINER, 3).length > 0)
+            if (creep.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType == STRUCTURE_CONTAINER }).length > 0)
                 creep.memory.taskQ = 'deposit';
             else
                 creep.memory.taskQ = 'build';
