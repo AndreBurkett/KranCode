@@ -28,11 +28,15 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
             for(let i=0; i<numParts; i++){
                 body.push(WORK);
             }
-            if(specialty = 'miner')
-                return this.spawnCreep(body, creepName.getName('m'), {memory: {role: role, specialty: specialty, task: 'idle'}})
-
+            switch(specialty){
+                case 'miner':
+                    return this.spawnCreep(body, creepName.getName('m'), {memory: {role: role, specialty: specialty, task: 'idle'}});
+                    break;
+                case 'upgrader':
+                    return this.spawnCreep(body, creepName.getName('u'), {memory: {role: role, specialty: specialty, task: 'idle'}});
+                    break;
+            }
             break;
-
     }
 }
 

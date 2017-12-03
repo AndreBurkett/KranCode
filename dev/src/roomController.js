@@ -71,12 +71,17 @@ function roomController(room) {
     let maxMiners = 2 * sourceLen;
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' }).length;
     let deliveryCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'deliveryWorker' }).length;
+    let upgradeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' }).length;
     if (mineCreeps < maxMiners) {
         spawnRole = 'statWorker';
         spawnSpecialty = 'miner';
     }
-    else if (deliveryCreeps < 2) {
+    else if (deliveryCreeps < 3) {
         spawnRole = 'deliveryWorker';
+    }
+    else if (ugradeCreeps < 1) {
+        spawnRole = 'statWorker';
+        spawnSpecialty = 'upgrader';
     }
     for (let i in spawns) {
         spawns[i].sCreep(spawnRole, spawnSpecialty);
