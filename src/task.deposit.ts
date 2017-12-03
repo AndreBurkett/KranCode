@@ -15,14 +15,11 @@ var taskDeposit = {
             //else
                 //creep.memory.task = 'idle';
         }
+        if(!creep.memory.taskQ && creep.memory.specialty === 'miner')
+            creep.memory.taskQ = 'mine';
         if (target) {
             if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                //if(!creep.memory.path)
-                //    creep.memory.path = PathFinder.search(creep.pos, target.pos, {maxCost: 10})
-                //if(creep.memory.path && !creep.memory.path.incomplete){
-                        creep.moveTo(target);
-                    //}
-                //}
+                creep.moveTo(target);
             }
             else
                 delete creep.memory.target;

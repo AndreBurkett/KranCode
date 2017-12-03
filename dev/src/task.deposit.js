@@ -14,6 +14,8 @@ var taskDeposit = {
             if (target)
                 creep.memory.target = target.id;
         }
+        if (!creep.memory.taskQ && creep.memory.specialty === 'miner')
+            creep.memory.taskQ = 'mine';
         if (target) {
             if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(target);
