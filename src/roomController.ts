@@ -215,7 +215,7 @@ function roomController(room: Room) {
 
     //Assign Idle Task
     let iCreeps = room.find(FIND_MY_CREEPS,
-        {filter: (c: Creep) => c.carry[RESOURCE_ENERGY] === 0 && (c.memory.task === 'build' || c.memory.task === 'deposit' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'transport' || c.memory.task === 'upgrade' || (c.memory.task === 'withdraw' && !filledContainers))});
+        {filter: (c: Creep) => c.carry[RESOURCE_ENERGY] === 0 && (c.memory.task === 'build' || c.memory.task === 'deposit' || c.memory.task === 'harvest' || c.memory.task === 'repair' || c.memory.task === 'towerFill' || c.memory.task === 'transport' || c.memory.task === 'upgrade' || (c.memory.task === 'withdraw' && !filledContainers))});
     //console.log(room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.carry[RESOURCE_ENERGY] === 0 && c.memory.task === 'withdraw' && !filledContainers}));
     //console.log(iCreeps);
     for(let i in iCreeps){
