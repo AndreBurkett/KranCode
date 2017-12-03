@@ -88,19 +88,31 @@ function roomController(room: Room) {
     let mineCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner'}).length;
     let deliveryCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'deliveryWorker'}).length;
     let upgradeCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader'}).length;
+    let roomCreeps = room.find(FIND_MY_CREEPS).length;
     if(mineCreeps < maxMiners){
         spawnRole = 'statWorker';
         spawnSpecialty = 'miner';
+        for(let i in spawns){
+            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
     }
     else if(deliveryCreeps < 3){
         spawnRole = 'deliveryWorker';
+        for(let i in spawns){
+            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
     }
     else if(ugradeCreeps < 1){
         spawnRole = 'statWorker';
         spawnSpecialty = 'upgrader';
+        for(let i in spawns){
+            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
     }
-    for(let i in spawns){
-        spawns[i].sCreep(spawnRole, spawnSpecialty);
+    else if(roomCreeps < 35){
+        for(let i in spawns){
+            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
     }
 
 
@@ -137,7 +149,6 @@ function roomController(room: Room) {
         }
         return minSource;
     }
-
 
     //Assign Deposit Task
     let dCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
