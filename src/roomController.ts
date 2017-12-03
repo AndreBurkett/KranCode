@@ -100,6 +100,13 @@ function roomController(room: Room) {
     let specMiners = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine'})
     for(let i in specMiners){
         specMiners[i].memory.task = 'mine';
+        let minSource = 0;
+        let minWorkers = 99;
+        for(let s in sources){
+            if(minWorkers > sources[s].workers)
+                minSource = s;
+        }
+        specMiners[i].memory.target = sources[minSource].id;
     }
     let allCreeps = room.find(FIND_MY_CREEPS).length;
     let mCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'mine'}).length;
