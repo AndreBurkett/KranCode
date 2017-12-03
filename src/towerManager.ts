@@ -5,7 +5,7 @@ export class towerManager {
         console.log('tm constructed');
     }
 
-    public function run(t: StructureTower){
+    public run(t: StructureTower){
         console.log('towerManager');
     }
 }

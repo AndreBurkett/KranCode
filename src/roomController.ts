@@ -1,21 +1,21 @@
 require('./prototype.creep');
-import('./towerManager');
+import {towerManager} from ('./towerManager');
 
 function roomController(room: Room) {
     let sourceLen = room.sources.length;
-    let sources = room.find(FIND_SOURCES);
+    let sources = room.find<Source>(FIND_SOURCES);
     let containers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
     let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50});
     let numContainers = containers.length || 0;
     let maxWorkers = 0
     if (room.controller)
     var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
-    let spawns = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
+    let spawns = room.find<StructureSpawn>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
     let towers = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER})
     //let mCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
 
-    //var test = new towerManager(towers[0]);
+    var test = new towerManager(towers[0]);
 
 
     for (let s in sources) {
@@ -27,7 +27,7 @@ function roomController(room: Room) {
     }
 
 
-    let rSpawn = room.find(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
+    let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
     for(let i in rSpawn){
         //Create Road Blueprints around room spawns
         room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
