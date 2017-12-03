@@ -1,3 +1,5 @@
+var creepName = require('./util.nameBuilder');
+
 interface StructureSpawn{
     sCreep(role:String, specialty:String): void;
 }
