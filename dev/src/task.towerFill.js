@@ -11,15 +11,15 @@ var towerFill = {
         }
         if (!target)
             c.memory.task = 'transport';
-        switch (creep.withdraw(target, RESOURCE_ENERGY)) {
+        switch (c.withdraw(target, RESOURCE_ENERGY)) {
             case ERR_NOT_IN_RANGE:
-                creep.moveTo(target);
+                c.moveTo(target);
                 break;
             case ERR_FULL:
-                delete creep.memory.target;
+                delete c.memory.target;
                 break;
             case ERR_INVALID_TARGET:
-                delete creep.memory.target;
+                delete c.memory.target;
                 break;
         }
     }
