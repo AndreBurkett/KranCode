@@ -17,7 +17,7 @@ function roomController(room: Room) {
 
     //var test = new towerManager(towers[0]);
     for (let i in towers){
-        tm[i] = new towerManager(towers[i]);
+        tm[i] = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER}).map(t => new towerManager(t))
     }
 
     for (let s in sources) {

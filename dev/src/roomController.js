@@ -15,7 +15,7 @@ function roomController(room) {
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
     for (let i in towers) {
-        tm[i] = new module_1.towerManager(towers[i]);
+        tm[i] = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER }).map(t => new module_1.towerManager(t));
     }
     for (let s in sources) {
         sources[s].memory.get;
