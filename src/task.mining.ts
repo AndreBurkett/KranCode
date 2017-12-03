@@ -1,10 +1,6 @@
-var taskMining = {
+var taskMine = {
     run: function(creep: Creep) {
         var target;
-        /*if(creep.carry.energy === creep.carryCapacity) {
-            creep.memory.task = 'deposit';
-            //Memory.sources[Game.getObjectById(creep.memory.target).name] --;
-        }*/
         target = Game.getObjectById(creep.memory.target);
         if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
@@ -12,4 +8,4 @@ var taskMining = {
     }
 }
 
-module.exports = taskMining;
+module.exports = taskMine;

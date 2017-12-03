@@ -1,5 +1,5 @@
 "use strict";
-var taskMining = {
+var taskMine = {
     run: function (creep) {
         var target;
         target = Game.getObjectById(creep.memory.target);
@@ -8,5 +8,5 @@ var taskMining = {
         }
     }
 };
-module.exports = taskMining;
+module.exports = taskMine;
 //# sourceMappingURL=task.mining.js.map

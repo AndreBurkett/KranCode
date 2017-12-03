@@ -76,12 +76,15 @@ function roomController(room) {
     for (let i in spawns) {
         spawns[i].sCreep(spawnRole, spawnSpecialty);
     }
+    let specMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine' });
+    for (let i in specMiners) {
+        specMiners[i].memory.task = 'mine';
+    }
     let allCreeps = room.find(FIND_MY_CREEPS).length;
     let mCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'mine' }).length;
     let mdCreeps = room.find(FIND_MY_CREEPS, {
         filter: (c) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')
     }).length;
-    console.log(mdCreeps);
     if (mdCreeps < (2 * sourceLen)) {
         for (let s = 0; s < sourceLen; s++) {
             let num = Math.min(sources[s].freeSpaceCount - sources[s].workers, 2);

@@ -97,11 +97,15 @@ function roomController(room: Room) {
     ////////////////////////////////// Task Priority ////////////////////////////////////////////
 
     //Assign Mine Task
+    let specMiners = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine'})
+    for(let i in specMiners){
+        specMiners[i].memory.task = 'mine';
+    }
     let allCreeps = room.find(FIND_MY_CREEPS).length;
     let mCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'mine'}).length;
     let mdCreeps: number = room.find(FIND_MY_CREEPS, {
         filter: (c: Creep) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')}).length;
-    console.log(mdCreeps);
+    //console.log(mdCreeps);
     if (mdCreeps < (2 * sourceLen)) {
         for (let s = 0; s < sourceLen; s++) {
             let num: number = Math.min(sources[s].freeSpaceCount - sources[s].workers, 2);
