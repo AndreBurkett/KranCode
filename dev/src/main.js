@@ -14,7 +14,6 @@ var taskRepair = require('./task.repair');
 var taskTransport = require('./task.transport');
 var taskUpgrade = require('./task.upgrade');
 var taskWithdraw = require('./task.withdraw');
-var creepName = require('./util.nameBuilder');
 var roomController = require('./roomController');
 module.exports.loop = function () {
     if (!Memory.paths)
@@ -25,12 +24,6 @@ module.exports.loop = function () {
         if (!Game.creeps[name]) {
             delete Memory.creeps[name];
         }
-    }
-    for (let spawnName in Game.spawns) {
-        let spawn = Game.spawns[spawnName];
-        if (spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], { dryRun: true }) && spawn.spawnEnabled)
-            ;
-        spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], creepName.getName('c'), { memory: { task: 'idle' } });
     }
     Memory.rooms = Game.rooms;
     for (var roomName in Game.rooms) {

@@ -1,4 +1,5 @@
 "use strict";
+var creepName = require('./util.nameBuilder');
 StructureSpawn.prototype.sCreep = function (role, specialty) {
     var body = [];
     var energyCap = this.room.energyCapacityAvailable;
