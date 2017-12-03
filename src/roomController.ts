@@ -171,9 +171,9 @@ function roomController(room: Room) {
     //Assign Tower Fill Task
     let emptyTowers = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER && s.energy < s.energyCapacity}).length
     if(emptyTowers > 0){
-        let tfCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.target === 'towers'}).length;
+        let tfCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'towerFill' || c.memory.taskQ === 'towerFill'}).length;
         if(tfCreeps < 1)
-            AssignTask('withdraw', 1, 'transport', 'towers')
+            AssignTask('withdraw', 1, 'towerFill')
     }
 
 

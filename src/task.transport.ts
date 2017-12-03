@@ -2,7 +2,7 @@ var taskTransport = {
     run: function(creep) {
         let target;
         let ctrl = creep.room.controller;
-        if(creep.memory.target && creep.memory.target === 'towers'){
+        if(creep.memory.target && creep.memory.transportTarget === 'towers'){
             target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER && s.energy < s.energyCapacity});
         }
         else
