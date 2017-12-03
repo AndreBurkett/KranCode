@@ -104,20 +104,20 @@ function roomController(room: Room) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if(deliveryCreeps < 4){
+    else if(deliveryCreeps < 5){
         spawnRole = 'deliveryWorker';
         for(let i in spawns){
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if(upgradeCreeps < 2){
+    else if(upgradeCreeps < 3){
         spawnRole = 'statWorker';
         spawnSpecialty = 'upgrader';
         for(let i in spawns){
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if(roomCreeps < 30){
+    else if(roomCreeps < 25){
         for(let i in spawns){
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
