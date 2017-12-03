@@ -5,7 +5,10 @@ interface StructureSpawn{
 }
 StructureSpawn.prototype.sCreep = function(role, specialty?){
     var body = [];
-    var energyCap = this.room.energyCapacityAvailable
+    if(this.room.find(FIND_MY_CREEPS).length > 0)
+        var energyCap:number = this.room.energyCapacityAvailable
+    else
+        var energyCap:number = 300;
     var numParts: number;
     switch (role){
         case 'deliveryWorker':
