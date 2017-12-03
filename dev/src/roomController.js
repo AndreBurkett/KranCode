@@ -113,9 +113,10 @@ function roomController(room) {
     }
     let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('deposit', dCreeps);
-    let uCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'upgrade' || c.memory.taskQ === 'upgrade' }).length;
-    if (uCreeps < 1) {
-        AssignTask('withdraw', 1, 'upgrade');
+    let specUpgraders = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'upgrade' });
+    for (let i in specUpgraders) {
+        specUpgraders[i].memory.task = 'upgrade';
+        delete specUpgraders[i].memory.taskQ;
     }
     let harvCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('harvest', harvCreeps);
