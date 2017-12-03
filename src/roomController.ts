@@ -79,6 +79,20 @@ function roomController(room: Room) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x,Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
     }
 
+    ////////////////////////////////// Request New Creeps ///////////////////////////////////////
+
+    var spawnRole  = 'genWorker';
+    var spawnSpecialty;
+    let maxMiners = 2 * sourceLen;
+    let mineCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'miner'}).length;
+    if(mineCreeps < maxMiners){
+        spawnRole = 'statWorker';
+        spawnSpecialty = 'miner';
+    }
+    for(let i in spawns){
+        spawns[i].sCreep(spawnRole, spawnSpecialty);
+    }
+
 
     ////////////////////////////////// Task Priority ////////////////////////////////////////////
 
@@ -88,7 +102,7 @@ function roomController(room: Room) {
     let mdCreeps: number = room.find(FIND_MY_CREEPS, {
         filter: (c: Creep) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')}).length;
     console.log(mdCreeps);
-    if (mdCreeps < (2 * sourceLen)-1) {
+    if (mdCreeps < (2 * sourceLen)) {
         for (let s = 0; s < sourceLen; s++) {
             let num: number = Math.min(sources[s].freeSpaceCount - sources[s].workers, 2);
             if (containers && allCreeps && allCreeps > mCreeps + 1)

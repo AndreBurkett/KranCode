@@ -1,23 +1,39 @@
+interface StructureSpawn{
+    sCreep(role:String, specialty:String): void;
+}
+StructureSpawn.prototype.sCreep = function(role, specialty?){
+    var body = [];
+    var energyCap = this.room.energyCapacityAvailable
+    var numParts: number;
+    switch (role){
+        case 'statWorker':
+            body.push(MOVE,CARRY);
+            energyCap = energyCap - 150;
+            numParts = Math.floor(energyCap/100);
+            for(let i=0; i<numParts; i++){
+                body.push(WORK);
+            }
+            if(specialty = 'miner')
+                return this.spawnCreep(body, creepName.getName('m'), {role: role, specialty: specialty, task: 'idle'})
+
+            break;
+        case 'genWorker':
+            body.push(WORK,CARRY,MOVE);
+            return this.spawnCreep(body, creepName.getName('g'), {task: 'idle'});
+            break;
+    }
+}
+
+
 Object.defineProperty(StructureSpawn.prototype, 'spawnEnabled', {
     configurable: true,
     get: function() {
-        //console.log('get spawnEnabled');
         if(_.isUndefined(this.memory.spawnEnabled)) {
             this.memory.spawnEnabled = true;
         }
-        /*if(!_.isObject(this.spawnEnabled)) {
-            console.log('wtf');
-            return undefined;
-        }*/
-        return this.memory.spawnEnabled;// = this.memory.spawnEnabled;// || {};
+        return this.memory.spawnEnabled;
     },
     set: function(value) {
-        /*if(_.isUndefined(Memory.mySpawnMemory)) {
-            Memory.mySpawnMemory = {};
-        }
-        if(!_.isObject(Memory.mySpawnMemory)) {
-            throw new Error('Could not set source memory');
-        }*/
         this.memory.spawnEnabled = value;
     }
 });
