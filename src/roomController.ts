@@ -195,7 +195,7 @@ function roomController(room: Room) {
     //Assign Task Functions
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
         let creep;
-        if(task === ('mine' || 'build' || 'repair' || 'upgrade') || taskQ === ('mine' || 'build' || 'repair' || 'upgrade'))
+        if(_.contains(['build','mine','repair','upgrade'], task) || _.contains(['build','mine','repair','upgrade'], taskQ))
             creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
         else
             creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
