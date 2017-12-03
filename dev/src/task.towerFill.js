@@ -4,8 +4,10 @@ var towerFill = {
         let target;
         if (!c.memory.target) {
             target = c.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER && s.energy < s.energyCapacity });
-            if (!target)
+            if (!target) {
+                console.log('wtf');
                 c.memory.task = 'transport';
+            }
             else
                 c.memory.target = target.id;
         }
