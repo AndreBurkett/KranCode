@@ -194,12 +194,16 @@ function roomController(room: Room) {
     //console.log(room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.carry[RESOURCE_ENERGY] === 0 && c.memory.task === 'withdraw' && !filledContainers}));
     //console.log(iCreeps);
     for(let i in iCreeps){
-        if(iCreeps[i].memory.taskQ)
-            iCreeps[i].memory.task = iCreeps[i].memory.taskQ;
-        else
-            iCreeps[i].setTask('idle');
-        delete iCreeps[i].memory.target;
-        delete iCreeps[i].memory.taskQ;
+        if (iCreeps[i].ticksToLive < 25)
+            iCreeps[i].suicide();
+        else {
+            if (iCreeps[i].memory.taskQ)
+                iCreeps[i].memory.task = iCreeps[i].memory.taskQ;
+            else
+                iCreeps[i].setTask('idle');
+            delete iCreeps[i].memory.target;
+            delete iCreeps[i].memory.taskQ;
+        }
     }
 
 
