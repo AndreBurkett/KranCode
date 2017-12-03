@@ -3,13 +3,14 @@ var towerFill = {
         let target;
         if(!c.memory.target){
             target = c.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER && s.energy < s.energyCapacity});
-            c.memory.target = target.id;
+            if(!target)
+                c.memory.task = 'transport';
+            else
+                c.memory.target = target.id;
         }
         else {
             target = Game.getObjectById(c.memory.target);
         }
-        if(!target)
-            c.memory.task = 'transport';
 
         switch (c.transfer(target, RESOURCE_ENERGY)){
             case ERR_NOT_IN_RANGE:
