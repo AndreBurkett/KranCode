@@ -15,8 +15,14 @@ var taskWithdraw = {
             if(target)
             creep.memory.target = target.id;
         }
-        if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(target);
+
+        switch (creep.withdraw(target, RESOURCE_ENERGY)){
+            case ERR_NOT_IN_RANGE:
+                creep.moveTo(target);
+                break;
+            case ERR_NOT_ENOUGH_RESOURCES:
+                delete creep.memory.target;
+                break;
         }
     }
 }
