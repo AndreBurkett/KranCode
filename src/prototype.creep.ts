@@ -7,6 +7,7 @@ interface Creep {
 interface CreepMemory{
     task: String;
     taskQ: String;
+    role: string;
     specialty: String;
     target: string;
 

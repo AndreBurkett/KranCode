@@ -5,6 +5,16 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
     var energyCap = this.room.energyCapacityAvailable;
     var numParts;
     switch (role) {
+        case 'deliveryWorker':
+            numParts = Math.floor(energyCap / 100);
+            for (let i = 0; i < numParts; i++)
+                body.push(CARRY, MOVE);
+            return this.spawnCreep(body, creepName.getName('d'), { memory: { role: role, task: 'idle' } });
+            break;
+        case 'genWorker':
+            body.push(WORK, CARRY, MOVE);
+            return this.spawnCreep(body, creepName.getName('g'), { memory: { task: 'idle' } });
+            break;
         case 'statWorker':
             body.push(MOVE, CARRY);
             energyCap = energyCap - 150;
@@ -13,11 +23,7 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
                 body.push(WORK);
             }
             if (specialty = 'miner')
-                return this.spawnCreep(body, creepName.getName('m'), { role: role, specialty: specialty, task: 'idle' });
-            break;
-        case 'genWorker':
-            body.push(WORK, CARRY, MOVE);
-            return this.spawnCreep(body, creepName.getName('g'), { task: 'idle' });
+                return this.spawnCreep(body, creepName.getName('m'), { memory: { role: role, specialty: specialty, task: 'idle' } });
             break;
     }
 };
