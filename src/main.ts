@@ -70,6 +70,7 @@ module.exports.loop = function()
                 break;
             case 'towerFill':
                 towerFill.run(Game.creeps[name]);
+                break;
             case 'transport':
                 taskTransport.run(Game.creeps[name]);
                 break;
