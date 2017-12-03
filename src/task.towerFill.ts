@@ -11,7 +11,7 @@ var towerFill = {
         if(!target)
             c.memory.task = 'transport';
 
-        switch (c.withdraw(target, RESOURCE_ENERGY)){
+        switch (c.transfer(target, RESOURCE_ENERGY)){
             case ERR_NOT_IN_RANGE:
                 c.moveTo(target);
                 break;
