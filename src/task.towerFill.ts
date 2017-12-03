@@ -1,6 +1,6 @@
 var towerFill = {
     run: function(c: Creep) {
-        var target = c.pos.findClosestByRange<StructureTower>(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER && s.energy < s.energyCapacity});
+        var target = c.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_TOWER && s.energy < s.energyCapacity});
         if(!target){
             console.log('wtf');
             c.memory.task = 'transport';
