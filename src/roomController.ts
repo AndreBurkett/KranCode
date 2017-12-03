@@ -1,4 +1,5 @@
 require('./prototype.creep');
+import('./towerManager');
 
 function roomController(room: Room) {
     let sourceLen = room.sources.length;
@@ -13,6 +14,9 @@ function roomController(room: Room) {
     let towers = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER})
     //let mCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'mine' });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'build' });
+
+    var test = new towerManager(towers[0]);
+
 
     for (let s in sources) {
         sources[s].memory.get;
