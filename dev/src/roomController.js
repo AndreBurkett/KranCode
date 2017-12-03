@@ -1,7 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 require('./prototype.creep');
-const module_1 = require();
+var towerManager = require('./towerManager');
 function roomController(room) {
     let sourceLen = room.sources.length;
     let sources = room.find(FIND_SOURCES);
@@ -15,7 +14,7 @@ function roomController(room) {
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
     for (let i in towers) {
-        tm[i] = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER }).map(t => new module_1.towerManager(t));
+        towerManager.run(towers[i]);
     }
     for (let s in sources) {
         sources[s].memory.get;

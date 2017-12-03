@@ -1,5 +1,7 @@
 require('./prototype.creep');
-import {towerManager} from ('./towerManager');
+//import {towerManager} from ('./towerManager');
+
+var towerManager = require('./towerManager');
 
 function roomController(room: Room) {
     let sourceLen = room.sources.length;
@@ -17,7 +19,7 @@ function roomController(room: Room) {
 
     //var test = new towerManager(towers[0]);
     for (let i in towers){
-        tm[i] = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType  === STRUCTURE_TOWER}).map(t => new towerManager(t))
+        towerManager.run(towers[i]);
     }
 
     for (let s in sources) {

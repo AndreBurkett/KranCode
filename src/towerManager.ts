@@ -1,4 +1,4 @@
-export class towerManager {
+/*export class towerManager {
     public t: StructureTower;
 
     public constructor(t:StructureTower){
@@ -8,4 +8,12 @@ export class towerManager {
     public run(t: StructureTower){
         console.log('towerManager');
     }
+}
+*/
+
+run: function(t: StructureTower){
+    console.log('tm run');
+    let hostile = t.pos.findClosestByRange<Creep>(FIND_HOSTILE_CREEPS)
+    if(hostile)
+        t.attack(hostile);
 }
