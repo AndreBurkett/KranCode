@@ -12,7 +12,7 @@ Room.prototype.getRoomEnergy = function () {
 Room.prototype.getMineEnergy = function () {
     let energy = 0;
     if (!this.memory.sourceContainers || this.memory.sourceContainers.length == 0) {
-        console.log('test');
+        console.log(this.memory.sourceIds.length);
         var mineContainers = [];
         var source = [];
         let cont = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
