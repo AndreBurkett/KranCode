@@ -13,7 +13,7 @@ var combatMelee = {
         switch (c.attack(target)){
             case ERR_NOT_IN_RANGE:
                 if(target.pos.x > 9 && target.pos.x < 41 && target.pos.y > 9 && target.pos.y < 41){
-                    c.moveTo(target, {reusePath: 3});
+                    c.moveTo(target, {reusePath: 1});
                 }
                 else
                     delete c.memory.target;
