@@ -1,26 +1,29 @@
 "use strict";
 var taskWithdraw = {
-    run: function (creep) {
+    run: function (c) {
         let target;
-        if (creep.memory.target) {
-            target = Game.getObjectById(creep.memory.target);
+        if (c.memory.target) {
+            target = Game.getObjectById(c.memory.target);
         }
-        else if (creep.memory.taskQ && creep.memory.taskQ == 'upgrade' && creep.room.controller) {
-            target = creep.room.controller.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] >= creep.carryCapacity });
+        else if (c.memory.taskQ && c.memory.taskQ == 'upgrade' && c.room.controller) {
+            target = c.room.controller.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] >= c.carryCapacity });
             if (target)
-                creep.memory.target = target.id;
+                c.memory.target = target.id;
         }
         else {
-            target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > creep.carryCapacity });
+            target = c.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > c.carryCapacity });
             if (target)
-                creep.memory.target = target.id;
+                c.memory.target = target.id;
         }
-        switch (creep.withdraw(target, RESOURCE_ENERGY)) {
+        switch (c.withdraw(target, RESOURCE_ENERGY)) {
             case ERR_NOT_IN_RANGE:
-                creep.moveTo(target);
+                c.moveTo(target);
+                break;
+            case ERR_INVALID_TARGET:
+                delete c.memory.target;
                 break;
             case ERR_NOT_ENOUGH_RESOURCES:
-                delete creep.memory.target;
+                delete c.memory.target;
                 break;
         }
     }
