@@ -2,7 +2,7 @@
 var creepName = require('./util.nameBuilder');
 StructureSpawn.prototype.sCreep = function (role, specialty) {
     var body = [];
-    if (this.room.find(FIND_MY_CREEPS).length > 0)
+    if (this.room.find(FIND_MY_CREEPS).length > 0 && this.room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER }).length > 0)
         var energyCap = this.room.energyCapacityAvailable;
     else
         var energyCap = 300;
