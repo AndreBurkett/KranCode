@@ -160,7 +160,7 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (roomCreeps < 20) {
+        else if (roomCreeps < 10) {
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
             }
