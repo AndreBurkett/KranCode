@@ -2,6 +2,9 @@ var taskMine = {
     run: function(creep: Creep) {
         var target;
         target = Game.getObjectById(creep.memory.target);
+        if(!target)
+            console.log(creep);
+            //target = creep.pos.findClosestByRange(FIND_SOURCES);
         if (!creep.memory.taskQ) {
             if (creep.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s: Structure) => s.structureType == STRUCTURE_CONTAINER}).length > 0)
                 creep.memory.taskQ = 'deposit';
