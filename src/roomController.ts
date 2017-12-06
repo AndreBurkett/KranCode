@@ -107,7 +107,7 @@ function roomController(room: Room) {
     else if(deliveryCreeps < 6){
         spawnRole = 'deliveryWorker';
         for(let i in spawns){
-            spawns[i].sCreep(spawnRole, spawnSpecialty);
+            spawns[i].sCreep(spawnRole);
         }
     }
     else if(upgradeCreeps < 3){
@@ -119,7 +119,7 @@ function roomController(room: Room) {
     }
     else if(roomCreeps < 20){
         for(let i in spawns){
-            spawns[i].sCreep(spawnRole, spawnSpecialty);
+            spawns[i].sCreep(spawnRole);
         }
     }
 
@@ -131,7 +131,10 @@ function roomController(room: Room) {
     for(let i in specMiners){
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;
-        delete specMiners[i].memory.taskQ;
+        if(containers)
+            delete specMiners[i].memory.taskQ;
+        else
+            specMiners[i].memory.taskQ = 'build';
     }
 
     //let allCreeps = room.find(FIND_MY_CREEPS).length;

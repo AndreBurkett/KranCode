@@ -9,7 +9,7 @@ require('./prototype.creep');
 var taskBuild = require('./task.build');
 var taskDeposit = require('./task.deposit');
 var taskHarvest = require('./task.harvest');
-var taskMine = require('./task.mining');
+var taskMine = require('./task.mine');
 var taskRepair = require('./task.repair');
 var towerFill = require('./task.towerFill');
 var taskTransport = require('./task.transport');
