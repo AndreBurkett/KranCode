@@ -288,10 +288,12 @@ function roomController(room: Room) {
         let creep;
         if(_.contains(['build','mine','repair','upgrade'], task) || _.contains(['build','mine','repair','upgrade'], taskQ))
             creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
-        else
+        else{
             creep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
+            console.log(creep);
+        }
         let num = Math.min(maxAssign, creep.length);
-        console.log(creep);
+
         for(let i=0; i < num; i++){
             creep[i].setTask(task);
             if(taskQ)
