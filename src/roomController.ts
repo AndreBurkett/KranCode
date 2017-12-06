@@ -53,7 +53,7 @@ function roomController(room: Room) {
     }
 
     //Get Spawn to Source Containers Paths
-    if(!Memory.paths.sourceC || Memory.paths.sourceC.length < numContainers) {
+    if(!Memory.paths.sourceC || !Memory.paths.sourceC.path || Memory.paths.sourceC.path.length < numContainers) {
         let pathNum = 0;
         for(let i in containers){
             for(let j in spawns){
@@ -165,7 +165,6 @@ function roomController(room: Room) {
 
     //Assign Mine Task
     let specMiners = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine'})
-    console.log(containers);
     for(let i in specMiners){
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;

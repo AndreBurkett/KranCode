@@ -39,7 +39,7 @@ function roomController(room) {
     else if (room.controller) {
         room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
-    if (!Memory.paths.sourceC || Memory.paths.sourceC.length < numContainers) {
+    if (!Memory.paths.sourceC || !Memory.paths.sourceC.path || Memory.paths.sourceC.path.length < numContainers) {
         let pathNum = 0;
         for (let i in containers) {
             for (let j in spawns) {
@@ -141,7 +141,6 @@ function roomController(room) {
         }
     }
     let specMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine' });
-    console.log(containers);
     for (let i in specMiners) {
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;

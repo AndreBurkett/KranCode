@@ -31,8 +31,8 @@ Room.prototype.getMineEnergy = function(){
         var mineContainers = [];
         var source = [];
         let cont = this.find(FIND_STRUCTURES, {filter: (s: StructureContainer) => s.structureType === STRUCTURE_CONTAINER});
-        for(let i in this.memory.sources){
-            source[i] = Game.getObjectById(this.memory.sources[i]);
+        for(let i in Memory.sources){
+            source[i] = Game.getObjectById(this.memory.sourceIds[i]);
             for(let j in cont){
                 if(source[i].pos.inRangeTo(cont[j], 2)){
                     mineContainers.push(Cont[j]);
