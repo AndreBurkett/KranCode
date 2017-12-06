@@ -6,6 +6,7 @@ require('./prototype.spawn');
 require('./prototype.container');
 require('./prototype.controller');
 require('./prototype.creep');
+var combatMelee = require('./combat.melee');
 var taskBuild = require('./task.build');
 var taskDeposit = require('./task.deposit');
 var taskHarvest = require('./task.harvest');
@@ -34,6 +35,9 @@ module.exports.loop = function () {
         switch (Game.creeps[name].memory.task) {
             case 'build':
                 taskBuild.run(Game.creeps[name]);
+                break;
+            case 'combatMelee':
+                combatMelee.run(Game.creeps[name]);
                 break;
             case 'deposit':
                 taskDeposit.run(Game.creeps[name]);

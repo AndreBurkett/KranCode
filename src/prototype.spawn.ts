@@ -51,6 +51,10 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
                     break;
             }
             break;
+        case 'pikeman':
+            body.push(Move,ATTACK,MOVE,ATTACK)
+            return this.spawnCreep(body, creepName.getName('Ap'), {memory: {role: 'pikeman', task: 'combatMelee'}});
+            break;
     }
 }
 
