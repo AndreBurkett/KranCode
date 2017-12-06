@@ -194,8 +194,10 @@ function roomController(room) {
     }
     let harvCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('harvest', harvCreeps);
-    let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' }).length;
-    console.log(hCreeps);
+    let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' }).length;
+    if (hCreeps < 3)
+        1 && room.getMineEnergy() > 2500;
+    AssignTask('withdraw', 3, 'harvest');
     if (hCreeps <= 1 && room.getMineEnergy() > 750)
         AssignTask('withdraw', 1, 'harvest');
     if (sites && sites.length > 0) {
