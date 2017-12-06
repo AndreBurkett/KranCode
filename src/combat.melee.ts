@@ -10,7 +10,7 @@ var combatMelee = {
             }
         }
 
-        if(target.pos.x > 9 || target.pos.x < 41){
+        /*if(target.pos.x > 9 || target.pos.x < 41){
             if(target.pos.y > 9 || target.pos.y < 41){
                 switch (c.attack(target)){
                     case ERR_NOT_IN_RANGE:
@@ -21,7 +21,7 @@ var combatMelee = {
                         break;
                 }
             }
-        }
+        }*/
     }
 }
 

@@ -9,18 +9,6 @@ var combatMelee = {
             if (!target) {
             }
         }
-        if (target.pos.x > 9 || target.pos.x < 41) {
-            if (target.pos.y > 9 || target.pos.y < 41) {
-                switch (c.attack(target)) {
-                    case ERR_NOT_IN_RANGE:
-                        c.moveTo(target, { reusePath: 3 });
-                        break;
-                    case ERR_INVALID_TARGET:
-                        delete c.memory.target;
-                        break;
-                }
-            }
-        }
     }
 };
 module.exports = combatMelee;
