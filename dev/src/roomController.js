@@ -104,13 +104,13 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
         }
-        else if (deliveryCreeps < 6) {
+        else if (deliveryCreeps < 1) {
             spawnRole = 'deliveryWorker';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (upgradeCreeps < 3) {
+        else if (upgradeCreeps < 1) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
             for (let i in spawns) {
@@ -128,6 +128,19 @@ function roomController(room) {
             spawnRole = 'pikeman';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
+            }
+        }
+        else if (deliveryCreeps < 6) {
+            spawnRole = 'deliveryWorker';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole);
+            }
+        }
+        else if (upgradeCreeps < 3) {
+            spawnRole = 'statWorker';
+            spawnSpecialty = 'upgrader';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
         }
         else if (roomCreeps < 10) {

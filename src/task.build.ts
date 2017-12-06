@@ -1,34 +1,46 @@
 var taskBuild = {
-    run: function(creep: Creep) {
+    run: function(c: Creep) {
         let target
         //target = Game.getObjectById(creep.memory.buildTarget);
-        let containerPrint = creep.room.find(FIND_CONSTRUCTION_SITES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER});
+        let containerPrint = c.room.find<ConstructionSite>(FIND_CONSTRUCTION_SITES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER});
         if (containerPrint && containerPrint.length > 0){
-            target = creep.pos.findClosestByRange(containerPrint);
-            this.buildTarget(creep, target);
+            target = c.pos.findClosestByRange<ConstructionSite>(containerPrint);
+            this.buildTarget(c, target);
         }
         else{
-            let extensionPrint = creep.room.find(FIND_CONSTRUCTION_SITES, {filter: (s: Structure) => s.structureType === STRUCTURE_EXTENSION});
+            let extensionPrint = c.room.find<ConstructionSite>(FIND_CONSTRUCTION_SITES, {filter: (s: Structure) => s.structureType === STRUCTURE_EXTENSION});
             if(extensionPrint && extensionPrint.length > 0){
-                target = creep.pos.findClosestByRange(extensionPrint);
-                this.buildTarget(creep, target);
+                target = c.pos.findClosestByRange<ConstructionSite>(extensionPrint);
+                if(!this.buildTarget(c, target)){
+                    this.getClosestPrints(c);
+                }
             }
             else{
-                target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
-                this.buildTarget(creep, target);
+                this.getClosestPrints(c);
             }
         }
 
         console.log(target);
         if(!target)
-            creep.memory.task = 'idle';
+            c.memory.task = 'idle';
 
 
     },
-    buildTarget: function(creep: Creep, target) {
-        if (creep.build(target) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(target);
+    buildTarget: function(c: Creep, target: ConstructionSite) {
+        switch (c.build(target)){
+            case ERR_NOT_IN_RANGE:
+                c.moveTo(target);
+                return true;
+            case ERR_INVALID_TARGET:
+                delete c.memory.target;
+                return false;
+            case OK:
+                return true;
         }
+    },
+    getClosestPrints: function(c: Creep){
+        let target = c.pos.findClosestByRange<ConstructionSite>(FIND_CONSTRUCTION_SITES);
+        this.buildTarget(c, target);
     }
 }
 
