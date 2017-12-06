@@ -1,4 +1,11 @@
 "use strict";
+Room.prototype.getRoomEnergy = function () {
+    let energy = 0;
+    let containers = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+    for (let i in containers) {
+        energy = energy + containers[i].store[RESOURCE_ENERGY];
+    }
+};
 Room.prototype.iCreep = function () {
     return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || !c.memory.task });
 };

@@ -1,12 +1,22 @@
 interface Room {
     iCreep(): Creep;
     mCreep(): Creep;
+    getRoomEnergy(): number;
     memory: RoomMemory;
 }
-/*interface RoomMemory{
-    iCreep(): Creep;
-    mCreep(): Creep;
-}*/
+interface RoomMemory{
+    //iCreep(): Creep;
+    //mCreep(): Creep;
+}
+
+Room.prototype.getRoomEnergy = function(){
+    let energy = 0;
+    let containers: [StructureContainer] = this.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER});
+    for(let i in containers){
+        energy = energy + containers[i].store[RESOURCE_ENERGY];
+    }
+}
+
 
 Room.prototype.iCreep = function(){
     return this.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
