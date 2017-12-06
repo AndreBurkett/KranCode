@@ -9,10 +9,19 @@ function roomController(room) {
     let numContainers = containers.length || 0;
     var sourceContainerEnergy = room.getMineEnergy();
     let maxWorkers = 0;
-    if (room.controller)
-        var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
+    let hostiles = room.find(FIND_HOSTILE_CREEPS);
+    if (room.controller) {
+        var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
+        for (let i in hostiles) {
+            if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
+                if (room.controller.safeModeAvailable) {
+                    room.controller.activateSafeMode;
+                }
+            }
+        }
+    }
     for (let i in towers) {
         towerManager.run(towers[i]);
     }
