@@ -71,10 +71,12 @@ function roomController(room) {
     }
     var spawnRole = 'genWorker';
     var spawnSpecialty;
+    var sites = room.find(FIND_CONSTRUCTION_SITES);
     let maxMiners = 2 * sourceLen;
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' }).length;
     let deliveryCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'deliveryWorker' }).length;
     let upgradeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' }).length;
+    let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'mobileWorker' });
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     if (mineCreeps < maxMiners) {
         spawnRole = 'statWorker';
@@ -94,6 +96,11 @@ function roomController(room) {
         spawnSpecialty = 'upgrader';
         for (let i in spawns) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
+    }
+    else if (buildCreeps.length * 10 < sites.length) {
+        for (let i in spawns) {
+            spawns[i].sCreep(spawnRole);
         }
     }
     else if (roomCreeps < 20) {
@@ -134,16 +141,23 @@ function roomController(room) {
     let dCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'deposit' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('deposit', dCreeps);
     let specUpgraders = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'upgrade' });
-    for (let i in specUpgraders) {
-        specUpgraders[i].memory.task = 'withdraw';
-        specUpgraders[i].memory.taskQ = 'upgrade';
+    if (containers.length > 0) {
+        for (let i in specUpgraders) {
+            specUpgraders[i].memory.task = 'withdraw';
+            specUpgraders[i].memory.taskQ = 'upgrade';
+        }
+    }
+    else {
+        for (let i in specUpgraders) {
+            specUpgraders[i].memory.task = 'mine';
+            specUpgraders[i].memory.taskQ = 'build';
+        }
     }
     let harvCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('harvest', harvCreeps);
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle' }).length;
     if (hCreeps < 3 && room.energyAvailable < room.energyCapacityAvailable)
         AssignTask('withdraw', 3, 'harvest');
-    let sites = room.find(FIND_CONSTRUCTION_SITES);
     if (sites && sites.length > 0) {
         let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' || c.memory.taskQ === 'build' }).length;
         if (bCreeps < 3)

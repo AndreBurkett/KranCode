@@ -90,10 +90,12 @@ function roomController(room: Room) {
 
     var spawnRole  = 'genWorker';
     var spawnSpecialty;
+    var sites = room.find(FIND_CONSTRUCTION_SITES);
     let maxMiners = 2 * sourceLen;
     let mineCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner'}).length;
     let deliveryCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'deliveryWorker'}).length;
     let upgradeCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader'}).length;
+    let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'mobileWorker'})
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     if(mineCreeps < maxMiners){
         spawnRole = 'statWorker';
@@ -113,6 +115,11 @@ function roomController(room: Room) {
         spawnSpecialty = 'upgrader';
         for(let i in spawns){
             spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
+    }
+    else if(buildCreeps.length*10< sites.length){
+        for(let i in spawns){
+            spawns[i].sCreep(spawnRole)
         }
     }
     else if(roomCreeps < 20){
@@ -165,9 +172,17 @@ function roomController(room: Room) {
 
     //Assign Upgrade Task
     let specUpgraders = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'upgrade'})
-    for(let i in specUpgraders){
-        specUpgraders[i].memory.task = 'withdraw';
-        specUpgraders[i].memory.taskQ = 'upgrade';
+    if(containers.length > 0){
+        for(let i in specUpgraders){
+            specUpgraders[i].memory.task = 'withdraw';
+            specUpgraders[i].memory.taskQ = 'upgrade';
+        }
+    }
+    else{
+        for(let i in specUpgraders){
+            specUpgraders[i].memory.task = 'mine';
+            specUpgraders[i].memory.taskQ = 'build';
+        }
     }
 
     //Assign Harvest Task
@@ -178,7 +193,6 @@ function roomController(room: Room) {
         AssignTask('withdraw', 3, 'harvest');
 
     //Assign Build Task
-    let sites = room.find(FIND_CONSTRUCTION_SITES);
     if(sites && sites.length > 0){
         let bCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'build' || c.memory.taskQ === 'build'}).length;
         if (bCreeps < 3)
