@@ -53,7 +53,7 @@ function roomController(room: Room) {
     }
 
     //Get Spawn to Source Containers Paths
-    if(!Memory.paths.sourceC || !Memory.paths.sourceC.path || Memory.paths.sourceC.path.length < numContainers) {
+    if(!Memory.paths.sourceC || !Memory.paths.sourceC[numContainers]) {
         let pathNum = 0;
         for(let i in containers){
             for(let j in spawns){
