@@ -81,7 +81,21 @@ function roomController(room) {
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     let pikeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'pikeman' }).length;
     let disableSpawning = false;
-    if (containers.length > 0) {
+    if (harvesterCreeps < 1) {
+        spawnRole = 'mobileWorker';
+        spawnSpecialty = 'harvester';
+        for (let i in spawns) {
+            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
+    }
+    else if (mineCreeps < maxMiners) {
+        spawnRole = 'statWorker';
+        spawnSpecialty = 'miner';
+        for (let i in spawns) {
+            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        }
+    }
+    else if (containers.length > 0) {
         if (mineCreeps < maxMiners) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'miner';
@@ -124,21 +138,7 @@ function roomController(room) {
             disableSpawning = true;
     }
     else {
-        if (harvesterCreeps < 1) {
-            spawnRole = 'mobileWorker';
-            spawnSpecialty = 'harvester';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
-            }
-        }
-        else if (mineCreeps < maxMiners) {
-            spawnRole = 'statWorker';
-            spawnSpecialty = 'miner';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
-            }
-        }
-        else if (buildCreeps * 10 < sites.length) {
+        if (buildCreeps * 10 < sites.length) {
             spawnRole = 'mobileWorker';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
