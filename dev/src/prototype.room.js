@@ -27,9 +27,8 @@ Room.prototype.getMineEnergy = function () {
             energy = energy + this.memory.sourceContainers[i];
         }
         catch (e) {
-            console.log('caught mine energy error');
+            console.log(e);
             delete this.memory.sourceContainers;
-            this.getMineEnergy();
         }
     }
 };

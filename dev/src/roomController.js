@@ -73,40 +73,71 @@ function roomController(room) {
     var spawnSpecialty;
     var sites = room.find(FIND_CONSTRUCTION_SITES);
     let maxMiners = 2 * sourceLen;
+    let harvesterCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'harvester' }).length;
     let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' }).length;
     let deliveryCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'deliveryWorker' }).length;
     let upgradeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' }).length;
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'mobileWorker' });
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     console.log(room.getMineEnergy());
-    if (mineCreeps < maxMiners) {
-        spawnRole = 'statWorker';
-        spawnSpecialty = 'miner';
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole, spawnSpecialty);
+    if (containers.length > 0) {
+        if (mineCreeps < maxMiners) {
+            spawnRole = 'statWorker';
+            spawnSpecialty = 'miner';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (deliveryCreeps < 6) {
+            spawnRole = 'deliveryWorker';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole);
+            }
+        }
+        else if (upgradeCreeps < 3) {
+            spawnRole = 'statWorker';
+            spawnSpecialty = 'upgrader';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (buildCreeps.length * 10 < sites.length) {
+            spawnRole = 'mobileWorker';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole);
+            }
+        }
+        else if (roomCreeps < 20) {
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole);
+            }
         }
     }
-    else if (deliveryCreeps < 6 && containers.length > 0) {
-        spawnRole = 'deliveryWorker';
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole);
+    else {
+        if (harvesterCreeps < 1) {
+            spawnRole = 'mobileWorker';
+            spawnSpecialty = 'harvester';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
         }
-    }
-    else if (upgradeCreeps < 3 && containers.length > 0) {
-        spawnRole = 'statWorker';
-        spawnSpecialty = 'upgrader';
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole, spawnSpecialty);
+        else if (mineCreeps < maxMiners) {
+            spawnRole = 'statWorker';
+            spawnSpecialty = 'miner';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
         }
-    }
-    else if (buildCreeps.length * 10 < sites.length) {
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole);
+        else if (buildCreeps.length * 10 < sites.length) {
+            spawnRole = 'mobileWorker';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole);
+            }
         }
-    }
-    else if (roomCreeps < 20) {
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole);
+        else if (roomCreeps < 20) {
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole);
+            }
         }
     }
     let specMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine' });
