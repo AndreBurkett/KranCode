@@ -240,6 +240,7 @@ function roomController(room: Room) {
         for(let i in specBuilders){
             specBuilders[i].memory.task = 'withdraw';
             specBuilders[i].memory.taskQ = 'build'
+        }
         if (bCreeps < 3)
             AssignTask('withdraw', 3, 'build');
     }
