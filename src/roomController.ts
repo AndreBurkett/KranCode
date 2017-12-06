@@ -102,7 +102,7 @@ function roomController(room: Room) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if(deliveryCreeps < 6){
+    else if(deliveryCreeps < 6 && containers){
         spawnRole = 'deliveryWorker';
         for(let i in spawns){
             spawns[i].sCreep(spawnRole);
@@ -126,6 +126,7 @@ function roomController(room: Room) {
 
     //Assign Mine Task
     let specMiners = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine'})
+    console.log(containers);
     for(let i in specMiners){
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;
