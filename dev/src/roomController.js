@@ -162,6 +162,8 @@ function roomController(room) {
     console.log(containers.length);
     if (containers.length > 0) {
         AssignTask('mine', (maxMiners - mdCreeps), 'deposit', sources[getMinSource()].id);
+    }
+    else {
         AssignTask('mine', (maxMiners - mdCreeps), 'harvest', sources[getMinSource()].id);
     }
     function getMinSource() {
