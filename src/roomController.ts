@@ -291,6 +291,7 @@ function roomController(room: Room) {
         else
             creep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
         let num = Math.min(maxAssign, creep.length);
+        console.log(creep);
         for(let i=0; i < num; i++){
             creep[i].setTask(task);
             if(taskQ)
