@@ -13,11 +13,11 @@ var combatMelee = {
             if(target.pos.y > 6 || target.pos.y < 44){
                 switch (c.attack(target)){
                     case ERR_NOT_IN_RANGE:
-                    c.moveTo(target);
-                    break;
-                case ERR_INVALID_TARGET:
-                    delete c.memory.target;
-                    break;
+                        c.moveTo(target);
+                        break;
+                    case ERR_INVALID_TARGET:
+                        delete c.memory.target;
+                        break;
                 }
             }
         }
