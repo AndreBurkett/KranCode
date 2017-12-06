@@ -14,7 +14,7 @@ Room.prototype.getMineEnergy = function () {
     if (!this.memory.sourceContainers) {
         var mineContainers = [];
         for (let i in this.memory.sources) {
-            for (let j in getContainers()) {
+            for (let j in this.getContainers()) {
                 if (Game.getObjectById(this.memory.sources[i]).pos.inRangeTo(Game.getObjectById(this.memory.allContainers[j]), 2)) {
                     mineContainers.push(Game.getObjectById(this.memory.allContainers[j]));
                 }
