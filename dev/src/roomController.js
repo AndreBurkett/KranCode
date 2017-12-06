@@ -83,7 +83,7 @@ function roomController(room) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if (deliveryCreeps < 6 && containers) {
+    else if (deliveryCreeps < 6 && containers.length > 0) {
         spawnRole = 'deliveryWorker';
         for (let i in spawns) {
             spawns[i].sCreep(spawnRole);
