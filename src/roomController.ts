@@ -99,6 +99,7 @@ function roomController(room: Room) {
     let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'mobileWorker'}).length
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     let pikeCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'}).length;
+    let disableSpawning = false;
     if (containers.length > 0) {
         if (mineCreeps < maxMiners) {
             spawnRole = 'statWorker';
@@ -138,6 +139,8 @@ function roomController(room: Room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
+        else
+            disableSpawning = true;
     }
     else{
         if(harvesterCreeps < 1){
@@ -230,7 +233,7 @@ function roomController(room: Room) {
     let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest'}).length;
     if(hCreeps <3 && room.getMineEnergy() > 2500)
         AssignTask('withdraw', 3, 'harvest');
-    else if(hCreeps <= 1 && room.getMineEnergy() > 750)
+    else if(hCreeps <= 1 && room.getMineEnergy() > 750 || disableSpawning == false)
         AssignTask('withdraw', 1, 'harvest');
 
     //Assign Build Task

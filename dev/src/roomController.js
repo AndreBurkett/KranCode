@@ -80,6 +80,7 @@ function roomController(room) {
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'mobileWorker' }).length;
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     let pikeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'pikeman' }).length;
+    let disableSpawning = false;
     if (containers.length > 0) {
         if (mineCreeps < maxMiners) {
             spawnRole = 'statWorker';
@@ -119,6 +120,8 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
+        else
+            disableSpawning = true;
     }
     else {
         if (harvesterCreeps < 1) {
@@ -198,7 +201,7 @@ function roomController(room) {
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' }).length;
     if (hCreeps < 3 && room.getMineEnergy() > 2500)
         AssignTask('withdraw', 3, 'harvest');
-    else if (hCreeps <= 1 && room.getMineEnergy() > 750)
+    else if (hCreeps <= 1 && room.getMineEnergy() > 750 || disableSpawning == false)
         AssignTask('withdraw', 1, 'harvest');
     if (sites && sites.length > 0) {
         let specBuilders = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'builder' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'build' });
