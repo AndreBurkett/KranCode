@@ -12,7 +12,6 @@ function roomController(room) {
         var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
-    let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'build' });
     for (let i in towers) {
         towerManager.run(towers[i]);
     }
@@ -194,6 +193,15 @@ function roomController(room) {
                 creep[i].memory.taskQ = taskQ;
             if (target)
                 creep[i].memory.target = target;
+        }
+    }
+    AssignQdTask();
+    function AssignQdTask() {
+        let c = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
+        for (let i in c) {
+            c[i].memory.task = c[i].memory.taskQ;
+            delete c[i].memory.taskQ;
+            delete c[i].memory.target;
         }
     }
     function AssignQTask(task, maxAssign, taskQ, target) {
