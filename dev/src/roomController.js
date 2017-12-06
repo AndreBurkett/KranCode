@@ -149,6 +149,8 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
+        else
+            disableSpawning = true;
     }
     let specMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'mine' });
     for (let i in specMiners) {
@@ -199,6 +201,13 @@ function roomController(room) {
     let harvCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity }).length;
     AssignQTask('harvest', harvCreeps);
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' }).length;
+    let specHarvesters = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'harvester' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'withdraw' });
+    if (disableSpawning == false) {
+        for (let i in specHarvesters) {
+            specHarvesters[i].memory.task = 'withdraw';
+            specHarvesters[i].memory.taskQ = 'harvest';
+        }
+    }
     if (hCreeps < 3 && room.getMineEnergy() > 2500)
         AssignTask('withdraw', 3, 'harvest');
     else if (hCreeps <= 1 && room.getMineEnergy() > 750 || disableSpawning == false)
