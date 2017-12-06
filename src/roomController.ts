@@ -122,8 +122,9 @@ function roomController(room: Room) {
         }
         else if (buildCreeps * 10 < sites.length) {
             spawnRole = 'mobileWorker';
+            spawnSpecialty = 'builder';
             for (let i in spawns) {
-                spawns[i].sCreep(spawnRole);
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
         }
         else if (pikeCreeps < 1){
@@ -234,7 +235,11 @@ function roomController(room: Room) {
 
     //Assign Build Task
     if(sites && sites.length > 0){
+        let specBuilders = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'builder' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'build'})
         let bCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'build' || c.memory.taskQ === 'build'}).length;
+        for(let i in specBuilders){
+            specBuilders[i].memory.task = 'withdraw';
+            specBuilders[i].memory.taskQ = 'build'
         if (bCreeps < 3)
             AssignTask('withdraw', 3, 'build');
     }
