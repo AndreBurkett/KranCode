@@ -132,8 +132,9 @@ function roomController(room: Room) {
         specMiners[i].memory.target = sources[getMinSource()].id;
         if(containers)
             delete specMiners[i].memory.taskQ;
-        else
+        else{
             specMiners[i].memory.taskQ = 'build';
+        }
     }
 
     let mdCreeps: number = room.find(FIND_MY_CREEPS, {
