@@ -14,6 +14,7 @@ var taskBuild = {
                 target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
             }
         }
+        console.log(target);
         if (!target)
             creep.memory.task = 'idle';
         if (creep.build(target) == ERR_NOT_IN_RANGE) {

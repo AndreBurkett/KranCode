@@ -15,6 +15,7 @@ var taskBuild = {
             }
         }
 
+        console.log(target);
         if(!target)
             creep.memory.task = 'idle';
 
