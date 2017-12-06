@@ -185,6 +185,7 @@ function roomController(room: Room) {
     let mdCreeps: number = room.find(FIND_MY_CREEPS, {
         filter: (c: Creep) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')
     }).length;
+    console.log(containers.length);
     if (containers.length > 0) {
         AssignTask('mine', (maxMiners - mdCreeps),'deposit', sources[getMinSource()].id)
     else
@@ -226,8 +227,8 @@ function roomController(room: Room) {
     //Assign Harvest Task
     let harvCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
     AssignQTask('harvest', harvCreeps)
-    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest'}).length;
-    if(hCreeps < 2 && room.getMineEnergy() < 750)
+    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || (c.memory.task == 'withdraw' && c.memory.taskQ === 'harvest')}).length;
+    if(hCreeps <= 2 && room.getMineEnergy() < 750)
         AssignTask('withdraw', 2, 'harvest');
 
     //Assign Build Task
