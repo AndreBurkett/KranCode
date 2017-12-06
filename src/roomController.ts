@@ -265,11 +265,11 @@ function roomController(room: Room) {
                 specHarvesters[i].memory.taskQ = 'harvest';
             }
         }
+        if (hCreeps < 3 && sourceContainerEnergy > 2500)
+            AssignTask('withdraw', 3, 'harvest');
+        else if (hCreeps <= 1 && sourceContainerEnergy > 750)
+            AssignTask('withdraw', 1, 'harvest');
     }
-    if(hCreeps <3 && sourceContainerEnergy > 2500)
-        AssignTask('withdraw', 3, 'harvest');
-    else if(hCreeps <= 1 && sourceContainerEnergy > 750 || disableSpawning == false)
-        AssignTask('withdraw', 1, 'harvest');
 
     //Assign Build Task
     if(sites && sites.length > 0){
