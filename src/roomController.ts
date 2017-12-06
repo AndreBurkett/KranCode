@@ -185,14 +185,14 @@ function roomController(room: Room) {
     let mdCreeps: number = room.find(FIND_MY_CREEPS, {
         filter: (c: Creep) => (c.memory.task === 'mine' || c.memory.task === 'deposit' || c.memory.taskQ === 'deposit')
     }).length;
-    if (containers) {
+    if (containers.length > 0) {
         AssignTask('mine', (maxMiners - mdCreeps),'deposit', sources[getMinSource()].id)
     else
         AssignTask('mine', (maxMiners - mdCreeps),'harvest', sources[getMinSource()].id)
     }
 
     function getMinSource(){
-        let sources = room.find(FIND_SOURCES);
+        let sources = room.find<Source>(FIND_SOURCES);
         let minSource = 0;
         let minWorkers = 99;
         for(let s in sources){
@@ -226,9 +226,9 @@ function roomController(room: Room) {
     //Assign Harvest Task
     let harvCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
     AssignQTask('harvest', harvCreeps)
-    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' || c.memory.task === 'idle'}).length;
-    if(hCreeps < 3 && room.energyAvailable < room.energyCapacityAvailable)
-        AssignTask('withdraw', 3, 'harvest');
+    let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest'}).length;
+    if(hCreeps < 2 && room.getMineEnergy() < 750)
+        AssignTask('withdraw', 2, 'harvest');
 
     //Assign Build Task
     if(sites && sites.length > 0){
@@ -286,7 +286,7 @@ function roomController(room: Room) {
     //Assign Task Functions
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
         let creep;
-        console.log(task);
+        console.log(taskQ);
         if(_.contains(['build','mine','repair','upgrade'], task) || _.contains(['build','mine','repair','upgrade'], taskQ))
             creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
         else{
