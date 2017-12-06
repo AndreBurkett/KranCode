@@ -240,12 +240,10 @@ function roomController(room) {
     }
     function AssignTask(task, maxAssign, taskQ, target) {
         let creep;
-        console.log(task + ' ' + taskQ);
         if (_.contains(['build', 'mine', 'repair', 'upgrade'], task) || _.contains(['build', 'mine', 'repair', 'upgrade'], taskQ))
             creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task) });
         else {
             creep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || !c.memory.task });
-            console.log(creep);
         }
         let num = Math.min(maxAssign, creep.length);
         for (let i = 0; i < num; i++) {

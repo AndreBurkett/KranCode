@@ -99,7 +99,6 @@ function roomController(room: Room) {
     let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'mobileWorker'}).length
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
     let pikeCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'}).length;
-    //console.log(room.getMineEnergy());
     if (containers.length > 0) {
         if (mineCreeps < maxMiners) {
             spawnRole = 'statWorker';
@@ -289,12 +288,10 @@ function roomController(room: Room) {
     //Assign Task Functions
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
         let creep;
-        console.log(task +' ' + taskQ);
         if(_.contains(['build','mine','repair','upgrade'], task) || _.contains(['build','mine','repair','upgrade'], taskQ))
             creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
         else{
             creep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
-            console.log(creep);
         }
         let num = Math.min(maxAssign, creep.length);
 
