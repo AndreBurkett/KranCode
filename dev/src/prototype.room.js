@@ -13,10 +13,13 @@ Room.prototype.getMineEnergy = function () {
     let energy = 0;
     if (!this.memory.sourceContainers) {
         var mineContainers = [];
+        var source = [];
+        let cont = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
         for (let i in this.memory.sources) {
-            for (let j in this.getContainers()) {
-                if (Game.getObjectById(this.memory.sources[i]).pos.inRangeTo(Game.getObjectById(this.memory.allContainers[j]), 2)) {
-                    mineContainers.push(Game.getObjectById(this.memory.allContainers[j]));
+            source[i] = Game.getObjectById(this.memory.sources[i]);
+            for (let j in cont) {
+                if (source[i].pos.inRangeTo(cont[j], 2)) {
+                    mineContainers.push(Cont[j]);
                 }
             }
         }

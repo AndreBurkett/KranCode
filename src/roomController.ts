@@ -204,7 +204,7 @@ function roomController(room: Room) {
 
     //Assign Upgrade Task
     let specUpgraders = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'upgrade'})
-    if(containers.length > 0){
+    if(containers.length > 0 && ctrlContainer[0]){
         for(let i in specUpgraders){
             specUpgraders[i].memory.task = 'withdraw';
             specUpgraders[i].memory.taskQ = 'upgrade';
