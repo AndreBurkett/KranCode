@@ -7,6 +7,7 @@ function roomController(room) {
     let containers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
     let filledContainers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50 });
     let numContainers = containers.length || 0;
+    var sourceContainerEnergy = room.getMineEnergy();
     let maxWorkers = 0;
     if (room.controller)
         var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
@@ -203,7 +204,7 @@ function roomController(room) {
     let hCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest' }).length;
     let specHarvesters = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'harvester' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'withdraw' });
     if (disableSpawning == false) {
-        if (containers.length > 0) {
+        if (sourceContainerEnergy > 50) {
             for (let i in specHarvesters) {
                 specHarvesters[i].memory.task = 'withdraw';
                 specHarvesters[i].memory.taskQ = 'harvest';
@@ -216,9 +217,9 @@ function roomController(room) {
             }
         }
     }
-    if (hCreeps < 3 && room.getMineEnergy() > 2500)
+    if (hCreeps < 3 && sourceContainerEnergy > 2500)
         AssignTask('withdraw', 3, 'harvest');
-    else if (hCreeps <= 1 && room.getMineEnergy() > 750 || disableSpawning == false)
+    else if (hCreeps <= 1 && sourceContainerEnergy > 750 || disableSpawning == false)
         AssignTask('withdraw', 1, 'harvest');
     if (sites && sites.length > 0) {
         let specBuilders = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'builder' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'build' });
