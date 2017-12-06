@@ -2,11 +2,19 @@ interface Room {
     iCreep(): Creep;
     mCreep(): Creep;
     getRoomEnergy(): number;
+    getMineEnergy(): number;
+    getContainers(): StructureContainer;
     memory: RoomMemory;
 }
 interface RoomMemory{
+    sourceContainers: StructureContainer;
+    allContainers: StructureContainer;
     //iCreep(): Creep;
     //mCreep(): Creep;
+}
+
+Room.prototype.getContainers = function(){
+    return this.memory.allContainers = this.find(FIND_STRUCTURES, {filter: (s: StructureContainer) => s.structureType === STRUCTURE_CONTAINER});
 }
 
 Room.prototype.getRoomEnergy = function(){
@@ -17,6 +25,29 @@ Room.prototype.getRoomEnergy = function(){
     }
 }
 
+Room.prototype.getMineEnergy = function(){
+    let energy = 0
+    if(!this.memory.sourceContainers){
+        var mineContainers = [];
+        for(let i in this.memory.sources){
+            for(let j in getContainers()){
+                if(Game.getObjectById(this.memory.sources[i]).pos.inRangeTo(Game.getObjectById(this.memory.allContainers[j]), 2)){
+                    mineContainers.push(Game.getObjectById(this.memory.allContainers[j]));
+                }
+            }
+        }
+        this.memory.sourceContainers = mineContainers;
+    }
+    for(let i in this.memory.sourceContainers){
+        try {
+            energy = energy + this.memory.sourceContainers[i];
+        } catch (e) {
+            console.log('caught mine energy error');
+            delete this.memory.sourceContainers;
+            this.getMineEnergy();
+        }
+    }
+}
 
 Room.prototype.iCreep = function(){
     return this.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});

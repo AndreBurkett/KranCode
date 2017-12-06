@@ -1,9 +1,36 @@
 "use strict";
+Room.prototype.getContainers = function () {
+    return this.memory.allContainers = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+};
 Room.prototype.getRoomEnergy = function () {
     let energy = 0;
     let containers = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
     for (let i in containers) {
         energy = energy + containers[i].store[RESOURCE_ENERGY];
+    }
+};
+Room.prototype.getMineEnergy = function () {
+    let energy = 0;
+    if (!this.memory.sourceContainers) {
+        var mineContainers = [];
+        for (let i in this.memory.sources) {
+            for (let j in getContainers()) {
+                if (Game.getObjectById(this.memory.sources[i]).pos.inRangeTo(Game.getObjectById(this.memory.allContainers[j]), 2)) {
+                    mineContainers.push(Game.getObjectById(this.memory.allContainers[j]));
+                }
+            }
+        }
+        this.memory.sourceContainers = mineContainers;
+    }
+    for (let i in this.memory.sourceContainers) {
+        try {
+            energy = energy + this.memory.sourceContainers[i];
+        }
+        catch (e) {
+            console.log('caught mine energy error');
+            delete this.memory.sourceContainers;
+            this.getMineEnergy();
+        }
     }
 };
 Room.prototype.iCreep = function () {

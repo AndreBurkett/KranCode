@@ -117,7 +117,7 @@ function roomController(room: Room) {
             spawns[i].sCreep(spawnRole, spawnSpecialty);
         }
     }
-    else if(buildCreeps.length*10< sites.length){
+    else if(buildCreeps.length*10 < sites.length){
         for(let i in spawns){
             spawns[i].sCreep(spawnRole)
         }
