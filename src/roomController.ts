@@ -234,10 +234,18 @@ function roomController(room: Room) {
     AssignQTask('harvest', harvCreeps)
     let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest'}).length;
     let specHarvesters = room.find<Creeps>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'harvester' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'withdraw'});
-    if(disableSpawning == false){
-        for(let i in specHarvesters){
-            specHarvesters[i].memory.task = 'withdraw';
-            specHarvesters[i].memory.taskQ = 'harvest';
+    if (disableSpawning == false) {
+        if (containers.length > 0) {
+            for (let i in specHarvesters) {
+                specHarvesters[i].memory.task = 'withdraw';
+                specHarvesters[i].memory.taskQ = 'harvest';
+            }
+        }
+        else {
+            for (let i in specHarvesters) {
+                specHarvesters[i].memory.task = 'mine';
+                specHarvesters[i].memory.taskQ = 'harvest';
+            }
         }
     }
     if(hCreeps <3 && room.getMineEnergy() > 2500)

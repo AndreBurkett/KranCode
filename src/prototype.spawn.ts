@@ -5,7 +5,7 @@ interface StructureSpawn{
 }
 StructureSpawn.prototype.sCreep = function(role, specialty?){
     var body = [];
-    if(this.room.find(FIND_MY_CREEPS).length > 0 && this.room.find(FIND_STRUCTURES, {filter: (s:StructureContainer) => s.structureType === STRUCTURE_CONTAINER}).length > 0)
+    if(this.room.find(FIND_MY_CREEPS).length > 0 && this.room.find(FIND_STRUCTURES, {filter: (s:StructureContainer) => s.structureType === STRUCTURE_CONTAINER}).length > 0 && this.room.find(FIND_MY_CREEPS).length >= 4)
         var energyCap:number = this.room.energyCapacityAvailable
     else
         var energyCap:number = 300;
