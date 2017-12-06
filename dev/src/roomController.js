@@ -78,6 +78,7 @@ function roomController(room) {
     let upgradeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'upgrader' }).length;
     let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'mobileWorker' });
     let roomCreeps = room.find(FIND_MY_CREEPS).length;
+    console.log(room.getMineEnergy());
     if (mineCreeps < maxMiners) {
         spawnRole = 'statWorker';
         spawnSpecialty = 'miner';
