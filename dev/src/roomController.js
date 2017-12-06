@@ -97,14 +97,7 @@ function roomController(room) {
         }
     }
     else if (containers.length > 0) {
-        if (mineCreeps < maxMiners) {
-            spawnRole = 'statWorker';
-            spawnSpecialty = 'miner';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
-            }
-        }
-        else if (deliveryCreeps < 1) {
+        if (deliveryCreeps < 1) {
             spawnRole = 'deliveryWorker';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
@@ -117,7 +110,7 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
         }
-        else if (buildCreeps * 10 < sites.length) {
+        else if (buildCreeps < sites.length / 10) {
             spawnRole = 'mobileWorker';
             spawnSpecialty = 'builder';
             for (let i in spawns) {
@@ -130,7 +123,7 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (deliveryCreeps < 6) {
+        else if (deliveryCreeps < 5) {
             spawnRole = 'deliveryWorker';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
