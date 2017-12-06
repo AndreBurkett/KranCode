@@ -130,7 +130,7 @@ function roomController(room: Room) {
     for(let i in specMiners){
         specMiners[i].memory.task = 'mine';
         specMiners[i].memory.target = sources[getMinSource()].id;
-        if(containers)
+        if(containers.length > 0)
             delete specMiners[i].memory.taskQ;
         else{
             specMiners[i].memory.taskQ = 'build';
