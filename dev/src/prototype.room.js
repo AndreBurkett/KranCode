@@ -11,28 +11,15 @@ Room.prototype.getRoomEnergy = function () {
 };
 Room.prototype.getMineEnergy = function () {
     let energy = 0;
-    if (!this.memory.sourceContainers || this.memory.sourceContainers.length == 0) {
-        console.log(this.memory.sourceIds.length);
-        var mineContainers = [];
-        var source = [];
-        let cont = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
-        for (let i in Memory.sources) {
-            source[i] = Game.getObjectById(this.memory.sourceIds[i]);
-            for (let j in cont) {
-                if (source[i].pos.inRangeTo(cont[j], 2)) {
-                    mineContainers.push(Cont[j]);
-                }
+    var mineContainers = [];
+    var source = [];
+    let cont = this.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+    for (let i in this.memory.sourceIds) {
+        source[i] = Game.getObjectById(this.memory.sourceIds[i]);
+        for (let j in cont) {
+            if (source[i].pos.inRangeTo(cont[j], 2)) {
+                energy = energy + cont[j].store[RESOURCE_ENERGY];
             }
-        }
-        this.memory.sourceContainers = mineContainers;
-    }
-    for (let i in this.memory.sourceContainers) {
-        try {
-            energy = energy + this.memory.sourceContainers[i];
-        }
-        catch (e) {
-            console.log(e + "error");
-            delete this.memory.sourceContainers;
         }
     }
     return energy;
