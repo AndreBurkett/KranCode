@@ -50,6 +50,7 @@ Room.prototype.getMineEnergy = function(){
             //this.getMineEnergy();
         }
     }
+    return energy;
 }
 
 Room.prototype.iCreep = function(){

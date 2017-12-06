@@ -34,6 +34,7 @@ Room.prototype.getMineEnergy = function () {
             delete this.memory.sourceContainers;
         }
     }
+    return energy;
 };
 Room.prototype.iCreep = function () {
     return this.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' || !c.memory.task });
