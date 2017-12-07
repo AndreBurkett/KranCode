@@ -6,13 +6,13 @@ interface constructionManager {
 export class architect implements constructionManager {
     r: Room;
     spawns: StructureSpawn[];
-    sources= [];
+    sources = [];
 
     public constructor(room: Room) {
         this.spawns = room.find<StructureSpawn>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN })
         this.r = room;
         for (let i in room.sources) {
-            this.sources.push(Game.getObjectById(room.sources[i]))
+            this.sources.push(room.sources[i])
         }
     }
     public createRoads() {
@@ -37,21 +37,26 @@ export class architect implements constructionManager {
     }
     public createSourceContainers(){
         for(let i in this.sources){
-            var target = [];
+            var targetX = [];
+            var targetY = [];
             if(Game.map.getTerrainAt(this.sources[i].pos.x -2, this.sources[i].pos.y, this.r.name) != 'wall'){
-                target.push(this.sources[i].pos.x -2, this.sources[i].pos.y)
+                targetX.push(this.sources[i].pos.x - 2);
+                targetY.push(this.sources[i].pos.y);
             }
             if(Game.map.getTerrainAt(this.sources[i].pos.x +2, this.sources[i].pos.y, this.r.name) != 'wall'){
-                target.push(this.sources[i].pos.x +2, this.sources[i].pos.y)
+                targetX.push(this.sources[i].pos.x  + 2);
+                targetY.push(this.sources[i].pos.y);
             }
             if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y - 2, this.r.name) != 'wall'){
-                target.push(this.sources[i].pos.x, this.sources[i].pos.y - 2)
+                targetX.push(this.sources[i].pos.x);
+                targetY.push(this.sources[i].pos.y - 2);
             }
             if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y + 2, this.r.name) != 'wall'){
-                target.push(this.sources[i].pos.x, this.sources[i].pos.y + 2)
+                targetX.push(this.sources[i].pos.x);
+                targetY.push(this.sources[i].pos.y + 2);
             }
             if(target.length > 0){
-                var site = this.spawns[0].pos.findClosestByRange(target);
+                var site = this.spawns[0].pos.findClosestByRange(targetX,targetY);
                 this.r.visual.circle(site);
                 //this.r.createConstructionSite(site,STRUCTURE_CONTAINER)
             }
