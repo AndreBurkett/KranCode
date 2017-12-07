@@ -47,7 +47,7 @@ class architect {
                 targetX.push(this.sources[i].pos.x);
                 targetY.push(this.sources[i].pos.y + 2);
             }
-            if (target.length > 0) {
+            if (targetX.length > 0) {
                 var site = this.spawns[0].pos.findClosestByRange(targetX, targetY);
                 this.r.visual.circle(site);
             }
