@@ -12,18 +12,30 @@ class architect {
     createRoads() {
         if (!this.r.memory.paths) {
             this.r.memory.paths = {};
-            if (!this.r.memory.paths.controllerPath)
-                this.r.memory.paths.controllerPath = {};
+            this.r.memory.paths.controllerPath = {};
+            this.r.memory.paths.spawn = {};
         }
         for (let i in this.spawns) {
             if (this.r.controller) {
-                let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true });
-                this.r.memory.paths.controllerPath[i] = path;
+                let path1 = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true });
+                var container = this.r.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+                var pathNum = 0;
+                for (let j in container) {
+                    let path2 = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true });
+                    this.r.memory.paths.spawnToContainer[pathNum] = path2;
+                    pathNum++;
+                }
+                this.r.memory.paths.controllerPath[i] = path1;
             }
         }
         for (let i in this.r.memory.paths.controllerPath) {
             for (let j in this.r.memory.paths.controllerPath[i].path) {
                 this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD);
+            }
+        }
+        for (let i in this.r.memory.paths.spawnToContainer) {
+            for (let j in this.r.memory.paths.spawnToContainer[i].path) {
+                this.r.visual.circle(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y);
             }
         }
     }
