@@ -13,7 +13,7 @@ class architect {
         if (!this.r.memory.paths) {
             this.r.memory.paths = {};
             this.r.memory.paths.controllerPath = {};
-            this.r.memory.paths.spawn = {};
+            this.r.memory.paths.spawnToContainer = {};
         }
         for (let i in this.spawns) {
             if (this.r.controller) {
