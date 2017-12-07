@@ -37,27 +37,21 @@ export class architect implements constructionManager {
     }
     public createSourceContainers(){
         for(let i in this.sources){
-            var targetX = [];
-            var targetY = [];
-            if(Game.map.getTerrainAt(this.sources[i].pos.x -2, this.sources[i].pos.y, this.r.name) != 'wall'){
-                targetX.push(new RoomPosition(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name))
-                //targetX.push(this.sources[i].pos.x - 2);
-                //targetY.push(this.sources[i].pos.y);
-            }/*
-            if(Game.map.getTerrainAt(this.sources[i].pos.x +2, this.sources[i].pos.y, this.r.name) != 'wall'){
-                targetX.push(this.sources[i].pos.x  + 2);
-                targetY.push(this.sources[i].pos.y);
+            var target = [];
+            if(Game.map.getTerrainAt(this.sources[i].pos.x -2, this.sources[i].pos.y, this.r.name) != 'wall' && Game.map.getTerrainAt(this.sources[i].pos.x -1, this.sources[i].pos.y, this.r.name) != 'wall'){
+                target.push(new RoomPosition(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name))
             }
-            if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y - 2, this.r.name) != 'wall'){
-                targetX.push(this.sources[i].pos.x);
-                targetY.push(this.sources[i].pos.y - 2);
+            if(Game.map.getTerrainAt(this.sources[i].pos.x +2, this.sources[i].pos.y, this.r.name) != 'wall' && Game.map.getTerrainAt(this.sources[i].pos.x +1, this.sources[i].pos.y, this.r.name) != 'wall'){
+                target.push(new RoomPosition(this.sources[i].pos.x + 2, this.sources[i].pos.y, this.r.name))
             }
-            if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y + 2, this.r.name) != 'wall'){
-                targetX.push(this.sources[i].pos.x);
-                targetY.push(this.sources[i].pos.y + 2);
-            }*/
-            if(targetX.length > 0){
-                var site = this.spawns[0].pos.findClosestByRange(targetX);
+            if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y - 2, this.r.name) != 'wall' && Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y -1, this.r.name) != 'wall'){
+                target.push(new RoomPosition(this.sources[i].pos.x, this.sources[i].pos.y-2, this.r.name))
+            }
+            if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y + 2, this.r.name) != 'wall' && Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y +1, this.r.name) != 'wall'){
+                target.push(new RoomPosition(this.sources[i].pos.x, this.sources[i].pos.y +2, this.r.name))
+            }
+            if(target.length > 0){
+                var site = this.spawns[0].pos.findClosestByRange(target);
                 this.r.visual.circle(site);
                 //this.r.createConstructionSite(site,STRUCTURE_CONTAINER)
             }
