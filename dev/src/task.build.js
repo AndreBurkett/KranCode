@@ -19,9 +19,6 @@ var taskBuild = {
                 this.getClosestPrints(c);
             }
         }
-        console.log(target);
-        if (!target)
-            c.memory.task = 'idle';
     },
     buildTarget: function (c, target) {
         switch (c.build(target)) {
@@ -37,7 +34,10 @@ var taskBuild = {
     },
     getClosestPrints: function (c) {
         let target = c.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
-        this.buildTarget(c, target);
+        if (!target)
+            c.memory.task = 'idle';
+        else
+            this.buildTarget(c, target);
     }
 };
 module.exports = taskBuild;

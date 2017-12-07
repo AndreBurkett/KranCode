@@ -19,12 +19,6 @@ var taskBuild = {
                 this.getClosestPrints(c);
             }
         }
-
-        console.log(target);
-        if(!target)
-            c.memory.task = 'idle';
-
-
     },
     buildTarget: function(c: Creep, target: ConstructionSite) {
         switch (c.build(target)){
@@ -40,7 +34,10 @@ var taskBuild = {
     },
     getClosestPrints: function(c: Creep){
         let target = c.pos.findClosestByRange<ConstructionSite>(FIND_CONSTRUCTION_SITES);
-        this.buildTarget(c, target);
+        if(!target)
+            c.memory.task = 'idle';
+        else
+            this.buildTarget(c, target);
     }
 }
 
