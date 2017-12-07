@@ -6,7 +6,7 @@ var combatMelee = {
         else{
             target = c.pos.findClosestByRange<Creep>(FIND_HOSTILE_CREEPS);
             if(!target){
-            //create logic to move to rally point
+                c.moveTo(25,25);
             }
         }
 

@@ -7,6 +7,7 @@ var combatMelee = {
         else {
             target = c.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
             if (!target) {
+                c.moveTo(25, 25);
             }
         }
         switch (c.attack(target)) {
