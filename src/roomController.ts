@@ -1,5 +1,5 @@
 require('./prototype.creep');
-require('./constructionManager');
+import {architect} from './constructionManager';
 //import {towerManager} from ('./towerManager');
 
 var towerManager = require('./towerManager');
@@ -42,7 +42,7 @@ function roomController(room: Room) {
     }
 
 
-    var cm = new constructionManager();
+    var cm = new architect(room);
 
     let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
     for(let i in rSpawn){

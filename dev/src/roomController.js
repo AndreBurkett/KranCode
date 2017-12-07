@@ -1,6 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('./prototype.creep');
-require('./constructionManager');
+const constructionManager_1 = require("./constructionManager");
 var towerManager = require('./towerManager');
 function roomController(room) {
     let sourceLen = room.sources.length;
@@ -32,7 +33,7 @@ function roomController(room) {
         sources[s].containerSpot;
         room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
-    var cm = new constructionManager();
+    var cm = new constructionManager_1.architect(room);
     let rSpawn = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_SPAWN });
     for (let i in rSpawn) {
         room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
