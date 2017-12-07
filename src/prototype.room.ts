@@ -9,7 +9,7 @@ interface Room {
 interface RoomMemory{
     sourceContainers: StructureContainer;
     allContainers: StructureContainer;
-    paths: PathFinder;
+    paths;
     //iCreep(): Creep;
     //mCreep(): Creep;
 }
