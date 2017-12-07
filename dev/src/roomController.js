@@ -30,8 +30,6 @@ function roomController(room) {
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
-        sources[s].containerSpot;
-        room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
     var cm = new constructionManager_1.architect(room);
     cm.createRoads();

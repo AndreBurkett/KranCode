@@ -44,7 +44,11 @@ class architect {
             }
             if (target.length > 0) {
                 var site = this.spawns[0].pos.findClosestByRange(target);
-                this.r.visual.circle(site);
+                this.r.createConstructionSite(site, STRUCTURE_CONTAINER);
+            }
+            else {
+                this.sources[i].containerSpot;
+                this.r.createConstructionSite(this.sources[i].containerSpot[0], this.sources[i].containerSpot[1], STRUCTURE_CONTAINER);
             }
         }
     }

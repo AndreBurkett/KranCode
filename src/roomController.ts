@@ -36,9 +36,9 @@ function roomController(room: Room) {
     for (let s in sources) {
         sources[s].memory.get;
         maxWorkers = maxWorkers + sources[s].memory.workers;
-        sources[s].containerSpot;
+        //sources[s].containerSpot;
         //Create Blueprints
-        room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
+        //room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
 
 
