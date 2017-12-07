@@ -63,7 +63,7 @@ function roomController(room: Room) {
     else if(room.controller) {
         room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
-
+/*
     //Get Spawn to Source Containers Paths
     if(!Memory.paths.sourceC || !Memory.paths.sourceC[numContainers]) {
         let pathNum = 0;
@@ -96,7 +96,7 @@ function roomController(room: Room) {
     //Place Spawn to Controller Roads
     for(let sToC in Memory.paths.myPath.path) {
         room.createConstructionSite(Memory.paths.myPath.path[sToC].x,Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
-    }
+    }*/
 
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////
 

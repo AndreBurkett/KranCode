@@ -50,36 +50,6 @@ function roomController(room) {
     else if (room.controller) {
         room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
-    if (!Memory.paths.sourceC || !Memory.paths.sourceC[numContainers]) {
-        let pathNum = 0;
-        for (let i in containers) {
-            for (let j in spawns) {
-                let startPos = containers[i].pos;
-                let endPos = spawns[j].pos;
-                let path = PathFinder.search(startPos, endPos, { swampCost: 1 });
-                pathNum = pathNum + 1;
-                Memory.paths.sourceC[pathNum] = path;
-            }
-        }
-    }
-    else {
-        for (let i in Memory.paths.sourceC) {
-            for (let j in Memory.paths.sourceC[i].path) {
-                room.createConstructionSite(Memory.paths.sourceC[i].path[j].x, Memory.paths.sourceC[i].path[j].y, STRUCTURE_ROAD);
-            }
-        }
-    }
-    if (!Memory.paths.myPath && room.controller) {
-        let startPos = room.controller.pos;
-        let endPos = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
-        for (let i in endPos) {
-            let myPath = PathFinder.search(startPos, endPos[i].pos, { swampCost: 1 });
-            Memory.paths.myPath = myPath;
-        }
-    }
-    for (let sToC in Memory.paths.myPath.path) {
-        room.createConstructionSite(Memory.paths.myPath.path[sToC].x, Memory.paths.myPath.path[sToC].y, STRUCTURE_ROAD);
-    }
     var spawnRole = 'genWorker';
     var spawnSpecialty;
     var sites = room.find(FIND_CONSTRUCTION_SITES);
