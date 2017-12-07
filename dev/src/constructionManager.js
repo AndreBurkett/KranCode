@@ -11,7 +11,7 @@ class architect {
         if (!this.r.memory.paths) {
             this.r.memory.paths = {};
             if (!this.r.memory.paths.controllerPath)
-                this.r.memory.paths.controllerPath = [];
+                this.r.memory.paths.controllerPath = {};
         }
         for (let i in this.r.sources) {
             sources.push(Game.getObjectById(this.r.sources[i]));
