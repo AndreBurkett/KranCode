@@ -6,7 +6,7 @@ interface constructionManager {
 export class architect implements constructionManager {
     r: Room;
     spawns: StructureSpawn[];
-    sources: [Source];
+    sources= [];
 
     public constructor(room: Room) {
         this.spawns = room.find<StructureSpawn>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN })
