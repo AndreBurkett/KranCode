@@ -6,15 +6,14 @@ interface constructionManager {
 export class architect implements constructionManager {
     r: Room;
     spawns: StructureSpawn[];
-    sources: Source[];
+    sources: [Source];
 
     public constructor(room: Room) {
         this.spawns = room.find<StructureSpawn>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN })
         this.r = room;
         for (let i in room.sources) {
-            this.sources[i] = (Game.getObjectById(room.sources[i]))
+            this.sources.push(Game.getObjectById(room.sources[i]))
         }
-        console.log('test');
     }
     public createRoads() {
         if (!this.r.memory.paths) {

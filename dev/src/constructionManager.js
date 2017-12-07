@@ -5,9 +5,8 @@ class architect {
         this.spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_SPAWN });
         this.r = room;
         for (let i in room.sources) {
-            this.sources[i] = (Game.getObjectById(room.sources[i]));
+            this.sources.push(Game.getObjectById(room.sources[i]));
         }
-        console.log('test');
     }
     createRoads() {
         if (!this.r.memory.paths) {
