@@ -1,5 +1,6 @@
 "use strict";
 require('./prototype.creep');
+require('./constructionManager');
 var towerManager = require('./towerManager');
 function roomController(room) {
     let sourceLen = room.sources.length;
@@ -31,6 +32,7 @@ function roomController(room) {
         sources[s].containerSpot;
         room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
+    var cm = new constructionManager();
     let rSpawn = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_SPAWN });
     for (let i in rSpawn) {
         room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
