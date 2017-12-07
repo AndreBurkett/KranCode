@@ -11,7 +11,6 @@ function roomController(room: Room) {
     let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50});
     let numContainers = containers.length || 0;
     var sourceContainerEnergy = room.getMineEnergy();
-    let maxWorkers = 0
 
     let spawns = room.find<StructureSpawn>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType == STRUCTURE_SPAWN});
     let towers = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_TOWER})
@@ -35,10 +34,6 @@ function roomController(room: Room) {
 
     for (let s in sources) {
         sources[s].memory.get;
-        maxWorkers = maxWorkers + sources[s].memory.workers;
-        //sources[s].containerSpot;
-        //Create Blueprints
-        //room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
 
 
@@ -164,7 +159,7 @@ function roomController(room: Room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (upgradeCreeps < 3 ) {
+        else if (upgradeCreeps < 3 || ctrlContainer[0].store[RESOURCE_ENERGY] > 1500) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
             for (let i in spawns) {

@@ -10,7 +10,6 @@ function roomController(room) {
     let filledContainers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50 });
     let numContainers = containers.length || 0;
     var sourceContainerEnergy = room.getMineEnergy();
-    let maxWorkers = 0;
     let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
@@ -29,7 +28,6 @@ function roomController(room) {
     }
     for (let s in sources) {
         sources[s].memory.get;
-        maxWorkers = maxWorkers + sources[s].memory.workers;
     }
     var cm = new constructionManager_1.architect(room);
     cm.createRoads();
@@ -141,7 +139,7 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (upgradeCreeps < 3) {
+        else if (upgradeCreeps < 3 || ctrlContainer[0].store[RESOURCE_ENERGY] > 1500) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
             for (let i in spawns) {
