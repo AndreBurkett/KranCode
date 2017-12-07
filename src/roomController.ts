@@ -287,11 +287,6 @@ function roomController(room: Room) {
     if(rCreeps < 1)
         AssignTask('withdraw', 1, 'repair');
 
-    //Assign Transport Task
-    let tCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'transport' || c.memory.taskQ === 'transport'}).length;
-    if(ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity) && tCreeps < 2)
-        AssignTask('withdraw', 3, 'transport');
-
     //Assign Tower Fill Task
     let emptyTowers = room.find(FIND_STRUCTURES, {filter: (s: StructureTower) => s.structureType  === STRUCTURE_TOWER && s.energy < s.energyCapacity}).length
     if(emptyTowers > 0){
@@ -299,6 +294,11 @@ function roomController(room: Room) {
         if(tfCreeps < 1)
             AssignTask('withdraw', 1, 'towerFill')
     }
+
+    //Assign Transport Task
+    let tCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'transport' || c.memory.taskQ === 'transport'}).length;
+    if(ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity) && tCreeps < 2)
+        AssignTask('withdraw', 5, 'transport');
 
     //Assign Upgrade Task
     let iCreep: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle'}).length;
