@@ -16,11 +16,13 @@ export class architect implements constructionManager {
         }
     }
     public createRoads() {
+        //Setup Memory
         if (!this.r.memory.paths) {
             this.r.memory.paths = {};
             if (!this.r.memory.paths.controllerPath)
                 this.r.memory.paths.controllerPath = {};
         }
+
 
         for (let i in this.spawns) {
             if (this.r.controller){
