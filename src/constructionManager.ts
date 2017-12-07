@@ -46,8 +46,8 @@ export class architect implements constructionManager {
         //Create Spawn To Container Roads
         for (let i in this.r.memory.paths.spawnToContainer) {
             for (let j in this.r.memory.paths.spawnToContainer[i].path) {
-                this.r.visual.circle(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y);
-                //this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x,this.r.memory.paths.controllerPath[i].path[j].y,STRUCTURE_ROAD)
+                //this.r.visual.circle(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y);
+                this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x,this.r.memory.paths.spawnToContainer[i].path[j].y,STRUCTURE_ROAD)
             }
         }
     }
