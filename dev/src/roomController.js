@@ -34,6 +34,7 @@ function roomController(room) {
         room.createConstructionSite(sources[s].containerSpot[0], sources[s].containerSpot[1], STRUCTURE_CONTAINER);
     }
     var cm = new constructionManager_1.architect(room);
+    cm.createRoads();
     let rSpawn = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_SPAWN });
     for (let i in rSpawn) {
         room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
