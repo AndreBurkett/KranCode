@@ -11,6 +11,6 @@ export class architect implements constructionManager{
         console.log('test');
     }
     public createRoads(){
-
+        console.log(this.r);
     }
 }
