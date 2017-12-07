@@ -40,7 +40,7 @@ export class architect implements constructionManager {
             var targetX = [];
             var targetY = [];
             if(Game.map.getTerrainAt(this.sources[i].pos.x -2, this.sources[i].pos.y, this.r.name) != 'wall'){
-                targetX.push(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name)
+                targetX.push(new RoomPosition(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name))
                 //targetX.push(this.sources[i].pos.x - 2);
                 //targetY.push(this.sources[i].pos.y);
             }/*

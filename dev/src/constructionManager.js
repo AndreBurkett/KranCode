@@ -32,7 +32,7 @@ class architect {
             var targetX = [];
             var targetY = [];
             if (Game.map.getTerrainAt(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name) != 'wall') {
-                targetX.push(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name);
+                targetX.push(new RoomPosition(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name));
             }
             if (targetX.length > 0) {
                 var site = this.spawns[0].pos.findClosestByRange(targetX);
