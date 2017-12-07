@@ -32,23 +32,10 @@ class architect {
             var targetX = [];
             var targetY = [];
             if (Game.map.getTerrainAt(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name) != 'wall') {
-                targetX.push(this.sources[i].pos.x - 2);
-                targetY.push(this.sources[i].pos.y);
-            }
-            if (Game.map.getTerrainAt(this.sources[i].pos.x + 2, this.sources[i].pos.y, this.r.name) != 'wall') {
-                targetX.push(this.sources[i].pos.x + 2);
-                targetY.push(this.sources[i].pos.y);
-            }
-            if (Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y - 2, this.r.name) != 'wall') {
-                targetX.push(this.sources[i].pos.x);
-                targetY.push(this.sources[i].pos.y - 2);
-            }
-            if (Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y + 2, this.r.name) != 'wall') {
-                targetX.push(this.sources[i].pos.x);
-                targetY.push(this.sources[i].pos.y + 2);
+                targetX.push(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name);
             }
             if (targetX.length > 0) {
-                var site = this.spawns[0].pos.findClosestByRange(targetX, targetY);
+                var site = this.spawns[0].pos.findClosestByRange(targetX);
                 this.r.visual.circle(site);
             }
         }

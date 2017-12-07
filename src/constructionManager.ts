@@ -40,9 +40,10 @@ export class architect implements constructionManager {
             var targetX = [];
             var targetY = [];
             if(Game.map.getTerrainAt(this.sources[i].pos.x -2, this.sources[i].pos.y, this.r.name) != 'wall'){
-                targetX.push(this.sources[i].pos.x - 2);
-                targetY.push(this.sources[i].pos.y);
-            }
+                targetX.push(this.sources[i].pos.x - 2, this.sources[i].pos.y, this.r.name)
+                //targetX.push(this.sources[i].pos.x - 2);
+                //targetY.push(this.sources[i].pos.y);
+            }/*
             if(Game.map.getTerrainAt(this.sources[i].pos.x +2, this.sources[i].pos.y, this.r.name) != 'wall'){
                 targetX.push(this.sources[i].pos.x  + 2);
                 targetY.push(this.sources[i].pos.y);
@@ -54,9 +55,9 @@ export class architect implements constructionManager {
             if(Game.map.getTerrainAt(this.sources[i].pos.x, this.sources[i].pos.y + 2, this.r.name) != 'wall'){
                 targetX.push(this.sources[i].pos.x);
                 targetY.push(this.sources[i].pos.y + 2);
-            }
+            }*/
             if(targetX.length > 0){
-                var site = this.spawns[0].pos.findClosestByRange(targetX,targetY);
+                var site = this.spawns[0].pos.findClosestByRange(targetX);
                 this.r.visual.circle(site);
                 //this.r.createConstructionSite(site,STRUCTURE_CONTAINER)
             }
