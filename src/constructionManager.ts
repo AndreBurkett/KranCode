@@ -31,7 +31,7 @@ export class architect implements constructionManager {
         }
         for (let i in this.r.memory.paths.controllerPath) {
             for (let j in this.r.memory.paths.controllerPath.path) {
-                new RoomVisual(this.r.name).circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
+                //new RoomVisual(this.r.name).circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
             }
         }
     }
