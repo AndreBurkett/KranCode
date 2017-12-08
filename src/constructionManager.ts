@@ -62,7 +62,7 @@ export class architect implements constructionManager {
                 break;
             case 5: maxPaths = 10;
         }
-        if(!this.r.paths.containerToContainer[maxPaths]){
+        if(!this.r.memory.paths.containerToContainer[maxPaths]){
             var pathNum = 0;
             for(let i=0; i<clength-2; i++){
                 for(let j=i; j<clength-1;j++){
