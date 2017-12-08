@@ -39,6 +39,7 @@ function roomController(room: Room) {
     var cm = new architect(room);
     cm.createRoads();
     cm.createSourceContainers();
+    cm.createControllerContainer();
 
     let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
     for(let i in rSpawn){
