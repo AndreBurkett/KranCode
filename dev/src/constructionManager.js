@@ -85,7 +85,7 @@ class architect {
                 for (let i = 0; i < clength - 1; i++) {
                     for (let j = i + 1; j < clength; j++) {
                         let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true });
-                        this.r.memory.paths.containerToContainer[pathNum] = this.r.serializePath(path);
+                        this.r.memory.paths.containerToContainer[pathNum] = path;
                         pathNum++;
                     }
                 }
