@@ -28,6 +28,9 @@ export class architect implements constructionManager {
 
         var container = this.r.find<StructureContainer>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER})
         var clength = container.length
+        if(!this.r.memory.paths.containers)
+            this.r.memory.paths.containers = clength;
+
         //Get Spawn Paths
         for (let i in this.spawns) {
             if (this.r.controller){
@@ -49,49 +52,53 @@ export class architect implements constructionManager {
             }
         }
 
-        //Get Container to Container Path
-        var maxPaths = 0
-        switch (clength){
-            case 1: maxPaths = 0;
-                break;
-            case 2: maxPaths = 1;
-                break;
-            case 3: maxPaths = 3;
-                break;
-            case 4: maxPaths = 6;
-                break;
-            case 5: maxPaths = 10;
-        }
-        if(!this.r.memory.paths.containerToContainer[maxPaths]){
-            var pathNum = 0;
-            for(let i=0; i<clength-1; i++){
-                for(let j=i+1; j<clength;j++){
-                    let path = PathFinder.search(container[i].pos, container[j].pos, {swampCost:1, ignoreRoads: true});
-                    this.r.memory.paths.containerToContainer[pathNum] = path;
-                    pathNum++;
+        if (this.r.memory.paths.containers == clength) {
+            //Get Container to Container Path
+            var maxPaths = 0
+            switch (clength) {
+                case 1: maxPaths = 0;
+                    break;
+                case 2: maxPaths = 1;
+                    break;
+                case 3: maxPaths = 3;
+                    break;
+                case 4: maxPaths = 6;
+                    break;
+                case 5: maxPaths = 10;
+            }
+            if (!this.r.memory.paths.containerToContainer[maxPaths]) {
+                var pathNum = 0;
+                for (let i = 0; i < clength - 1; i++) {
+                    for (let j = i + 1; j < clength; j++) {
+                        let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true });
+                        this.r.memory.paths.containerToContainer[pathNum] = path;
+                        pathNum++;
+                    }
                 }
             }
+
+            //Create Container To Container Roads
+            for (let i in this.r.memory.paths.containerToContainer) {
+                for (let j in this.r.memory.paths.containerToContainer[i].path) {
+                    //this.r.visual.circle(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y);
+                    this.r.createConstructionSite(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y, STRUCTURE_ROAD)
+                }
+            }
+            this.r.memory.paths.containers = clength;
         }
 
         //Create Spawn to Controller Roads
         for (let i in this.r.memory.paths.controllerPath) {
             for (let j in this.r.memory.paths.controllerPath[i].path) {
                 //this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
-                this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x,this.r.memory.paths.controllerPath[i].path[j].y,STRUCTURE_ROAD)
+                this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
             }
         }
         //Create Spawn To Container Roads
         for (let i in this.r.memory.paths.spawnToContainer) {
             for (let j in this.r.memory.paths.spawnToContainer[i].path) {
                 //this.r.visual.circle(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y);
-                this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x,this.r.memory.paths.spawnToContainer[i].path[j].y,STRUCTURE_ROAD)
-            }
-        }
-        //Create Container To Container Roads
-        for(let i in this.r.memory.paths.containerToContainer){
-            for(let j in this.r.memory.paths.containerToContainer[i].path){
-                //this.r.visual.circle(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y);
-                this.r.createConstructionSite(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y, STRUCTURE_ROAD)
+                this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y, STRUCTURE_ROAD)
             }
         }
     }
