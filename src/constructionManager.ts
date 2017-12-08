@@ -16,6 +16,7 @@ export class architect implements constructionManager {
         }
     }
     public createRoads() {
+        let start = Game.cpu.getUsed();
         //Setup Memory
         if (!this.r.memory.paths)
             this.r.memory.paths = {};
@@ -30,17 +31,33 @@ export class architect implements constructionManager {
         var clength = container.length
         if(!this.r.memory.paths.containers)
             this.r.memory.paths.containers = clength;
+        if(!this.r.memory.paths.spawns)
+            this.r.memory.paths.spawns = this.spawns.length;
 
         //Get Spawn Paths
-        for (let i in this.spawns) {
-            if (this.r.controller){
-                //Get Spawn to Controller Path
-                if(!this.r.memory.paths.controllerPath[this.spawns.length-1]){
-                    let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true})
-                    this.r.memory.paths.controllerPath[i] = path;
+        if (this.r.memory.paths.spawns != this.spawns.length) {
+            for (let i in this.spawns) {
+                if (this.r.controller) {
+                    //Get Spawn to Controller Path
+                    if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
+                        let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true })
+                        this.r.memory.paths.controllerPath[i] = path;
+                    }
                 }
+            }
+            //Create Spawn to Controller Roads
+            for (let i in this.r.memory.paths.controllerPath) {
+                for (let j in this.r.memory.paths.controllerPath[i].path) {
+                    //this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
+                    this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
+                }
+            }
+            this.r.memory.paths.spawns = this.spawns.length;
+        }
 
-                //Get Spawn to Container Path
+        //Get Spawn to Container Path
+        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length) {
+            for (let i in this.spawns) {
                 if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
                     for (let j in container) {
@@ -50,9 +67,19 @@ export class architect implements constructionManager {
                     }
                 }
             }
+
+            //Create Spawn To Container Roads
+            for (let i in this.r.memory.paths.spawnToContainer) {
+                for (let j in this.r.memory.paths.spawnToContainer[i].path) {
+                    //this.r.visual.circle(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y);
+                    this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y, STRUCTURE_ROAD)
+                }
+            }
+            this.r.memory.paths.containers = clength;
+            this.r.memory.paths.spawns = this.spawns.length;
         }
 
-        if (this.r.memory.paths.containers == clength) {
+        if (this.r.memory.paths.containers != clength) {
             //Get Container to Container Path
             var maxPaths = 0
             switch (clength) {
@@ -86,21 +113,7 @@ export class architect implements constructionManager {
             }
             this.r.memory.paths.containers = clength;
         }
-
-        //Create Spawn to Controller Roads
-        for (let i in this.r.memory.paths.controllerPath) {
-            for (let j in this.r.memory.paths.controllerPath[i].path) {
-                //this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
-                this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
-            }
-        }
-        //Create Spawn To Container Roads
-        for (let i in this.r.memory.paths.spawnToContainer) {
-            for (let j in this.r.memory.paths.spawnToContainer[i].path) {
-                //this.r.visual.circle(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y);
-                this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y, STRUCTURE_ROAD)
-            }
-        }
+        console.log(Game.cpu.getUsed() -start);
     }
     public createSourceContainers(){
         for(let i in this.sources){

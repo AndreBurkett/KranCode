@@ -10,6 +10,7 @@ class architect {
         }
     }
     createRoads() {
+        let start = Game.cpu.getUsed();
         if (!this.r.memory.paths)
             this.r.memory.paths = {};
         if (!this.r.memory.paths.controllerPath)
@@ -22,12 +23,26 @@ class architect {
         var clength = container.length;
         if (!this.r.memory.paths.containers)
             this.r.memory.paths.containers = clength;
-        for (let i in this.spawns) {
-            if (this.r.controller) {
-                if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
-                    let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true });
-                    this.r.memory.paths.controllerPath[i] = path;
+        if (!this.r.memory.paths.spawns)
+            this.r.memory.paths.spawns = this.spawns.length;
+        if (this.r.memory.paths.spawns != this.spawns.length) {
+            for (let i in this.spawns) {
+                if (this.r.controller) {
+                    if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
+                        let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true });
+                        this.r.memory.paths.controllerPath[i] = path;
+                    }
                 }
+            }
+            for (let i in this.r.memory.paths.controllerPath) {
+                for (let j in this.r.memory.paths.controllerPath[i].path) {
+                    this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD);
+                }
+            }
+            this.r.memory.paths.spawns = this.spawns.length;
+        }
+        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length) {
+            for (let i in this.spawns) {
                 if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
                     for (let j in container) {
@@ -37,8 +52,15 @@ class architect {
                     }
                 }
             }
+            for (let i in this.r.memory.paths.spawnToContainer) {
+                for (let j in this.r.memory.paths.spawnToContainer[i].path) {
+                    this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y, STRUCTURE_ROAD);
+                }
+            }
+            this.r.memory.paths.containers = clength;
+            this.r.memory.paths.spawns = this.spawns.length;
         }
-        if (this.r.memory.paths.containers == clength) {
+        if (this.r.memory.paths.containers != clength) {
             var maxPaths = 0;
             switch (clength) {
                 case 1:
@@ -72,16 +94,7 @@ class architect {
             }
             this.r.memory.paths.containers = clength;
         }
-        for (let i in this.r.memory.paths.controllerPath) {
-            for (let j in this.r.memory.paths.controllerPath[i].path) {
-                this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD);
-            }
-        }
-        for (let i in this.r.memory.paths.spawnToContainer) {
-            for (let j in this.r.memory.paths.spawnToContainer[i].path) {
-                this.r.createConstructionSite(this.r.memory.paths.spawnToContainer[i].path[j].x, this.r.memory.paths.spawnToContainer[i].path[j].y, STRUCTURE_ROAD);
-            }
-        }
+        console.log(Game.cpu.getUsed() - start);
     }
     createSourceContainers() {
         for (let i in this.sources) {
