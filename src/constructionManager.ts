@@ -26,16 +26,18 @@ export class architect implements constructionManager {
             this.r.memory.paths.spawnToContainer = {};
         if(!this.r.memory.paths.containerToContainer)
             this.r.memory.paths.containerToContainer = {};
+        if(!this.r.memory.paths.tick) this.r.memory.paths.tick = 0;
 
         var container = this.r.find<StructureContainer>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER})
         var clength = container.length
+        var ticks = this.r.memory.paths.tick++;
         if(!this.r.memory.paths.containers)
             this.r.memory.paths.containers = clength;
         if(!this.r.memory.paths.spawns)
             this.r.memory.paths.spawns = this.spawns.length;
 
         //Get Spawn Paths
-        if (this.r.memory.paths.spawns != this.spawns.length) {
+        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 48) {
             for (let i in this.spawns) {
                 if (this.r.controller) {
                     //Get Spawn to Controller Path
@@ -56,7 +58,7 @@ export class architect implements constructionManager {
         }
 
         //Get Spawn to Container Path
-        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length) {
+        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 49) {
             for (let i in this.spawns) {
                 if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
@@ -79,7 +81,7 @@ export class architect implements constructionManager {
             this.r.memory.paths.spawns = this.spawns.length;
         }
 
-        if (this.r.memory.paths.containers != clength) {
+        if (this.r.memory.paths.containers != clength || ticks == 50) {
             //Get Container to Container Path
             var maxPaths = 0
             switch (clength) {
@@ -113,7 +115,8 @@ export class architect implements constructionManager {
             }
             this.r.memory.paths.containers = clength;
         }
-        console.log(Game.cpu.getUsed() -start);
+        if(ticks > 50) this.r.memory.paths.tick = 0;
+        //console.log(Game.cpu.getUsed() -start);
     }
     public createSourceContainers(){
         for(let i in this.sources){
