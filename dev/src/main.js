@@ -27,7 +27,6 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
         }
     }
-    Memory.rooms = Game.rooms;
     for (var roomName in Game.rooms) {
         let myRoom = new roomController(Game.rooms[roomName]);
     }

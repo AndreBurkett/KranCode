@@ -47,7 +47,7 @@ module.exports.loop = function()
     }*/
 
     //Create Room Controllers
-    Memory.rooms = Game.rooms;
+    //Memory.rooms = Game.rooms;
     for(var roomName in Game.rooms) {
         let myRoom = new roomController(Game.rooms[roomName]);
     }

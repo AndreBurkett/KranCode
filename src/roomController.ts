@@ -5,6 +5,7 @@ import {architect} from './constructionManager';
 var towerManager = require('./towerManager');
 
 function roomController(room: Room) {
+    console.log(room.memory);
     let sourceLen = room.sources.length;
     let sources = room.find<Source>(FIND_SOURCES);
     let containers = room.find<StructureContainer>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
