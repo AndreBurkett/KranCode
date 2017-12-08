@@ -14,8 +14,6 @@ interface RoomMemory{
     //mCreep(): Creep;
 }
 
-
-
 Room.prototype.getContainers = function(){
     return this.memory.allContainers = this.find(FIND_STRUCTURES, {filter: (s: StructureContainer) => s.structureType === STRUCTURE_CONTAINER});
 }
