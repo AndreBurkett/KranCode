@@ -28,6 +28,8 @@ export class architect implements constructionManager {
                 let path1 = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true})
                 var container = this.r.find<StructureContainer>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER})
                 var pathNum = 0;
+                if(this.r.memory.paths.spawnToContainer.length == container.length)
+                console.log('success '  + container.length);
                 for(let j in container){
                     let path2 = PathFinder.search(this.spawns[i].pos, container[j].pos, {swampCost: 1, ignoreRoads: true})
                     this.r.memory.paths.spawnToContainer[pathNum] = path2;
