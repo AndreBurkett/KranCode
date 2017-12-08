@@ -145,7 +145,8 @@ export class architect implements constructionManager {
     }
     public createControllerContainer(){
         if(this.r.controller && this.r.memory.paths.spawnToContainer){
-            let site = this.r.memory.paths.spawnToContainer.length;
+            let sites = Object.keys(this.r.memory.paths.spawnToContainer).length
+            this.r.visual.circle(this.r.memory.paths.spawnToContainer[sites].x,this.r.memory.paths.spawnToContainer[sites].y);
         }
     }
 }

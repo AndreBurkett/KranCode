@@ -18,10 +18,6 @@ var taskUpgrade = require('./task.upgrade');
 var taskWithdraw = require('./task.withdraw');
 var roomController = require('./roomController');
 module.exports.loop = function () {
-    if (!Memory.paths)
-        Memory.paths = {};
-    if (!Memory.paths.sourceC)
-        Memory.paths.sourceC = {};
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
             delete Memory.creeps[name];

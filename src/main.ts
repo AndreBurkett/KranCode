@@ -22,12 +22,6 @@ var roomController = require('./roomController');
 
 module.exports.loop = function()
 {
-    //Initialize Memory
-    if(!Memory.paths)
-    Memory.paths = {};
-    if(!Memory.paths.sourceC)
-    Memory.paths.sourceC = {};
-
     //Clear Memory on Respawn
     /*var room = Game.spawns.Spawn1.room;
     if(room.survivalInfo.score == 0) {
