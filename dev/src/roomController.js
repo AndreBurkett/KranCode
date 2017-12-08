@@ -14,7 +14,8 @@ function roomController(room) {
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
     if (room.controller) {
-        var ctrlContainer = room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
+        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+        console.log(ctrlContainer);
         for (let i in hostiles) {
             if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
                 if (room.controller.safeModeAvailable) {
