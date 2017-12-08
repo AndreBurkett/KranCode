@@ -10,12 +10,14 @@ class architect {
         }
     }
     createRoads() {
-        if (!this.r.memory.paths) {
+        if (!this.r.memory.paths)
             this.r.memory.paths = {};
+        if (!this.r.memory.paths.controllerPath)
             this.r.memory.paths.controllerPath = {};
+        if (!this.r.memory.paths.spawnToContainer)
             this.r.memory.paths.spawnToContainer = {};
+        if (!this.r.memory.paths.containerToContainer)
             this.r.memory.paths.containerToContainer = {};
-        }
         var container = this.r.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
         var clength = container.length;
         for (let i in this.spawns) {
