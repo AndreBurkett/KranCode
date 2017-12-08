@@ -127,7 +127,7 @@ class architect {
     }
     createControllerContainer() {
         if (this.r.controller && this.r.memory.paths.controllerPath) {
-            let sites = Object.keys(this.r.memory.paths.controllerPath).length;
+            let sites = Object.keys(this.r.memory.paths.controllerPath[0].path).length;
             this.r.visual.circle(this.r.memory.paths.controllerPath[0].path[sites].x, this.r.memory.paths.controllerPath[0].path[sites].y);
         }
     }
