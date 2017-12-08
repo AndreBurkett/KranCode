@@ -81,7 +81,7 @@ export class architect implements constructionManager {
             this.r.memory.paths.spawns = this.spawns.length;
         }
 
-        if (this.r.memory.paths.containers != clength || ticks == 50) {
+        if (this.r.memory.paths.containers != clength || ticks >= 0) {
             //Get Container to Container Path
             var maxPaths = 0
             switch (clength) {
@@ -100,7 +100,7 @@ export class architect implements constructionManager {
                 for (let i = 0; i < clength - 1; i++) {
                     for (let j = i + 1; j < clength; j++) {
                         let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true });
-                        this.r.memory.paths.containerToContainer[pathNum] = path;
+                        this.r.memory.paths.containerToContainer[pathNum] = this.r.serializePath(path);
                         pathNum++;
                     }
                 }
@@ -141,6 +141,11 @@ export class architect implements constructionManager {
                 this.sources[i].containerSpot;
                 this.r.createConstructionSite(this.sources[i].containerSpot[0], this.sources[i].containerSpot[1], STRUCTURE_CONTAINER);
             }
+        }
+    }
+    public createControllerContainer(){
+        if(this.r.controller && this.r.memory.paths.spawnToContainer){
+            let site = this.r.memory.paths.spawnToContainer.length;
         }
     }
 }

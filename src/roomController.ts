@@ -27,7 +27,6 @@ function roomController(room: Room) {
         }
     }
 
-    //var test = new towerManager(towers[0]);
     for (let i in towers){
         towerManager.run(towers[i]);
     }
@@ -36,7 +35,7 @@ function roomController(room: Room) {
         sources[s].memory.get;
     }
 
-
+    //Create Construction Manager
     var cm = new architect(room);
     cm.createRoads();
     cm.createSourceContainers();
