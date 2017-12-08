@@ -223,11 +223,11 @@ function roomController(room) {
         if (tfCreeps < 1)
             AssignTask('withdraw', 1, 'towerFill');
     }
-    let tCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'transport' || c.memory.taskQ === 'transport' }).length;
-    if (ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity) && tCreeps < 2)
-        AssignTask('withdraw', 5, 'transport');
     let iCreep = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'idle' }).length;
     AssignTask('withdraw', iCreep, 'upgrade');
+    let tCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'transport' || c.memory.taskQ === 'transport' }).length;
+    if (ctrlContainer[0] && ctrlContainer[0].store[RESOURCE_ENERGY] < (.85 * ctrlContainer[0].storeCapacity) && tCreeps < 2)
+        AssignTask('withdraw', 10, 'transport');
     let wCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'withdraw' && c.carry[RESOURCE_ENERGY] === c.carryCapacity });
     for (let i in wCreeps) {
         wCreeps[i].memory.task = wCreeps[i].memory.taskQ;
