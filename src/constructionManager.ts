@@ -37,7 +37,7 @@ export class architect implements constructionManager {
             this.r.memory.paths.spawns = this.spawns.length;
 
         //Get Spawn Paths
-        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 48) {
+        if (this.r.memory.paths.spawns != this.spawns.length || ticks !== 48) {
             for (let i in this.spawns) {
                 if (this.r.controller) {
                     //Get Spawn to Controller Path
@@ -146,7 +146,7 @@ export class architect implements constructionManager {
     public createControllerContainer(){
         if(this.r.controller && this.r.memory.paths.controllerPath){
             let sites = Object.keys(this.r.memory.paths.controllerPath[0].path).length;
-            this.r.visual.circle(this.r.memory.paths.controllerPath[0].path[sites].x,this.r.memory.paths.controllerPath[0].path[sites].y);
+            this.r.visual.circle(this.r.memory.paths.controllerPath[0].path[sites-1].x,this.r.memory.paths.controllerPath[0].path[sites-1].y);
         }
     }
 }

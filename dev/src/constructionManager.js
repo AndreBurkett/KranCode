@@ -28,7 +28,7 @@ class architect {
             this.r.memory.paths.containers = clength;
         if (!this.r.memory.paths.spawns)
             this.r.memory.paths.spawns = this.spawns.length;
-        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 48) {
+        if (this.r.memory.paths.spawns != this.spawns.length || ticks !== 48) {
             for (let i in this.spawns) {
                 if (this.r.controller) {
                     if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
@@ -128,7 +128,7 @@ class architect {
     createControllerContainer() {
         if (this.r.controller && this.r.memory.paths.controllerPath) {
             let sites = Object.keys(this.r.memory.paths.controllerPath[0].path).length;
-            this.r.visual.circle(this.r.memory.paths.controllerPath[0].path[sites].x, this.r.memory.paths.controllerPath[0].path[sites].y);
+            this.r.visual.circle(this.r.memory.paths.controllerPath[0].path[sites - 1].x, this.r.memory.paths.controllerPath[0].path[sites - 1].y);
         }
     }
 }
