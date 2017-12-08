@@ -126,9 +126,9 @@ class architect {
         }
     }
     createControllerContainer() {
-        if (this.r.controller && this.r.memory.paths.spawnToContainer) {
-            let sites = Object.keys(this.r.memory.paths.spawnToContainer).length;
-            this.r.visual.circle(this.r.memory.paths.spawnToContainer[sites].x, this.r.memory.paths.spawnToContainer[sites].y);
+        if (this.r.controller && this.r.memory.paths.controllerPath) {
+            let sites = Object.keys(this.r.memory.paths.controllerPath).length;
+            this.r.visual.circle(this.r.memory.paths.controllerPath[0].path[sites].x, this.r.memory.paths.controllerPath[0].path[sites].y);
         }
     }
 }
