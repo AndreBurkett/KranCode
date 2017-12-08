@@ -64,8 +64,8 @@ export class architect implements constructionManager {
         }
         if(!this.r.memory.paths.containerToContainer[maxPaths]){
             var pathNum = 0;
-            for(let i=0; i<clength-2; i++){
-                for(let j=i; j<clength-1;j++){
+            for(let i=0; i<clength-1; i++){
+                for(let j=i+1; j<clength;j++){
                     let path = PathFinder.search(container[i].pos, container[j].pos, {swampCost:1, ignoreRoads: true});
                     this.r.memory.paths.containerToContainer[pathNum] = path;
                     pathNum++;
@@ -90,7 +90,8 @@ export class architect implements constructionManager {
         //Create Container To Container Roads
         for(let i in this.r.memory.paths.containerToContainer){
             for(let j in this.r.memory.paths.containerToContainer[i].path){
-                this.r.visual.circle(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y);
+                //this.r.visual.circle(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y);
+                this.r.createConstructionSite(this.r.memory.paths.containerToContainer[i].path[j].x, this.r.memory.paths.containerToContainer[i].path[j].y, STRUCTURE_ROAD)
             }
         }
     }
