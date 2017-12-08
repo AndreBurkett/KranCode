@@ -17,8 +17,8 @@ function roomController(room: Room) {
     let hostiles = room.find<Creep>(FIND_HOSTILE_CREEPS);
 
     if (room.controller) {
-        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s:Structure) => s.structureType === STRUCTURE_CONTAINER});//room.lookForAt(LOOK_STRUCTURES, room.controller.containerSpot[0], room.controller.containerSpot[1]);
-        console.log(ctrlContainer);
+        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s:Structure) => s.structureType === STRUCTURE_CONTAINER});
+        if(ctrlContainer[0]) ctrlContainer[0].transportTarget = true;
         for (let i in hostiles) {
             if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
                 if (room.controller.safeModeAvailable) {
@@ -56,13 +56,6 @@ function roomController(room: Room) {
         room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y + 1, STRUCTURE_EXTENSION);
         //Create Tower around Room spawns
         room.createConstructionSite(rSpawn[i].pos.x, rSpawn[i].pos.y + 2, STRUCTURE_TOWER);
-    }
-    //Create Control Container Blueprints
-    if(ctrlContainer[0]) {
-        ctrlContainer[0].transportTarget = true;
-    }
-    else if(room.controller) {
-        room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
 
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////

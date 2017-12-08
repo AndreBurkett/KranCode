@@ -15,7 +15,8 @@ function roomController(room) {
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
     if (room.controller) {
         var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
-        console.log(ctrlContainer);
+        if (ctrlContainer[0])
+            ctrlContainer[0].transportTarget = true;
         for (let i in hostiles) {
             if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
                 if (room.controller.safeModeAvailable) {
@@ -45,12 +46,6 @@ function roomController(room) {
         room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y - 1, STRUCTURE_EXTENSION);
         room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y + 1, STRUCTURE_EXTENSION);
         room.createConstructionSite(rSpawn[i].pos.x, rSpawn[i].pos.y + 2, STRUCTURE_TOWER);
-    }
-    if (ctrlContainer[0]) {
-        ctrlContainer[0].transportTarget = true;
-    }
-    else if (room.controller) {
-        room.createConstructionSite(room.controller.containerSpot[0], room.controller.containerSpot[1], STRUCTURE_CONTAINER);
     }
     var spawnRole = 'genWorker';
     var spawnSpecialty;
