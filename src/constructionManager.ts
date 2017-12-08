@@ -25,18 +25,20 @@ export class architect implements constructionManager {
 
         for (let i in this.spawns) {
             if (this.r.controller){
+                if(this.r.memory.paths.controllerPath[this.spawns.length-1])
+                console.log('spawnPath exists');
                 let path1 = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true})
+                this.r.memory.paths.controllerPath[i] = path1;
+
                 var container = this.r.find<StructureContainer>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER})
                 var pathNum = 0;
-                if (this.r.memory.paths.spawnToContainer[container.length - 1]) {
-                    console.log('success ' + container.length);
+                if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     for (let j in container) {
                         let path2 = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true })
                         this.r.memory.paths.spawnToContainer[pathNum] = path2;
                         pathNum++;
                     }
                 }
-                this.r.memory.paths.controllerPath[i] = path1;
             }
         }
         //Create Spawn to Controller Roads

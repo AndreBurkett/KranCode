@@ -4,7 +4,6 @@ require('./prototype.creep');
 const constructionManager_1 = require("./constructionManager");
 var towerManager = require('./towerManager');
 function roomController(room) {
-    console.log(room.memory.paths);
     let sourceLen = room.sources.length;
     let sources = room.find(FIND_SOURCES);
     let containers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
