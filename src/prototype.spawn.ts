@@ -5,8 +5,10 @@ interface StructureSpawn{
 }
 StructureSpawn.prototype.sCreep = function(role, specialty?){
     var body = [];
-    if(this.room.find(FIND_MY_CREEPS).length > 0 && this.room.find(FIND_STRUCTURES, {filter: (s:StructureContainer) => s.structureType === STRUCTURE_CONTAINER}).length > 0 && this.room.find(FIND_MY_CREEPS).length >= 4)
+    if(this.room.find(FIND_STRUCTURES, {filter: (s:StructureContainer) => s.structureType === STRUCTURE_CONTAINER}).length > 0 && this.room.find(FIND_MY_CREEPS, {filter: (c) => c.memory.specialty == 'miner'}).length >= 2)
         var energyCap:number = this.room.energyCapacityAvailable
+    else if(this.room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty == 'miner'}).length > 0)
+    var energyCap:number = Math.max(this.room.energyCapacityAvailable /2, 300)
     else
         var energyCap:number = 300;
     var numParts: number;

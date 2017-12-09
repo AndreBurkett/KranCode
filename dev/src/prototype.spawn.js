@@ -2,8 +2,10 @@
 var creepName = require('./util.nameBuilder');
 StructureSpawn.prototype.sCreep = function (role, specialty) {
     var body = [];
-    if (this.room.find(FIND_MY_CREEPS).length > 0 && this.room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER }).length > 0 && this.room.find(FIND_MY_CREEPS).length >= 4)
+    if (this.room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER }).length > 0 && this.room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty == 'miner' }).length >= 2)
         var energyCap = this.room.energyCapacityAvailable;
+    else if (this.room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty == 'miner' }).length > 0)
+        var energyCap = Math.max(this.room.energyCapacityAvailable / 2, 300);
     else
         var energyCap = 300;
     var numParts;
