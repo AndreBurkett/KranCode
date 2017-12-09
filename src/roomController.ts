@@ -43,23 +43,6 @@ function roomController(room: Room) {
     cm.createSourceContainers();
     cm.createControllerContainer();
 
-
-    /*let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
-    for(let i in rSpawn){
-        //Create Road Blueprints around room spawns
-        room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
-        room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
-        room.createConstructionSite(rSpawn[i].pos.x, rSpawn[i].pos.y - 1, STRUCTURE_ROAD);
-        room.createConstructionSite(rSpawn[i].pos.x, rSpawn[i].pos.y + 1, STRUCTURE_ROAD);
-        //Create Extension Blueprints around room spawns
-        room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y - 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y + 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y - 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y + 1, STRUCTURE_EXTENSION);
-        //Create Tower around Room spawns
-        room.createConstructionSite(rSpawn[i].pos.x, rSpawn[i].pos.y + 2, STRUCTURE_TOWER);
-    }*/
-
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////
 
     var spawnRole  = 'genWorker';

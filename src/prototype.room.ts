@@ -10,6 +10,7 @@ interface RoomMemory{
     sourceContainers: StructureContainer;
     allContainers: StructureContainer;
     paths: any;
+    bunker: number;
     //iCreep(): Creep;
     //mCreep(): Creep;
 }
