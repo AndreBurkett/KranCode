@@ -41,8 +41,9 @@ function roomController(room: Room) {
     cm.createRoads();
     cm.createSourceContainers();
     cm.createControllerContainer();
+    cm.createStructures();
 
-    let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
+    /*let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
     for(let i in rSpawn){
         //Create Road Blueprints around room spawns
         room.createConstructionSite(rSpawn[i].pos.x - 1, rSpawn[i].pos.y, STRUCTURE_ROAD);
@@ -56,7 +57,7 @@ function roomController(room: Room) {
         room.createConstructionSite(rSpawn[i].pos.x + 1, rSpawn[i].pos.y + 1, STRUCTURE_EXTENSION);
         //Create Tower around Room spawns
         room.createConstructionSite(rSpawn[i].pos.x, rSpawn[i].pos.y + 2, STRUCTURE_TOWER);
-    }
+    }*/
 
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////
 
