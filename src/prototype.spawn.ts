@@ -12,9 +12,9 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
     var numParts: number;
     switch (role){
         case 'deliveryWorker':
-            numParts = Math.floor(energyCap/100)
+            numParts = Math.floor(energyCap/150)
             for(let i=0;i<numParts;i++)
-                body.push(CARRY,MOVE);
+                body.push(CARRY,CARRY,MOVE);
             return this.spawnCreep(body, creepName.getName('d'), {memory: {role: role, task: 'idle'}});
             break;
         case 'genWorker':

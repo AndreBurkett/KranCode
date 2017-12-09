@@ -17,7 +17,7 @@ function roomController(room) {
         for (let i in Memory.rooms) {
             let adjacentRoom = Game.map.describeExits(room.name);
             for (let j = 1; j <= 7; j = j + 2) {
-                console.log(adjacentRoom[j]);
+                console.log(Memory.rooms[adjacentRoom[j]]);
             }
         }
     }
