@@ -156,6 +156,10 @@ export class architect implements constructionManager {
         this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
         this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 2, STRUCTURE_ROAD);
         this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 3, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x + 2, rSpawn.pos.y - 2, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y - 1, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x + 4, rSpawn.pos.y, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x + 5, rSpawn.pos.y + 1, STRUCTURE_ROAD);
 
         //Create Extension Blueprints
         this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 1, STRUCTURE_EXTENSION);
