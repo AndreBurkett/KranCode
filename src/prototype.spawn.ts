@@ -46,7 +46,7 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
                 break;
         case 'statWorker':
             body.push(MOVE, MOVE,CARRY);
-            energyCap = energyCap - 150;
+            energyCap = Math.min(energyCap, 450) - 150;
             numParts = Math.floor(energyCap/100);
             for(let i=0; i<numParts; i++){
                 body.push(WORK);
