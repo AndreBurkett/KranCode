@@ -1,3 +1,4 @@
+import {Scout} from './task/Task.scout'
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -5,8 +6,7 @@ require('./prototype.spawn');
 require('./prototype.container');
 require('./prototype.controller');
 require('./prototype.creep');
-import {Task} from './task/Task'
-import {scout} from './task/Task.scout'
+
 var combatMelee = require('./combat.melee');
 
 var taskBuild = require('./task.build');
@@ -69,7 +69,7 @@ module.exports.loop = function()
                 taskRepair.run(Game.creeps[name]);
                 break;
             case 'scout':
-                new scout(Game.creeps[name]);
+                new Scout(Game.creeps[name]).run;
                 break;
             case 'towerFill':
                 towerFill.run(Game.creeps[name]);

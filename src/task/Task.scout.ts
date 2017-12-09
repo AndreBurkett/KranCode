@@ -1,6 +1,6 @@
 import {Task} from './Task';
 
-export class scout extends Task{
+export class Scout extends Task{
 
     constructor(c: Creep){
         super(c);
