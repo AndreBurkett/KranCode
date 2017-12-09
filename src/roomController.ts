@@ -38,10 +38,11 @@ function roomController(room: Room) {
 
     //Create Construction Manager
     var cm = new architect(room);
+    cm.createBunker();
     cm.createRoads();
     cm.createSourceContainers();
     cm.createControllerContainer();
-    cm.createStructures();
+
 
     /*let rSpawn = room.find<StructureSpawn>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN});
     for(let i in rSpawn){

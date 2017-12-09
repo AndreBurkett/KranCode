@@ -32,10 +32,10 @@ function roomController(room) {
         sources[s].memory.get;
     }
     var cm = new constructionManager_1.architect(room);
+    cm.createBunker();
     cm.createRoads();
     cm.createSourceContainers();
     cm.createControllerContainer();
-    cm.createStructures();
     var spawnRole = 'genWorker';
     var spawnSpecialty;
     var sites = room.find(FIND_CONSTRUCTION_SITES);
