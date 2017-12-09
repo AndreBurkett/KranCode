@@ -5,6 +5,7 @@ require('./prototype.spawn');
 require('./prototype.container');
 require('./prototype.controller');
 require('./prototype.creep');
+import {Task} from './task/Task'
 import {scout} from './task/Task.scout'
 var combatMelee = require('./combat.melee');
 
