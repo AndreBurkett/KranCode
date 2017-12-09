@@ -116,8 +116,10 @@ class architect {
                 target.push(new RoomPosition(this.sources[i].pos.x, this.sources[i].pos.y + 2, this.r.name));
             }
             if (target.length > 0) {
-                var site = this.spawns[0].pos.findClosestByRange(target);
-                this.r.createConstructionSite(site, STRUCTURE_CONTAINER);
+                if (this.spawns[0]) {
+                    var site = this.spawns[0].pos.findClosestByRange(target);
+                    this.r.createConstructionSite(site, STRUCTURE_CONTAINER);
+                }
             }
             else {
                 this.sources[i].containerSpot;
