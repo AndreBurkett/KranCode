@@ -38,8 +38,10 @@ function roomController(room: Room) {
 
     //Create Construction Manager
     var cm = new architect(room);
-    cm.createBunker();
-    cm.createRoads();
+    if(spawns.length > 0){
+        cm.createBunker();
+        cm.createRoads();
+    }
     cm.createSourceContainers();
     cm.createControllerContainer();
 

@@ -32,8 +32,10 @@ function roomController(room) {
         sources[s].memory.get;
     }
     var cm = new constructionManager_1.architect(room);
-    cm.createBunker();
-    cm.createRoads();
+    if (spawns.length > 0) {
+        cm.createBunker();
+        cm.createRoads();
+    }
     cm.createSourceContainers();
     cm.createControllerContainer();
     var spawnRole = 'genWorker';
