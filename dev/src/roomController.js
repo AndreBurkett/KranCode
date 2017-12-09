@@ -10,7 +10,7 @@ function roomController(room) {
     let filledContainers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50 });
     let numContainers = containers.length || 0;
     var sourceContainerEnergy = room.getMineEnergy();
-    let spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType == STRUCTURE_SPAWN });
+    let spawns = room.find(FIND_MY_SPAWNS);
     let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
     if (room.controller) {
