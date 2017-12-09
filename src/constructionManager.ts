@@ -9,7 +9,7 @@ export class architect implements constructionManager {
     sources = [];
 
     public constructor(room: Room) {
-        this.spawns = room.find<StructureSpawn>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_SPAWN })
+        this.spawns = room.find<StructureSpawn>(FIND_MY_SPAWNS)
         this.r = room;
         for (let i in room.sources) {
             this.sources.push(room.sources[i])

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class architect {
     constructor(room) {
         this.sources = [];
-        this.spawns = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_SPAWN });
+        this.spawns = room.find(FIND_MY_SPAWNS);
         this.r = room;
         for (let i in room.sources) {
             this.sources.push(room.sources[i]);
