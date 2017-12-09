@@ -8,6 +8,7 @@ class Scout extends Task_1.Task {
     run() {
         this.c;
         this.setDestination();
+        this.c.moveTo(new RoomPosition(25, 25, 'E17N39'));
     }
     setDestination() {
         console.log(Game.map.describeExits(this.c.room.name));

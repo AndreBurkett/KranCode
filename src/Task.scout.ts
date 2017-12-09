@@ -9,6 +9,7 @@ export class Scout extends Task{
     run(){
         this.c;
         this.setDestination();
+        this.c.moveTo(new RoomPosition(25,25, 'E17N39'));
     }
 
     private setDestination(){
