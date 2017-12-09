@@ -43,7 +43,7 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
                 return this.spawnCreep(body, creepName.getName('s'), {memory: {role: role, task: 'idle'}})
                 break;
         case 'statWorker':
-            body.push(MOVE,CARRY);
+            body.push(MOVE, MOVE,CARRY);
             energyCap = energyCap - 150;
             numParts = Math.floor(energyCap/100);
             for(let i=0; i<numParts; i++){
