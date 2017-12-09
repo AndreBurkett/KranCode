@@ -16,6 +16,11 @@ function roomController(room: Room) {
     let towers = room.find<StructureTower>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_TOWER})
     let hostiles = room.find<Creep>(FIND_HOSTILE_CREEPS);
 
+    for(let i in Memory.rooms){
+        console.log(Memory.rooms[i]);
+    }
+
+
     if (room.controller) {
         var roomOwner;
         if(room.controller.level > 0){
@@ -126,8 +131,7 @@ function roomController(room: Room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else
-            disableSpawning = true;
+        else disableSpawning = true;
     }
     else{
         if (buildCreeps * 10 < sites.length) {
@@ -141,8 +145,7 @@ function roomController(room: Room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else
-            disableSpawning = true;
+        else disableSpawning = true;
     }
 
 
@@ -326,19 +329,6 @@ function roomController(room: Room) {
                 creep[i].memory.target = target; //Todo assign closest creep to target
             else
                 delete creep[i].memory.target;
-        }
-    }
-
-    //Start & Stop Spawning
-    var idleCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest'});
-    if (idleCreeps && idleCreeps.length >= 5) {
-        for (let spawnName in Game.spawns) {
-            Game.spawns[spawnName].spawnEnabled = false;
-        }
-    }
-    else {
-        for (let spawnName in Game.spawns) {
-            Game.spawns[spawnName].spawnEnabled = true;
         }
     }
 }

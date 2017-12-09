@@ -13,6 +13,9 @@ function roomController(room) {
     let spawns = room.find(FIND_MY_SPAWNS);
     let towers = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
+    for (let i in Memory.rooms) {
+        console.log(Memory.rooms[i]);
+    }
     if (room.controller) {
         var roomOwner;
         if (room.controller.level > 0) {
@@ -287,17 +290,6 @@ function roomController(room) {
                 creep[i].memory.target = target;
             else
                 delete creep[i].memory.target;
-        }
-    }
-    var idleCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task == 'idle' || c.memory.task == 'withdraw' || c.memory.task === 'harvest' });
-    if (idleCreeps && idleCreeps.length >= 5) {
-        for (let spawnName in Game.spawns) {
-            Game.spawns[spawnName].spawnEnabled = false;
-        }
-    }
-    else {
-        for (let spawnName in Game.spawns) {
-            Game.spawns[spawnName].spawnEnabled = true;
         }
     }
 }
