@@ -49,7 +49,7 @@ module.exports.loop = function () {
                 taskRepair.run(Game.creeps[name]);
                 break;
             case 'scout':
-                new Task_scout_1.Scout(Game.creeps[name]).run;
+                new Task_scout_1.Scout(Game.creeps[name]).run();
                 break;
             case 'towerFill':
                 towerFill.run(Game.creeps[name]);
