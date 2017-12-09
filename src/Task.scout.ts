@@ -13,6 +13,6 @@ export class Scout extends Task{
     }
 
     private setDestination(){
-        console.log(Game.map.describeExits(this.c.room.name));
+        //console.log(Game.map.describeExits(this.c.room.name));
     }
 }
