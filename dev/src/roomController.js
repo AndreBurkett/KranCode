@@ -11,9 +11,18 @@ function roomController(room) {
     let numContainers = containers.length || 0;
     var sourceContainerEnergy = room.getMineEnergy();
     let spawns = room.find(FIND_MY_SPAWNS);
-    let towers = room.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
+    let towers = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
     if (room.controller) {
+        var roomOwner;
+        if (room.controller.level > 0) {
+            if (room.controller.my)
+                roomOwner = 'Me';
+            else
+                roomOwner = 'Hostile';
+        }
+        else
+            roomOwner = 'Neutral';
         var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
         if (ctrlContainer[0])
             ctrlContainer[0].transportTarget = true;
@@ -31,13 +40,15 @@ function roomController(room) {
     for (let s in sources) {
         sources[s].memory.get;
     }
-    var cm = new constructionManager_1.architect(room);
-    if (spawns.length > 0) {
-        cm.createBunker();
-        cm.createRoads();
+    if (roomOwner != 'Hostile') {
+        var cm = new constructionManager_1.architect(room);
+        if (spawns.length > 0) {
+            cm.createBunker();
+            cm.createRoads();
+            cm.createControllerContainer();
+        }
+        cm.createSourceContainers();
     }
-    cm.createSourceContainers();
-    cm.createControllerContainer();
     var spawnRole = 'genWorker';
     var spawnSpecialty;
     var sites = room.find(FIND_CONSTRUCTION_SITES);

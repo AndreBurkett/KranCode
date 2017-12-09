@@ -13,10 +13,16 @@ function roomController(room: Room) {
     var sourceContainerEnergy = room.getMineEnergy();
 
     let spawns = room.find<StructureSpawn>(FIND_MY_SPAWNS);
-    let towers = room.find(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_TOWER})
+    let towers = room.find<StructureTower>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_TOWER})
     let hostiles = room.find<Creep>(FIND_HOSTILE_CREEPS);
 
     if (room.controller) {
+        var roomOwner;
+        if(room.controller.level > 0){
+            if(room.controller.my) roomOwner = 'Me';
+            else roomOwner = 'Hostile'
+        }
+        else roomOwner = 'Neutral'
         var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s:Structure) => s.structureType === STRUCTURE_CONTAINER});
         if(ctrlContainer[0]) ctrlContainer[0].transportTarget = true;
         for (let i in hostiles) {
@@ -37,13 +43,15 @@ function roomController(room: Room) {
     }
 
     //Create Construction Manager
-    var cm = new architect(room);
-    if(spawns.length > 0){
-        cm.createBunker();
-        cm.createRoads();
+    if (roomOwner != 'Hostile') {
+        var cm = new architect(room);
+        if (spawns.length > 0) {
+            cm.createBunker();
+            cm.createRoads();
+            cm.createControllerContainer();
+        }
+        cm.createSourceContainers();
     }
-    cm.createSourceContainers();
-    cm.createControllerContainer();
 
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////
 
@@ -51,12 +59,12 @@ function roomController(room: Room) {
     var spawnSpecialty;
     var sites = room.find(FIND_CONSTRUCTION_SITES);
     let maxMiners = 2 * sourceLen;
-    let harvesterCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'harvester'}).length;
-    let mineCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner'}).length;
-    let deliveryCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'deliveryWorker'}).length;
-    let upgradeCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader'}).length;
+    let harvesterCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'harvester'}).length;
+    let mineCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner'}).length;
+    let deliveryCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'deliveryWorker'}).length;
+    let upgradeCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader'}).length;
     let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'mobileWorker'}).length
-    let roomCreeps = room.find(FIND_MY_CREEPS).length;
+    let roomCreeps = room.find<Creep>(FIND_MY_CREEPS).length;
     let pikeCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'}).length;
     let disableSpawning = false;
     if(harvesterCreeps < 1){
