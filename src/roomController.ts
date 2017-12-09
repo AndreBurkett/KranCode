@@ -25,8 +25,10 @@ function roomController(room: Room) {
                 }
                 else{
                     let scoutCreep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'})[0];
-                    scoutCreep.memory.task = 'scout';
-                    scoutCreep.memory.targetRoom = adjacentRoom[j];
+                    if(scoutCreep && scoutCreep.memory && scoutCreep.memory.task){
+                        scoutCreep.memory.task = 'scout';
+                        scoutCreep.memory.targetRoom = adjacentRoom[j];
+                    }
                 }
             }
         }
