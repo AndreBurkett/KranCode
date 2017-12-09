@@ -16,18 +16,22 @@ function roomController(room: Room) {
     let towers = room.find<StructureTower>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_TOWER})
     let hostiles = room.find<Creep>(FIND_HOSTILE_CREEPS);
 
-    for(let i in Memory.rooms){
-        console.log(Memory.rooms[i]);
+    if (room.memory.owner === 'Me') {
+        for (let i in Memory.rooms) {
+            let adjacentRoom = Game.map.describeExits(room.name);
+            for (let j = 1; j <= 7; j = j + 2) {
+                console.log(adjacentRoom[j]);
+            }
+        }
     }
 
 
     if (room.controller) {
-        var roomOwner;
         if(room.controller.level > 0){
-            if(room.controller.my) roomOwner = 'Me';
-            else roomOwner = 'Hostile'
+            if(room.controller.my) room.memory.owner = 'Me';
+            else room.memory.owner = 'Hostile'
         }
-        else roomOwner = 'Neutral'
+        else room.memory.owner = 'Neutral'
         var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s:Structure) => s.structureType === STRUCTURE_CONTAINER});
         if(ctrlContainer[0]) ctrlContainer[0].transportTarget = true;
         for (let i in hostiles) {
@@ -48,7 +52,7 @@ function roomController(room: Room) {
     }
 
     //Create Construction Manager
-    if (roomOwner != 'Hostile') {
+    if (room.memory.owner != 'Hostile') {
         var cm = new architect(room);
         if (spawns.length > 0) {
             cm.createBunker();

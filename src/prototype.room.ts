@@ -11,6 +11,7 @@ interface RoomMemory{
     allContainers: StructureContainer;
     paths: any;
     bunker: number;
+    owner: String;
     //iCreep(): Creep;
     //mCreep(): Creep;
 }

@@ -13,19 +13,23 @@ function roomController(room) {
     let spawns = room.find(FIND_MY_SPAWNS);
     let towers = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
-    for (let i in Memory.rooms) {
-        console.log(Memory.rooms[i]);
+    if (room.memory.owner === 'Me') {
+        for (let i in Memory.rooms) {
+            let adjacentRoom = Game.map.describeExits(room.name);
+            for (let j = 1; j <= 7; j = j + 2) {
+                console.log(adjacentRoom[j]);
+            }
+        }
     }
     if (room.controller) {
-        var roomOwner;
         if (room.controller.level > 0) {
             if (room.controller.my)
-                roomOwner = 'Me';
+                room.memory.owner = 'Me';
             else
-                roomOwner = 'Hostile';
+                room.memory.owner = 'Hostile';
         }
         else
-            roomOwner = 'Neutral';
+            room.memory.owner = 'Neutral';
         var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
         if (ctrlContainer[0])
             ctrlContainer[0].transportTarget = true;
@@ -43,7 +47,7 @@ function roomController(room) {
     for (let s in sources) {
         sources[s].memory.get;
     }
-    if (roomOwner != 'Hostile') {
+    if (room.memory.owner != 'Hostile') {
         var cm = new constructionManager_1.architect(room);
         if (spawns.length > 0) {
             cm.createBunker();
