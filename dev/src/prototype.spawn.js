@@ -37,7 +37,7 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
             break;
         case 'scout':
             body.push(MOVE);
-            return this.spawnCreep(body, creepName.getName('s'), { memory: { role: role, task: 'idle' } });
+            return this.spawnCreep(body, creepName.getName('s'), { memory: { role: role, home: this.room.name, task: 'idle' } });
             break;
         case 'statWorker':
             body.push(MOVE, MOVE, CARRY);
