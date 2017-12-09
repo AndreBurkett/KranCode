@@ -131,7 +131,7 @@ function roomController(room) {
             disableSpawning = true;
     }
     else {
-        if (buildCreeps * 10 < sites.length) {
+        if (buildCreeps < sites.length / 20) {
             spawnRole = 'mobileWorker';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole);
