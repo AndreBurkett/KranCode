@@ -14,6 +14,7 @@ export class architect implements constructionManager {
         for (let i in room.sources) {
             this.sources.push(room.sources[i])
         }
+        if (!this.r.memory.paths) this.r.memory.paths = {};
     }
     public createRoads() {
         let start = Game.cpu.getUsed();
