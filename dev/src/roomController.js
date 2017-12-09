@@ -222,7 +222,7 @@ function roomController(room) {
         else if (hCreeps <= 1 && sourceContainerEnergy > 750)
             AssignTask('withdraw', 1, 'harvest');
     }
-    if (sites && sites.length > 0) {
+    if (sites && sites.length > 0 && mineCreeps > 1) {
         let specBuilders = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'builder' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'build' });
         let bCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.task === 'build' || c.memory.taskQ === 'build' }).length;
         for (let i in specBuilders) {

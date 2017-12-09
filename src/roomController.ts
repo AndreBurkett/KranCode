@@ -243,7 +243,7 @@ function roomController(room: Room) {
     }
 
     //Assign Build Task
-    if(sites && sites.length > 0){
+    if(sites && sites.length > 0 && mineCreeps > 1){
         let specBuilders = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'builder' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'build'})
         let bCreeps: number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'build' || c.memory.taskQ === 'build'}).length;
         for(let i in specBuilders){
