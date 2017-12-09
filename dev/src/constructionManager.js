@@ -133,18 +133,18 @@ class architect {
     }
     createStructures() {
         let rSpawn = this.spawns[0];
-        room.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
-        room.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 2, STRUCTURE_ROAD);
-        room.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 3, STRUCTURE_ROAD);
-        room.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 2, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 2, rSpawn.pos.y - 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 2, rSpawn.pos.y, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 4, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
-        room.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
-        room.createConstructionSite(rSpawn.pos.x - 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
+        this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 2, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 3, STRUCTURE_ROAD);
+        this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 1, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 2, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 2, rSpawn.pos.y - 1, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 2, rSpawn.pos.y, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 4, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
+        this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
+        this.r.createConstructionSite(rSpawn.pos.x - 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
     }
 }
 exports.architect = architect;
