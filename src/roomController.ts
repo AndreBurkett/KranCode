@@ -17,11 +17,10 @@ function roomController(room: Room) {
     let hostiles = room.find<Creep>(FIND_HOSTILE_CREEPS);
 
     if (room.memory.owner === 'Me') {
-        for (let i in Memory.rooms) {
-            let adjacentRoom = Game.map.describeExits(room.name);
-            for (let j = 1; j <= 7; j = j + 2) {
-                console.log(Memory.rooms[adjacentRoom[j]]);
-            }
+        let adjacentRoom = Game.map.describeExits(room.name);
+        for (let j = 1; j <= 7; j = j + 2) {
+            if(Memory.rooms[adjacentRoom[j]])
+                console.log(Memory.rooms[adjacentRoom[j]].owner);
         }
     }
 

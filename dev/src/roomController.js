@@ -14,11 +14,10 @@ function roomController(room) {
     let towers = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
     if (room.memory.owner === 'Me') {
-        for (let i in Memory.rooms) {
-            let adjacentRoom = Game.map.describeExits(room.name);
-            for (let j = 1; j <= 7; j = j + 2) {
-                console.log(Memory.rooms[adjacentRoom[j]]);
-            }
+        let adjacentRoom = Game.map.describeExits(room.name);
+        for (let j = 1; j <= 7; j = j + 2) {
+            if (Memory.rooms[adjacentRoom[j]])
+                console.log(Memory.rooms[adjacentRoom[j]].owner);
         }
     }
     if (room.controller) {
