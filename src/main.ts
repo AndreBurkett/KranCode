@@ -1,4 +1,4 @@
-import {Scout} from './task/Task.scout'
+import {Scout} from './Task.scout'
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');

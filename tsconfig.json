@@ -11,8 +11,7 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "baseUrl": "./src/",
-    //"outDir": "./dev/",
-    "out":"./dev/src/main.js",
+    "outDir": "./dev/",
     "types": ["lodash", "typed-screeps", "screeps-profiler"]
   },
   "compileOnSave": false,
