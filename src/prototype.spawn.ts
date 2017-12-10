@@ -26,7 +26,7 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
         case 'mobileWorker':
             numParts = Math.floor(energyCap/300)
             for(let i=0;i<numParts;i++){
-                body.push(MOVE,CARRY,MOVE,CARRY,WORK);
+                body.push(MOVE,MOVE,CARRY,WORK);
             }
             switch(specialty){
                 case 'harvester':

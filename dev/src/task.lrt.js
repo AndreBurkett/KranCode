@@ -6,7 +6,7 @@ const STATE_MOVING = 1;
 const STATE_TARGETING = 2;
 const STATE_WORKING = 3;
 const STATE_DEPOSIT = 4;
-class Mine extends Task_1.Task {
+class Trasport extends Task_1.Task {
     constructor(c) {
         super(c);
     }
@@ -73,5 +73,5 @@ class Mine extends Task_1.Task {
         }
     }
 }
-exports.Mine = Mine;
+exports.Trasport = Trasport;
 //# sourceMappingURL=task.lrt.js.map

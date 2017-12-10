@@ -6,7 +6,7 @@ const STATE_TARGETING = 2;
 const STATE_WORKING = 3;
 const STATE_DEPOSIT = 4;
 
-export class Mine extends Task{
+export class Trasport extends Task{
 
     constructor(c: Creep){
         super(c);
