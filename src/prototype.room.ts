@@ -11,6 +11,7 @@ interface RoomMemory{
     sourceContainers: StructureContainer;
     sourceIds: String;
     allContainers: StructureContainer;
+    numContainers: number;
     paths: any;
     bunker: number;
     owner: String;

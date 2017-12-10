@@ -14,8 +14,11 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
             numParts = Math.floor(energyCap / 150);
             for (let i = 0; i < numParts; i++)
                 body.push(CARRY, CARRY, MOVE);
-            return this.spawnCreep(body, creepName.getName('d'), { memory: { role: role, task: 'idle' } });
-            break;
+            switch (specialty) {
+                case 'satTransporter':
+                    return this.spawnCreep(body, creepName.getName('Lt'), { memory: { role: role, task: 'idle', homeRoom: this.room.name, specialty: specialty } });
+            }
+            return this.spawnCreep(body, creepName.getName('d'), { memory: { role: role, task: 'idle', homeRoom: this.room.name } });
         case 'genWorker':
             body.push(WORK, CARRY, MOVE);
             return this.spawnCreep(body, creepName.getName('g'), { memory: { task: 'idle' } });

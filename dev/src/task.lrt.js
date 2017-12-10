@@ -6,6 +6,7 @@ const STATE_MOVING = 1;
 const STATE_TARGETING = 2;
 const STATE_WORKING = 3;
 const STATE_DEPOSIT = 4;
+const STATE_WITHDRAW = 5;
 class Trasport extends Task_1.Task {
     constructor(c) {
         super(c);
@@ -13,29 +14,49 @@ class Trasport extends Task_1.Task {
     run() {
         if (!this.c.memory.state)
             this.c.memory.state = STATE_SPAWNING;
-        switch (this.c.memory.state) {
-            case STATE_SPAWNING:
-                if (!this.c.memory.targetRoom)
-                    this.c.memory.targetRoom = this.c.room.name;
-                this.c.memory.state = STATE_MOVING;
-                break;
-            case STATE_MOVING:
-                this.Move(this.c.memory.targetRoom);
-                break;
-            case STATE_TARGETING:
-                this.target();
-                break;
-            case STATE_WORKING:
-                this.work();
-                break;
-            case STATE_DEPOSIT:
-                this.deposit();
-                break;
+        if (this.c.carry[RESOURCE_ENERGY] == this.c.carryCapacity) {
+            switch (this.c.memory.state) {
+                case STATE_SPAWNING:
+                    if (!this.c.memory.targetRoom)
+                        this.c.memory.targetRoom = this.c.room.name;
+                    this.c.memory.state = STATE_MOVING;
+                    break;
+                case STATE_MOVING:
+                    this.Move(this.c.memory.homeRoom);
+                    break;
+                case STATE_TARGETING:
+                    this.target('deposit');
+                    break;
+                case STATE_DEPOSIT:
+                    this.deposit();
+                    break;
+            }
+        }
+        else {
+            switch (this.c.memory.state) {
+                case STATE_SPAWNING:
+                    if (!this.c.memory.targetRoom)
+                        this.c.memory.targetRoom = this.c.room.name;
+                    this.c.memory.state = STATE_MOVING;
+                    break;
+                case STATE_MOVING:
+                    this.Move(this.c.memory.targetRoom);
+                    break;
+                case STATE_TARGETING:
+                    this.target('withdraw');
+                    break;
+                case STATE_WITHDRAW:
+                    this.withdraw();
+                    break;
+                case STATE_DEPOSIT:
+                    this.deposit();
+                    break;
+            }
         }
     }
     deposit() {
-        var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER || s.structureType === STRUCTURE_STORAGE });
-        switch (this.c.withdraw(target, RESOURCE_ENERGY)) {
+        var target = Game.getObjectById(this.c.memory.target);
+        switch (this.c.transfer(target, RESOURCE_ENERGY)) {
             case ERR_NOT_IN_RANGE:
                 this.c.moveTo(target);
                 break;
@@ -43,15 +64,33 @@ class Trasport extends Task_1.Task {
                 this.c.memory.state = STATE_MOVING;
                 this.target();
                 break;
+            case OK:
+                this.c.memory.state = STATE_MOVING;
+                delete this.c.memory.targetRoom;
+                break;
         }
     }
-    target() {
-        var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > this.c.carryCapacity });
-        if (target)
-            this.c.memory.target = target.id;
-        this.c.memory.state = STATE_WORKING;
+    target(targetType) {
+        switch (targetType) {
+            case 'withdraw':
+                var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, {
+                    filter: (s) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > this.c.carryCapacity
+                });
+                if (target)
+                    this.c.memory.target = target.id;
+                this.c.memory.state = STATE_WITHDRAW;
+                break;
+            case 'deposit':
+                var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, {
+                    filter: (s) => (s.structureType === STRUCTURE_CONTAINER || s.structureType === STRUCTURE_STORAGE) && s.store[RESOURCE_ENERGY] > this.c.carryCapacity
+                });
+                if (target)
+                    this.c.memory.target = target.id;
+                this.c.memory.state = STATE_DEPOSIT;
+                break;
+        }
     }
-    work() {
+    withdraw() {
         var target;
         target = Game.getObjectById(this.c.memory.target);
         if (!target) {

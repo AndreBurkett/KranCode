@@ -10,12 +10,14 @@ function roomController(room: Room) {
     let containers = room.find<StructureContainer>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
     let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: StructureContainer) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50});
     let numContainers = containers.length || 0;
+    room.memory.numContainers = numContainers;
     var sourceContainerEnergy = room.getMineEnergy();
 
     let spawns = room.find<StructureSpawn>(FIND_MY_SPAWNS);
     let towers = room.find<StructureTower>(FIND_MY_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_TOWER})
     let hostiles = room.find<Creep>(FIND_HOSTILE_CREEPS);
     var smNeeded = 0;
+    var stNeeded = 0;
 
     if (room.memory.owner === 'Me') {
         let adjacentRoom = Game.map.describeExits(room.name);
@@ -39,11 +41,28 @@ function roomController(room: Room) {
                                 else {
                                     smNeeded = 1;
                                 }
+
+                            }
+                            if(Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < 1 && Memory.rooms[adjacentRoom[i]].numContainers > 0){
+                                let satTransporters = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satTransporter' && !c.memory.targetRoom });
+                                if(satTransporters.length > 0){
+                                    for(let j in satTransporters){
+                                        satTransporters[j].memory.task = 'Transport';
+                                        satTransporters[j].memory.targetRoom = adjacentRoom[i];
+                                        delete satTransporters[j].memory.taskQ;
+                                        delete satTransporters[j].memory.state;
+                                        Memory.rooms[adjacentRoom[i]].creeps['satTransporter']++;
+                                    }
+                                }
+                                else{
+                                    stNeeded = 1;
+                                }
                             }
                         }
                         else{
                             Memory.rooms[adjacentRoom[i]].creeps = {};
                             Memory.rooms[adjacentRoom[i]].creeps.satMiner = 0;
+                            Memory.rooms[adjacentRoom[i]].creeps.satTransporter = 0;
                         }
                     }
                 }
@@ -140,6 +159,13 @@ function roomController(room: Room) {
         else if (smNeeded == 1){
             spawnRole = 'mobileWorker';
             spawnSpecialty = 'satMiner';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (stNeeded == 1){
+            spawnRole = 'deliveryWorker';
+            spawnSpecialty = 'satTransporter';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }

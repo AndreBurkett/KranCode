@@ -40,15 +40,7 @@ module.exports.loop = function()
         }
     }
 
-    //Spawn Creeps
-    /*for(let spawnName in Game.spawns) {
-        let spawn = Game.spawns[spawnName];
-        if(spawn.spawnCreep([WORK,CARRY,MOVE,MOVE], {dryRun: true}) && spawn.spawnEnabled);
-        spawn.spawnCreep([WORK,CARRY,MOVE,MOVE],creepName.getName('c'), {memory: {task: 'idle'}});
-    }*/
-
     //Create Room Controllers
-    //Memory.rooms = Game.rooms;
     for(var roomName in Game.rooms) {
         let myRoom = new roomController(Game.rooms[roomName]);
     }
