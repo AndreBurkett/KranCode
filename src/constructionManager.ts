@@ -204,6 +204,7 @@ export class architect implements constructionManager {
             this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
             this.r.createConstructionSite(rSpawn.pos.x - 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y + 2, STRUCTURE_STORAGE);
+            this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y + 4, STRUCTURE_LINK);
 
             this.r.memory.bunker = 0
         }
