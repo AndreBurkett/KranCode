@@ -26,9 +26,9 @@ function roomController(room: Room) {
                         if (Memory.rooms[adjacentRoom[i]].creeps && Memory.rooms[adjacentRoom[i]].creeps.satMiners < 1) {
                             let satMiners = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom })
                             if (satMiners.length > 0) {
-                                for (let i in satMiners) {
-                                    satMiners[i].memory.task = 'mine';
-                                    satMiners[i].memory.targetRoom = adjacentRoom[i];
+                                for (let j in satMiners) {
+                                    satMiners[j].memory.task = 'mine';
+                                    satMiners[j].memory.targetRoom = adjacentRoom[i];
                                     Memory.rooms[adjacentRoom[i]].creeps.satMiners++;
                                 }
                             }
