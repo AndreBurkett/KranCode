@@ -73,6 +73,7 @@ module.exports.loop = function()
                 break;
             case 'Mine':
                 new Mine(Game.creeps[name]).run();
+                break;
             case 'repair':
                 taskRepair.run(Game.creeps[name]);
                 break;

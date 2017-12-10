@@ -55,6 +55,7 @@ module.exports.loop = function () {
                 break;
             case 'Mine':
                 new Task_lrm_1.Mine(Game.creeps[name]).run();
+                break;
             case 'repair':
                 taskRepair.run(Game.creeps[name]);
                 break;
