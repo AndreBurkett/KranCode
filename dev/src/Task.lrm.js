@@ -16,6 +16,7 @@ class Mine extends Task_1.Task {
             case STATE_SPAWNING:
                 if (!this.c.memory.targetRoom)
                     this.c.memory.targetRoom = this.c.room.name;
+                this.c.memory.state = STATE_MOVING;
                 break;
             case STATE_MOVING:
                 this.Move(this.c.memory.targetRoom);

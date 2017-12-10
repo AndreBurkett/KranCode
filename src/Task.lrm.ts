@@ -16,6 +16,7 @@ export class Mine extends Task{
         switch(this.c.memory.state){
             case STATE_SPAWNING:
                 if(!this.c.memory.targetRoom) this.c.memory.targetRoom = this.c.room.name;
+                this.c.memory.state = STATE_MOVING;
                 break;
             case STATE_MOVING:
                 this.Move(this.c.memory.targetRoom)
