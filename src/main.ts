@@ -1,5 +1,6 @@
-import {Scout} from './Task.scout'
-import {Mine} from './Task.lrm'
+import {Scout} from './Task.scout';
+import {Mine} from './Task.lrm';
+import {Transport} from './task.lrt';
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -77,6 +78,9 @@ module.exports.loop = function()
                 break;
             case 'transport':
                 taskTransport.run(Game.creeps[name]);
+                break;
+            case 'Transport':
+                new Transport(Game.creeps[name]).run();
                 break;
             case 'upgrade':
                 taskUpgrade.run(Game.creeps[name]);

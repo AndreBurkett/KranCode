@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Task_scout_1 = require("./Task.scout");
 const Task_lrm_1 = require("./Task.lrm");
+const task_lrt_1 = require("./task.lrt");
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -67,6 +68,9 @@ module.exports.loop = function () {
                 break;
             case 'transport':
                 taskTransport.run(Game.creeps[name]);
+                break;
+            case 'Transport':
+                new task_lrt_1.Transport(Game.creeps[name]).run();
                 break;
             case 'upgrade':
                 taskUpgrade.run(Game.creeps[name]);
