@@ -122,6 +122,9 @@ class architect {
                     var site = this.spawns[0].pos.findClosestByRange(target);
                     this.r.createConstructionSite(site, STRUCTURE_CONTAINER);
                 }
+                else {
+                    this.r.createConstructionSite(target[0], STRUCTURE_CONTAINER);
+                }
             }
             else {
                 this.sources[i].containerSpot;
