@@ -11,6 +11,7 @@ interface CreepMemory{
     specialty: String;
     target: string;
     targetRoom: String;
+    state: number;
 
 
 }

@@ -1,4 +1,5 @@
 import {Scout} from './Task.scout'
+import {Mine} from './Task.lrm'
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -65,6 +66,8 @@ module.exports.loop = function()
             case 'mine':
                 taskMine.run(Game.creeps[name]);
                 break;
+            case 'Mine':
+                new Mine(Game.creeps[name]).run();
             case 'repair':
                 taskRepair.run(Game.creeps[name]);
                 break;

@@ -21,9 +21,9 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
             return this.spawnCreep(body, creepName.getName('g'), { memory: { task: 'idle' } });
             break;
         case 'mobileWorker':
-            numParts = Math.floor(energyCap / 250);
+            numParts = Math.floor(energyCap / 300);
             for (let i = 0; i < numParts; i++) {
-                body.push(MOVE, CARRY, MOVE, WORK);
+                body.push(MOVE, CARRY, MOVE, CARRY, WORK);
             }
             switch (specialty) {
                 case 'harvester':
@@ -32,9 +32,10 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
                 case 'builder':
                     return this.spawnCreep(body, creepName.getName('b'), { memory: { role: role, specialty: specialty, task: 'idle' } });
                     break;
+                case 'satMiner':
+                    return this.spawnCreep(body, creepName.getName('Lm'), { memory: { role: role, specialty: specialty, task: 'idle' } });
                 case undefined:
                     return this.spawnCreep(body, creepName.getName('g'), { memory: { role: role, task: 'idle' } });
-                    break;
             }
             break;
         case 'scout':

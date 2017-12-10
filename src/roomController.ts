@@ -18,16 +18,22 @@ function roomController(room: Room) {
 
     if (room.memory.owner === 'Me') {
         let adjacentRoom = Game.map.describeExits(room.name);
-        for (let j = 1; j <= 7; j = j + 2) {
-            if(adjacentRoom[j]){
-                if(Memory.rooms[adjacentRoom[j]]){
-                    console.log(Memory.rooms[adjacentRoom[j]].owner);
+        for (let i = 1; i <= 7; i = i + 2) {
+            if(adjacentRoom[i]){
+                if(Memory.rooms[adjacentRoom[i]]){
+                    if(Memory.rooms[adjacentRoom[i]].owner === 'Neutral'){
+                        let satMiners = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom})
+                        for(let i in satMiners){
+                            satMiners[i].memory.task = 'mine';
+                            satMiners[i].memory.targetRoom = adjacentRoom[i];
+                        }
+                    }
                 }
                 else{
                     let scoutCreep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'})[0];
                     if(scoutCreep && scoutCreep.memory && scoutCreep.memory.task){
                         scoutCreep.memory.task = 'scout';
-                        scoutCreep.memory.targetRoom = adjacentRoom[j];
+                        scoutCreep.memory.targetRoom = adjacentRoom[i];
                     }
                 }
             }

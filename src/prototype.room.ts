@@ -8,6 +8,7 @@ interface Room {
 }
 interface RoomMemory{
     sourceContainers: StructureContainer;
+    sourceIds: String;
     allContainers: StructureContainer;
     paths: any;
     bunker: number;
