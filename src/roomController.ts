@@ -37,8 +37,8 @@ function roomController(room: Room) {
                             }
                         }
                         else{
-                            adjacentRoom[i].memory.creeps = {};
-                            adjacentRoom[i].memory.creeps.satMiners = 0;
+                            Memory.rooms[adjacentRoom[i]].creeps = {};
+                            Memory.rooms[adjacentRoom[i]].creeps.satMiners = 0;
                         }
                     }
                 }
