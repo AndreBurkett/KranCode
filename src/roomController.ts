@@ -32,6 +32,7 @@ function roomController(room: Room) {
                                         satMiners[j].memory.targetRoom = adjacentRoom[i];
                                         delete satMiners[j].memory.taskQ;
                                         delete satMiners[j].memory.state;
+                                        delete satMiners[j].memory.repairTarget;
                                         Memory.rooms[adjacentRoom[i]].creeps['satMiner']++;
                                     }
                                 }
