@@ -8,7 +8,7 @@ function roomController(room: Room) {
     let sourceLen = room.sources.length;
     let sources = room.find<Source>(FIND_SOURCES);
     let containers = room.find<StructureContainer>(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER });
-    let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50});
+    let filledContainers = room.find(FIND_STRUCTURES, { filter: (s: StructureContainer) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 50});
     let numContainers = containers.length || 0;
     var sourceContainerEnergy = room.getMineEnergy();
 
@@ -22,10 +22,17 @@ function roomController(room: Room) {
             if(adjacentRoom[i]){
                 if(Memory.rooms[adjacentRoom[i]]){
                     if(Memory.rooms[adjacentRoom[i]].owner === 'Neutral'){
-                        let satMiners = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom})
-                        for(let i in satMiners){
-                            satMiners[i].memory.task = 'mine';
-                            satMiners[i].memory.targetRoom = adjacentRoom[i];
+                        if (adjacentRoom[i].memory.creeps && adjacentRoom[i].memory.creeps.satMiners < 1) {
+                            let satMiners = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom })
+                            for (let i in satMiners) {
+                                satMiners[i].memory.task = 'mine';
+                                satMiners[i].memory.targetRoom = adjacentRoom[i];
+                                adjacentRoom[i].memory.creeps.satMiners++;
+                            }
+                        }
+                        else{
+                            adjacentRoom[i].memory.creeps = {};
+                            adjacentRoom[i].memory.creeps.satMiners = 0;
                         }
                     }
                 }

@@ -4,6 +4,7 @@ interface Room {
     getRoomEnergy(): number;
     getMineEnergy(): number;
     getContainers(): StructureContainer;
+    sources: Source[];
     memory: RoomMemory;
 }
 interface RoomMemory{
@@ -13,6 +14,7 @@ interface RoomMemory{
     paths: any;
     bunker: number;
     owner: String;
+    creeps: any;
     //iCreep(): Creep;
     //mCreep(): Creep;
 }

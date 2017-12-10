@@ -14,6 +14,9 @@ export class Mine extends Task{
     run(){
         if(!this.c.memory.state) this.c.memory.state = STATE_SPAWNING
         switch(this.c.memory.state){
+            case STATE_SPAWNING:
+                if(!this.c.memory.targetRoom) this.c.memory.targetRoom = this.c.room.name;
+                break;
             case STATE_MOVING:
                 this.Move(this.c.memory.targetRoom)
                 break;
@@ -30,8 +33,8 @@ export class Mine extends Task{
         let minSource = 0;
         let minWorkers = 99;
         let source: Source[] = [];
-        for(let i in this.c.room.memory.sourceIds){
-            source[i] = Game.getObjectById<Source>(this.c.room.memory.sourceIds)
+        for(let i=0; i<Object.keys(this.c.room.memory.sourceIds).length; i++){
+            source[i] = Game.getObjectById<Source>(this.c.room.memory.sourceIds[i])
             if(minWorkers > source[i].workers){
                 minWorkers = source[i].workers;
                 minSource = i;
