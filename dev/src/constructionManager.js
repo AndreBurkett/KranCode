@@ -179,6 +179,7 @@ class architect {
             this.r.createConstructionSite(rSpawn.pos.x - 4, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
             this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
             this.r.createConstructionSite(rSpawn.pos.x - 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
+            this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y + 2, STRUCTURE_STORAGE);
             this.r.memory.bunker = 0;
         }
     }
