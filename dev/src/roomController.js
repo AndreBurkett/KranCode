@@ -199,9 +199,11 @@ function roomController(room) {
     if (containers.length > 0) {
         AssignTask('mine', (maxMiners - mdCreeps), 'deposit', sources[getMinSource()].id);
     }
-    else {
+    else if (room.memory.owner == 'Me') {
         AssignTask('mine', (maxMiners - mdCreeps), 'harvest', sources[getMinSource()].id);
     }
+    else
+        (AssignTask('mine', (maxMiners - mdCreeps), 'build', sources[getMinSource()].id));
     function getMinSource() {
         let sources = room.find(FIND_SOURCES);
         let minSource = 0;
