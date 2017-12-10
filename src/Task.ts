@@ -13,7 +13,7 @@ export abstract class Task{
 
     public Move(room: string){
         let target = new RoomPosition(25,25,room)
-        if(this.c.pos.roomName == room){
+        if(this.c.pos.roomName == room && this.c.pos.x > 2 && this.c.pos.x <48 && this.c.pos.y < 2 && this.c.pos.y < 48){
             this.c.memory.state = STATE_WORKING;
         }
         else{
