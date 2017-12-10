@@ -10,7 +10,7 @@ interface CreepMemory{
     role: string;
     specialty: String;
     target: string;
-    targetRoom: String;
+    targetRoom: string;
     state: number;
 
 

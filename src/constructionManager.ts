@@ -163,6 +163,7 @@ export class architect implements constructionManager {
             //Top Right Inner Quadrant
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 2, STRUCTURE_ROAD);
+            this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 4, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y - 3, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x + 2, rSpawn.pos.y - 2, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y - 1, STRUCTURE_ROAD);
