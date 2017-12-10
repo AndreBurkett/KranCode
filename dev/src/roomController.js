@@ -13,6 +13,7 @@ function roomController(room) {
     let spawns = room.find(FIND_MY_SPAWNS);
     let towers = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
+    var smNeeded = 0;
     if (room.memory.owner === 'Me') {
         let adjacentRoom = Game.map.describeExits(room.name);
         for (let i = 1; i <= 7; i = i + 2) {
@@ -21,10 +22,15 @@ function roomController(room) {
                     if (Memory.rooms[adjacentRoom[i]].owner === 'Neutral') {
                         if (adjacentRoom[i].memory.creeps && adjacentRoom[i].memory.creeps.satMiners < 1) {
                             let satMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom });
-                            for (let i in satMiners) {
-                                satMiners[i].memory.task = 'mine';
-                                satMiners[i].memory.targetRoom = adjacentRoom[i];
-                                adjacentRoom[i].memory.creeps.satMiners++;
+                            if (satMiners.length > 0) {
+                                for (let i in satMiners) {
+                                    satMiners[i].memory.task = 'mine';
+                                    satMiners[i].memory.targetRoom = adjacentRoom[i];
+                                    adjacentRoom[i].memory.creeps.satMiners++;
+                                }
+                            }
+                            else {
+                                smNeeded = 1;
                             }
                         }
                         else {
@@ -114,6 +120,13 @@ function roomController(room) {
         else if (upgradeCreeps < 1) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (smNeeded == 1) {
+            spawnRole = 'mobileWorker';
+            spawnSpecialty = 'satMiner';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
