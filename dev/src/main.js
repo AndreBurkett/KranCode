@@ -23,6 +23,13 @@ var roomController = require('./roomController');
 module.exports.loop = function () {
     for (var name in Memory.creeps) {
         if (!Game.creeps[name]) {
+            if (Memory.creeps[name].targetRoom) {
+                try {
+                    Memory.rooms[Memory.creeps[name].targetRoom].creeps[Memory.creeps[name].specialty]--;
+                }
+                finally {
+                }
+            }
             delete Memory.creeps[name];
         }
     }
