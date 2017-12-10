@@ -26,7 +26,7 @@ function roomController(room) {
                                 for (let i in satMiners) {
                                     satMiners[i].memory.task = 'mine';
                                     satMiners[i].memory.targetRoom = adjacentRoom[i];
-                                    adjacentRoom[i].memory.creeps.satMiners++;
+                                    Memory.rooms[adjacentRoom[i]].creeps.satMiners++;
                                 }
                             }
                             else {
