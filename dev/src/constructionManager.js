@@ -30,7 +30,7 @@ class architect {
             this.r.memory.paths.containers = clength;
         if (!this.r.memory.paths.spawns)
             this.r.memory.paths.spawns = this.spawns.length;
-        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 48) {
+        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 480) {
             for (let i in this.spawns) {
                 if (this.r.controller) {
                     if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
@@ -46,7 +46,7 @@ class architect {
             }
             this.r.memory.paths.spawns = this.spawns.length;
         }
-        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 49) {
+        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 490) {
             for (let i in this.spawns) {
                 if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
@@ -65,7 +65,7 @@ class architect {
             this.r.memory.paths.containers = clength;
             this.r.memory.paths.spawns = this.spawns.length;
         }
-        if (this.r.memory.paths.containers != clength || ticks >= 0) {
+        if (this.r.memory.paths.containers != clength || ticks == 500) {
             var maxPaths = 0;
             switch (clength) {
                 case 1:
@@ -99,7 +99,7 @@ class architect {
             }
             this.r.memory.paths.containers = clength;
         }
-        if (ticks > 50)
+        if (ticks > 500)
             this.r.memory.paths.tick = 0;
     }
     createSourceContainers() {
@@ -141,7 +141,7 @@ class architect {
     createBunker() {
         if (!this.r.memory.bunker)
             this.r.memory.bunker = Game.time;
-        if (Game.time - this.r.memory.bunker > 100) {
+        if (Game.time - this.r.memory.bunker > 500) {
             let rSpawn = this.spawns[0];
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 2, STRUCTURE_ROAD);

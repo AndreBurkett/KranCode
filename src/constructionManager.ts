@@ -38,7 +38,7 @@ export class architect implements constructionManager {
             this.r.memory.paths.spawns = this.spawns.length;
 
         //Get Spawn Paths
-        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 48) {
+        if (this.r.memory.paths.spawns != this.spawns.length || ticks == 480) {
             for (let i in this.spawns) {
                 if (this.r.controller) {
                     //Get Spawn to Controller Path
@@ -59,7 +59,7 @@ export class architect implements constructionManager {
         }
 
         //Get Spawn to Container Path
-        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 49) {
+        if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 490) {
             for (let i in this.spawns) {
                 if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
@@ -82,7 +82,7 @@ export class architect implements constructionManager {
             this.r.memory.paths.spawns = this.spawns.length;
         }
 
-        if (this.r.memory.paths.containers != clength || ticks >= 0) {
+        if (this.r.memory.paths.containers != clength || ticks == 500) {
             //Get Container to Container Path
             var maxPaths = 0
             switch (clength) {
@@ -116,7 +116,7 @@ export class architect implements constructionManager {
             }
             this.r.memory.paths.containers = clength;
         }
-        if(ticks > 50) this.r.memory.paths.tick = 0;
+        if(ticks > 500) this.r.memory.paths.tick = 0;
         //console.log(Game.cpu.getUsed() -start);
     }
     public createSourceContainers(){
@@ -158,7 +158,7 @@ export class architect implements constructionManager {
     }
     public createBunker(){
         if(!this.r.memory.bunker) this.r.memory.bunker = Game.time;
-        if (Game.time - this.r.memory.bunker > 100) {
+        if (Game.time - this.r.memory.bunker > 500) {
             let rSpawn = this.spawns[0];
             //Top Right Inner Quadrant
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
