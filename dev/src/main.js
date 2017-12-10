@@ -26,7 +26,8 @@ module.exports.loop = function () {
         if (!Game.creeps[name]) {
             if (Memory.creeps[name].targetRoom) {
                 try {
-                    Memory.rooms[Memory.creeps[name].targetRoom].creeps[Memory.creeps[name].specialty]--;
+                    if (Memory.rooms[Memory.creeps[name].targetRoom].creeps[Memory.creeps[name].specialty] > 0)
+                        Memory.rooms[Memory.creeps[name].targetRoom].creeps[Memory.creeps[name].specialty]--;
                 }
                 finally {
                 }
