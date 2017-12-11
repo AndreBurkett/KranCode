@@ -7,7 +7,7 @@ const STATE_TARGETING = 2;
 const STATE_WORKING = 3;
 const STATE_DEPOSIT = 4;
 const STATE_WITHDRAW = 5;
-class Trasport extends Task_1.Task {
+class Transport extends Task_1.Task {
     constructor(c) {
         super(c);
     }
@@ -112,5 +112,5 @@ class Trasport extends Task_1.Task {
         }
     }
 }
-exports.Trasport = Trasport;
-//# sourceMappingURL=task.lrt.js.map
+exports.Transport = Transport;
+//# sourceMappingURL=Task.lrt.js.map

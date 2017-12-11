@@ -7,7 +7,7 @@ const STATE_WORKING = 3;
 const STATE_DEPOSIT = 4;
 const STATE_WITHDRAW = 5;
 
-export class Trasport extends Task{
+export class Transport extends Task{
 
     constructor(c: Creep){
         super(c);

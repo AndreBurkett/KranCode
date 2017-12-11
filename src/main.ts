@@ -1,6 +1,6 @@
 import {Scout} from './Task.scout';
 import {Mine} from './Task.lrm';
-import {Transport} from './task.lrt';
+import {Transport} from './Task.lrt';
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
