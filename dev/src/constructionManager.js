@@ -186,7 +186,7 @@ class architect {
         }
     }
     roomCostMatrix() {
-        let costs = PathFinder.CostMatrix;
+        let costs = new PathFinder.CostMatrix;
         this.r.find(FIND_STRUCTURES).forEach(function (s) {
             if (!_.contains([STRUCTURE_CONTAINER, STRUCTURE_ROAD, STRUCTURE_RAMPART], s.structureType)) {
                 costs.set(s.pos.x, s.pos.y, 0xff);
