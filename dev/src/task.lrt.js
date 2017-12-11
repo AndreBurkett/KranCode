@@ -30,6 +30,10 @@ class Transport extends Task_1.Task {
                 case STATE_DEPOSIT:
                     this.deposit();
                     break;
+                case STATE_WITHDRAW:
+                    this.c.memory.state = STATE_MOVING;
+                    this.Move(this.c.memory.homeRoom);
+                    break;
             }
         }
         else {
@@ -109,6 +113,8 @@ class Transport extends Task_1.Task {
                 this.c.memory.state = STATE_TARGETING;
                 this.target();
                 break;
+            case OK:
+                this.c.memory.state = STATE_MOVING;
         }
     }
 }
