@@ -29,7 +29,7 @@ module.exports.loop = function () {
                     if (Memory.rooms[Memory.creeps[name].targetRoom].creeps[Memory.creeps[name].specialty] > 0)
                         Memory.rooms[Memory.creeps[name].targetRoom].creeps[Memory.creeps[name].specialty]--;
                 }
-                finally {
+                catch (e) {
                 }
             }
             delete Memory.creeps[name];
