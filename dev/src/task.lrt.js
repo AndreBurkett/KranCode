@@ -70,7 +70,9 @@ class Transport extends Task_1.Task {
                 break;
             case OK:
                 this.c.memory.state = STATE_MOVING;
+                Memory.rooms[this.c.memory.targetRoom].creeps.satTransporter--;
                 delete this.c.memory.targetRoom;
+                delete this.c.memory.task;
                 break;
         }
     }
