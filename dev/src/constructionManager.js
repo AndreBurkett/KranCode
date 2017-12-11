@@ -49,7 +49,7 @@ class architect {
                 if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
                     for (let j in container) {
-                        let path = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true });
+                        let path = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
                         this.r.memory.paths.spawnToContainer[pathNum] = path;
                         pathNum++;
                     }
@@ -84,7 +84,7 @@ class architect {
                 var pathNum = 0;
                 for (let i = 0; i < clength - 1; i++) {
                     for (let j = i + 1; j < clength; j++) {
-                        let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true });
+                        let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
                         this.r.memory.paths.containerToContainer[pathNum] = path;
                         pathNum++;
                     }
@@ -184,13 +184,18 @@ class architect {
         }
     }
     roomCostMatrix() {
-        let costs = new PathFinder.CostMatrix;
-        this.r.find(FIND_STRUCTURES).forEach(function (s) {
-            if (!_.contains([STRUCTURE_CONTAINER, STRUCTURE_ROAD, STRUCTURE_RAMPART], s.structureType)) {
-                costs.set(s.pos.x, s.pos.y, 0xff);
-            }
-        });
-        return function () { return costs; };
+        if (this.costs) {
+            return function () { return this.costs; };
+        }
+        else {
+            var costs = new PathFinder.CostMatrix;
+            this.r.find(FIND_STRUCTURES).forEach(function (s) {
+                if (!_.contains([STRUCTURE_CONTAINER, STRUCTURE_ROAD, STRUCTURE_RAMPART], s.structureType)) {
+                    costs.set(s.pos.x, s.pos.y, 0xff);
+                }
+            });
+            return function () { return costs; };
+        }
     }
 }
 exports.architect = architect;
