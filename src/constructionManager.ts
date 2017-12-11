@@ -43,7 +43,7 @@ export class architect implements constructionManager {
                 if (this.r.controller) {
                     //Get Spawn to Controller Path
                     if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
-                        let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true })
+                        let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true, roomCallback: this.roomCostMatrix() })
                         this.r.memory.paths.controllerPath[i] = path;
                     }
                 }
@@ -51,8 +51,8 @@ export class architect implements constructionManager {
             //Create Spawn to Controller Roads
             for (let i in this.r.memory.paths.controllerPath) {
                 for (let j in this.r.memory.paths.controllerPath[i].path) {
-                    //this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
-                    this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
+                    this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
+                    //this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
                 }
             }
             this.r.memory.paths.spawns = this.spawns.length;
@@ -209,5 +209,14 @@ export class architect implements constructionManager {
 
             this.r.memory.bunker = 0
         }
+    }
+    public roomCostMatrix(){
+        let costs = PathFinder.CostMatrix;
+        this.r.find<Structure>(FIND_STRUCTURES).forEach(function (s){
+            if(!_.contains([STRUCTURE_CONTAINER,STRUCTURE_ROAD,STRUCTURE_RAMPART], s.structureType)){
+                costs.set(s.pos.x, s.pos.y, 0xff);
+            }
+        })
+        return costs
     }
 }
