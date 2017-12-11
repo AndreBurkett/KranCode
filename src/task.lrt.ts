@@ -74,7 +74,6 @@ export class Transport extends Task{
                 Memory.rooms[this.c.memory.targetRoom].creeps.satTransporter--;
                 delete this.c.memory.targetRoom;
                 delete this.c.memory.task;
-
                 break;
         }
 
@@ -89,7 +88,7 @@ export class Transport extends Task{
                 break;
             case 'deposit':
                 var target = this.c.pos.findClosestByRange<Structure>(FIND_STRUCTURES, {
-                    filter: (s: Structure) => (s.structureType === STRUCTURE_CONTAINER || s.structureType === STRUCTURE_STORAGE) && s.store[RESOURCE_ENERGY] > this.c.carryCapacity});
+                    filter: (s: Structure) => (s.structureType === STRUCTURE_CONTAINER || s.structureType === STRUCTURE_STORAGE) && (s.storeCapacity - s.store[RESOURCE_ENERGY]) > this.c.carryCapacity});
                 if(target) this.c.memory.target = target.id;
                 this.c.memory.state = STATE_DEPOSIT;
                 break;
@@ -118,6 +117,8 @@ export class Transport extends Task{
                 break;
             case OK:
                 this.c.memory.state = STATE_MOVING;
+                this.Move(this.c.memory.homeRoom);
+                break;
         }
     }
 

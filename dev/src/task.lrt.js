@@ -88,7 +88,7 @@ class Transport extends Task_1.Task {
                 break;
             case 'deposit':
                 var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, {
-                    filter: (s) => (s.structureType === STRUCTURE_CONTAINER || s.structureType === STRUCTURE_STORAGE) && s.store[RESOURCE_ENERGY] > this.c.carryCapacity
+                    filter: (s) => (s.structureType === STRUCTURE_CONTAINER || s.structureType === STRUCTURE_STORAGE) && (s.storeCapacity - s.store[RESOURCE_ENERGY]) > this.c.carryCapacity
                 });
                 if (target)
                     this.c.memory.target = target.id;
@@ -117,6 +117,8 @@ class Transport extends Task_1.Task {
                 break;
             case OK:
                 this.c.memory.state = STATE_MOVING;
+                this.Move(this.c.memory.homeRoom);
+                break;
         }
     }
 }
