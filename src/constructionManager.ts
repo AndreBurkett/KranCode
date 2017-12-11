@@ -42,17 +42,17 @@ export class architect implements constructionManager {
             for (let i in this.spawns) {
                 if (this.r.controller) {
                     //Get Spawn to Controller Path
-                    if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
+                    //if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
                         let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true, roomCallback: this.roomCostMatrix() })
                         this.r.memory.paths.controllerPath[i] = path;
-                    }
+                    //}
                 }
             }
             //Create Spawn to Controller Roads
             for (let i in this.r.memory.paths.controllerPath) {
                 for (let j in this.r.memory.paths.controllerPath[i].path) {
-                    this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
-                    //this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
+                    //this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
+                    this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD)
                 }
             }
             this.r.memory.paths.spawns = this.spawns.length;
@@ -217,6 +217,6 @@ export class architect implements constructionManager {
                 costs.set(s.pos.x, s.pos.y, 0xff);
             }
         })
-        return costs
+        return function(){return costs};
     }
 }

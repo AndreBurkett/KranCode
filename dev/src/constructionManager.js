@@ -33,15 +33,13 @@ class architect {
         if (this.r.memory.paths.spawns != this.spawns.length || ticks == 480) {
             for (let i in this.spawns) {
                 if (this.r.controller) {
-                    if (!this.r.memory.paths.controllerPath[this.spawns.length - 1]) {
-                        let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
-                        this.r.memory.paths.controllerPath[i] = path;
-                    }
+                    let path = PathFinder.search(this.spawns[i].pos, this.r.controller.pos, { swampCost: 1, range: 2, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
+                    this.r.memory.paths.controllerPath[i] = path;
                 }
             }
             for (let i in this.r.memory.paths.controllerPath) {
                 for (let j in this.r.memory.paths.controllerPath[i].path) {
-                    this.r.visual.circle(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y);
+                    this.r.createConstructionSite(this.r.memory.paths.controllerPath[i].path[j].x, this.r.memory.paths.controllerPath[i].path[j].y, STRUCTURE_ROAD);
                 }
             }
             this.r.memory.paths.spawns = this.spawns.length;
@@ -192,7 +190,7 @@ class architect {
                 costs.set(s.pos.x, s.pos.y, 0xff);
             }
         });
-        return costs;
+        return function () { return costs; };
     }
 }
 exports.architect = architect;
