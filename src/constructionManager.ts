@@ -62,14 +62,14 @@ export class architect implements constructionManager {
         //Get Spawn to Container Path
         if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 490) {
             for (let i in this.spawns) {
-                if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
+                //if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
                     var pathNum = 0;
                     for (let j in container) {
                         let path = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() })
                         this.r.memory.paths.spawnToContainer[pathNum] = path;
                         pathNum++;
                     }
-                }
+                //}
             }
 
             //Create Spawn To Container Roads
@@ -85,7 +85,7 @@ export class architect implements constructionManager {
 
         if (this.r.memory.paths.containers != clength || ticks == 500) {
             //Get Container to Container Path
-            var maxPaths = 0
+            /*var maxPaths = 0
             switch (clength) {
                 case 1: maxPaths = 0;
                     break;
@@ -97,7 +97,7 @@ export class architect implements constructionManager {
                     break;
                 case 5: maxPaths = 10;
             }
-            if (!this.r.memory.paths.containerToContainer[maxPaths]) {
+            if (!this.r.memory.paths.containerToContainer[maxPaths]) {*/
                 var pathNum = 0;
                 for (let i = 0; i < clength - 1; i++) {
                     for (let j = i + 1; j < clength; j++) {
@@ -106,7 +106,7 @@ export class architect implements constructionManager {
                         pathNum++;
                     }
                 }
-            }
+            //}
 
             //Create Container To Container Roads
             for (let i in this.r.memory.paths.containerToContainer) {

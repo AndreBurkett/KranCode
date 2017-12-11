@@ -46,13 +46,11 @@ class architect {
         }
         if (this.r.memory.paths.containers != clength || this.r.memory.paths.spawns != this.spawns.length || ticks == 490) {
             for (let i in this.spawns) {
-                if (!this.r.memory.paths.spawnToContainer[container.length - 1]) {
-                    var pathNum = 0;
-                    for (let j in container) {
-                        let path = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
-                        this.r.memory.paths.spawnToContainer[pathNum] = path;
-                        pathNum++;
-                    }
+                var pathNum = 0;
+                for (let j in container) {
+                    let path = PathFinder.search(this.spawns[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
+                    this.r.memory.paths.spawnToContainer[pathNum] = path;
+                    pathNum++;
                 }
             }
             for (let i in this.r.memory.paths.spawnToContainer) {
@@ -64,30 +62,12 @@ class architect {
             this.r.memory.paths.spawns = this.spawns.length;
         }
         if (this.r.memory.paths.containers != clength || ticks == 500) {
-            var maxPaths = 0;
-            switch (clength) {
-                case 1:
-                    maxPaths = 0;
-                    break;
-                case 2:
-                    maxPaths = 1;
-                    break;
-                case 3:
-                    maxPaths = 3;
-                    break;
-                case 4:
-                    maxPaths = 6;
-                    break;
-                case 5: maxPaths = 10;
-            }
-            if (!this.r.memory.paths.containerToContainer[maxPaths]) {
-                var pathNum = 0;
-                for (let i = 0; i < clength - 1; i++) {
-                    for (let j = i + 1; j < clength; j++) {
-                        let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
-                        this.r.memory.paths.containerToContainer[pathNum] = path;
-                        pathNum++;
-                    }
+            var pathNum = 0;
+            for (let i = 0; i < clength - 1; i++) {
+                for (let j = i + 1; j < clength; j++) {
+                    let path = PathFinder.search(container[i].pos, container[j].pos, { swampCost: 1, ignoreRoads: true, roomCallback: this.roomCostMatrix() });
+                    this.r.memory.paths.containerToContainer[pathNum] = path;
+                    pathNum++;
                 }
             }
             for (let i in this.r.memory.paths.containerToContainer) {
