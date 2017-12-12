@@ -102,10 +102,6 @@ class Build extends Task_1.Task {
             case ERR_NOT_IN_RANGE:
                 this.c.moveTo(target);
                 break;
-            case OK:
-                this.c.memory.state = STATE_TARGETING;
-                this.target('build');
-                break;
         }
     }
     repair() {
