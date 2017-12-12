@@ -87,6 +87,7 @@ function roomController(room) {
                                     Memory.rooms[adjacentRoom[i]].creeps = {};
                                     Memory.rooms[adjacentRoom[i]].creeps.satMiner = 0;
                                     Memory.rooms[adjacentRoom[i]].creeps.satTransporter = 0;
+                                    Memory.rooms[adjacentRoom[i]].creeps.satBuilder = 0;
                                 }
                             }
                         }
