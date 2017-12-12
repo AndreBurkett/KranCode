@@ -21,7 +21,7 @@ export class architect implements constructionManager {
         if(!this.r.memory.paths.spawnToContainer) this.r.memory.paths.spawnToContainer = {};
         if(!this.r.memory.paths.containerToContainer) this.r.memory.paths.containerToContainer = {};
         if(!this.r.memory.paths.tick) this.r.memory.paths.tick = 0;
-        if(this.r.memory.paths.ticks > 500) this.r.memory.paths.tick = 0;
+        if(this.r.memory.paths.tick > 500) this.r.memory.paths.tick = 0;
     }
     public createRoads() {
         //let start = Game.cpu.getUsed();
@@ -115,11 +115,13 @@ export class architect implements constructionManager {
         //console.log(Game.cpu.getUsed() -start);
     }
     public createHighway(sourceId: string){
-        if(this.r.memory.paths.ticks >= 0){
+        if(this.r.memory.paths.tick >= 0){
             var source = Game.getObjectById<Source>(sourceId);
-            var path = PathFinder.search(this.spawns[0].pos, source.pos, {swampCost: 2, roomCallback: this.roomCostMatrix()});
-            for(let i in path.path){
-                console.log(path.path[i]);
+            if (source) {
+                var path = PathFinder.search(this.spawns[0].pos, source.pos, { swampCost: 2, roomCallback: this.roomCostMatrix() });
+                for (let i in path.path) {
+                    console.log(path.path[i]);
+                }
             }
         }
     }
