@@ -5,12 +5,14 @@ var taskWithdraw = {
             target = Game.getObjectById(c.memory.target)
         }
         else if(c.memory.taskQ && c.memory.taskQ == 'upgrade' && c.room.controller){
-            target = c.room.controller.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] >= c.carryCapacity});
+            target = c.room.controller.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] >= (c.carryCapacity -c.carry[RESOURCE_ENERGY])});
             if(target)
             c.memory.target = target.id;
         }
         else {
-            target = c.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > c.carryCapacity});
+            target = c.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] >= (c.carryCapacity -c.carry[RESOURCE_ENERGY])});
             if(target)
             c.memory.target = target.id;
         }
