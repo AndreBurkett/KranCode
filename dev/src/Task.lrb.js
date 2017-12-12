@@ -106,12 +106,9 @@ class Build extends Task_1.Task {
     }
     repair() {
         var target = Game.getObjectById(this.c.memory.target);
-        if (!target) {
+        if (!target || target.hits == target.hitsMax) {
             this.c.memory.state = STATE_TARGETING;
-            return;
         }
-        if (target.hits == target.hitsMax)
-            this.c.memory.state = STATE_TARGETING;
         else {
             switch (this.c.repair(target)) {
                 case ERR_NOT_IN_RANGE:
