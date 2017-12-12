@@ -4,6 +4,7 @@ const Task_scout_1 = require("./Task.scout");
 const Task_lrb_1 = require("./Task.lrb");
 const Task_lrm_1 = require("./Task.lrm");
 const task_lrt_1 = require("./task.lrt");
+const combat_melee_1 = require("./combat.melee");
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -11,7 +12,6 @@ require('./prototype.spawn');
 require('./prototype.container');
 require('./prototype.controller');
 require('./prototype.creep');
-var combatMelee = require('./combat.melee');
 var taskBuild = require('./task.build');
 var taskDeposit = require('./task.deposit');
 var taskHarvest = require('./task.harvest');
@@ -48,7 +48,7 @@ module.exports.loop = function () {
                 new Task_lrb_1.Build(Game.creeps[name]).run();
                 break;
             case 'combatMelee':
-                combatMelee.run(Game.creeps[name]);
+                new combat_melee_1.Melee(Game.creeps[name]).run();
                 break;
             case 'deposit':
                 taskDeposit.run(Game.creeps[name]);

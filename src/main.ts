@@ -2,6 +2,7 @@ import {Scout} from './Task.scout';
 import {Build} from './Task.lrb';
 import {Mine} from './Task.lrm';
 import {Transport} from './task.lrt';
+import {Melee} from './combat.melee';
 var creepName = require('./util.nameBuilder');
 require('./prototype.room');
 require('./prototype.source');
@@ -9,8 +10,6 @@ require('./prototype.spawn');
 require('./prototype.container');
 require('./prototype.controller');
 require('./prototype.creep');
-
-var combatMelee = require('./combat.melee');
 
 var taskBuild = require('./task.build');
 var taskDeposit = require('./task.deposit');
@@ -61,7 +60,7 @@ module.exports.loop = function()
                 new Build(Game.creeps[name]).run();
                 break;
             case 'combatMelee':
-                combatMelee.run(Game.creeps[name]);
+                new Melee(Game.creeps[name]).run();
                 break;
             case 'deposit':
                 taskDeposit.run(Game.creeps[name]);
