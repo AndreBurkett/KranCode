@@ -155,7 +155,7 @@ class Build extends Task_1.Task {
             case 'build':
                 var lStructs = this.c.room.find(FIND_STRUCTURES, { filter: (s) => s.hits < (s.hitsMax * .5) });
                 var structs = this.c.room.find(FIND_STRUCTURES, { filter: (s) => s.hits < s.hitsMax });
-                var sites = this.c.room.find(FIND_STRUCTURES);
+                var sites = this.c.room.find(FIND_CONSTRUCTION_SITES);
                 var bTarget;
                 if (lStructs && lStructs.length > 0) {
                     this.c.memory.target = this.c.pos.findClosestByRange(lStructs).id;

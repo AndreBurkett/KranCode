@@ -25,7 +25,6 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
         case 'genWorker':
             body.push(WORK,CARRY,MOVE);
             return this.spawnCreep(body, creepName.getName('g'), {memory: {task: 'idle'}});
-            break;
         case 'mobileWorker':
             numParts = Math.floor(energyCap/300)
             for(let i=0;i<numParts;i++){
@@ -34,10 +33,8 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
             switch(specialty){
                 case 'harvester':
                     return this.spawnCreep(body, creepName.getName('h'), {memory: {role: role, specialty: specialty, task: 'idle'}});
-                    break;
                 case 'builder':
                     return this.spawnCreep(body, creepName.getName('b'), {memory: {role: role, specialty: specialty, task:'idle'}});
-                    break;
                 case 'satBuilder':
                     return this.spawnCreep(body, creepName.getName('Lb'), {memory: {role: role, specialty: specialty, task:'idle', homeRoom: this.room.name}});
                 case undefined:
@@ -55,7 +52,6 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
         case 'scout':
             body.push(MOVE)
                 return this.spawnCreep(body, creepName.getName('s'), {memory: {role: role, home: this.room.name, task: 'idle'}});
-                break;
         case 'statWorker':
             body.push(MOVE, MOVE,CARRY);
             energyCap = Math.min(energyCap, 550) - 150;
@@ -66,16 +62,24 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
             switch(specialty){
                 case 'miner':
                     return this.spawnCreep(body, creepName.getName('m'), {memory: {role: role, specialty: specialty, task: 'idle'}});
-                    break;
                 case 'upgrader':
                     return this.spawnCreep(body, creepName.getName('u'), {memory: {role: role, specialty: specialty, task: 'idle'}});
-                    break;
             }
             break;
         case 'pikeman':
             body.push(MOVE,MOVE,ATTACK,MOVE,ATTACK,ATTACK);
             return this.spawnCreep(body, creepName.getName('Ap'), {memory: {role: 'pikeman', task: 'combatMelee'}});
-            break;
+        case 'calvalry':
+            energyCap = energyCap -60;
+            numParts = Math.floor(energyCap/130)
+            body.push(TOUGH,MOVE);
+            for(let i=0;i<numParts;i++){
+                body.push(MOVE);
+            }
+            for(let i=0;i<numParts;i++){
+                body.push(ATTACK);
+            }
+            return this.spawnCreep(body, creepName.getName('Cm'), {memory: {role: 'calvalry', task: 'combatMelee'}});
     }
 }
 

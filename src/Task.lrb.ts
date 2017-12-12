@@ -153,7 +153,7 @@ export class Build extends Task{
             case 'build':
                 var lStructs = this.c.room.find<Structure>(FIND_STRUCTURES, {filter: (s: Structure) => s.hits < (s.hitsMax * .5)})
                 var structs = this.c.room.find<Structure>(FIND_STRUCTURES, {filter: (s: Structure) => s.hits < s.hitsMax})
-                var sites = this.c.room.find<ConstructionSite>(FIND_STRUCTURES);
+                var sites = this.c.room.find<ConstructionSite>(FIND_CONSTRUCTION_SITES);
                 var bTarget;
                 if(lStructs && lStructs.length > 0){
                     this.c.memory.target = this.c.pos.findClosestByRange(lStructs).id;
