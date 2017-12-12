@@ -37,12 +37,18 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
                     break;
                 case 'satBuilder':
                     return this.spawnCreep(body, creepName.getName('Lb'), { memory: { role: role, specialty: specialty, task: 'idle', homeRoom: this.room.name } });
-                case 'satMiner':
-                    return this.spawnCreep(body, creepName.getName('Lm'), { memory: { role: role, specialty: specialty, task: 'idle' } });
                 case undefined:
                     return this.spawnCreep(body, creepName.getName('g'), { memory: { role: role, task: 'idle' } });
             }
             break;
+        case 'satMiner':
+            energyCap = Math.min(energyCap, 950) - 50;
+            numParts = Math.floor(energyCap / 150);
+            for (let i = 0; i < numParts; i++) {
+                body.push(MOVE, WORK);
+            }
+            body.push(CARRY);
+            return this.spawnCreep(body, creepName.getName('Lm'), { memory: { role: role, specialty: specialty, task: 'idle' } });
         case 'scout':
             body.push(MOVE);
             return this.spawnCreep(body, creepName.getName('s'), { memory: { role: role, home: this.room.name, task: 'idle' } });

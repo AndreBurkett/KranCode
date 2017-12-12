@@ -181,7 +181,7 @@ function roomController(room: Room) {
             }
         }
         else if (smNeeded == 1){
-            spawnRole = 'mobileWorker';
+            spawnRole = 'satMiner';
             spawnSpecialty = 'satMiner';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
