@@ -78,7 +78,7 @@ class architect {
         }
     }
     createHighway(sourceId) {
-        if (this.r.memory.paths.tick >= 0) {
+        if (this.r.memory.paths.tick == 250) {
             var source = Game.getObjectById(sourceId);
             if (source) {
                 var path = PathFinder.search(this.spawns[0].pos, source.pos, { swampCost: 1, roomCallback: this.roomCostMatrix() });
