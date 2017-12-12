@@ -15,7 +15,7 @@ class Build extends Task_1.Task {
     run() {
         if (!this.c.memory.state)
             this.c.memory.state = STATE_SPAWNING;
-        if (this.c.carry[RESOURCE_ENERGY] == this.c.carryCapacity) {
+        if (this.c.carry[RESOURCE_ENERGY] >= 0) {
             switch (this.c.memory.state) {
                 case STATE_SPAWNING:
                     if (!this.c.memory.targetRoom)
