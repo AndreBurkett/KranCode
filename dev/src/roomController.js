@@ -52,7 +52,7 @@ function roomController(room) {
                                             cmNeeded = 1;
                                         }
                                     }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < 1) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < Object.keys(Memory.rooms[adjacentRoom[i]].sourceIds).length) {
                                         let satMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom });
                                         if (satMiners.length > 0) {
                                             for (let j in satMiners) {
@@ -68,7 +68,7 @@ function roomController(room) {
                                             smNeeded = 1;
                                         }
                                     }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < 1 && Memory.rooms[adjacentRoom[i]].numContainers > 0) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < Object.keys(Memory.rooms[adjacentRoom[i]].sourceIds).length && Memory.rooms[adjacentRoom[i]].numContainers > 0) {
                                         let satTransporters = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satTransporter' && !c.memory.targetRoom });
                                         if (satTransporters.length > 0) {
                                             for (let j in satTransporters) {
