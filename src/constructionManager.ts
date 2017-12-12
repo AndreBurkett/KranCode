@@ -120,7 +120,7 @@ export class architect implements constructionManager {
             if (source) {
                 var path = PathFinder.search(this.spawns[0].pos, source.pos, { swampCost: 2, roomCallback: this.roomCostMatrix() });
                 for (let i in path.path) {
-                    console.log(path.path[i]);
+                    Game.rooms[path.path[i].roomName].createConstructionSite(path.path[i], STRUCTURE_ROAD);
                 }
             }
         }
