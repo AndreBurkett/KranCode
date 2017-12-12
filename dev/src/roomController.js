@@ -14,6 +14,7 @@ function roomController(room) {
     let spawns = room.find(FIND_MY_SPAWNS);
     let towers = room.find(FIND_MY_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_TOWER });
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
+    var cmNeeded = 0;
     var smNeeded = 0;
     var stNeeded = 0;
     var sbNeeded = 0;
@@ -36,6 +37,21 @@ function roomController(room) {
                             }
                             if (Memory.rooms[adjacentRoom[i]].owner === 'Neutral') {
                                 if (Memory.rooms[adjacentRoom[i]].creeps) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['calvalry'] < 1) {
+                                        let calvalry = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'calvalry' && !c.memory.targetRoom });
+                                        if (calvalry.length > 0) {
+                                            for (let j in calvalry) {
+                                                calvalry[j].memory.task = 'Build';
+                                                calvalry[j].memory.targetRoom = adjacentRoom[i];
+                                                delete calvalry[j].memory.taskQ;
+                                                delete calvalry[j].memory.state;
+                                                Memory.rooms[adjacentRoom[i]].creeps['calvalry']++;
+                                            }
+                                        }
+                                        else {
+                                            cmNeeded = 1;
+                                        }
+                                    }
                                     if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < 1) {
                                         let satMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom });
                                         if (satMiners.length > 0) {
@@ -88,6 +104,7 @@ function roomController(room) {
                                     Memory.rooms[adjacentRoom[i]].creeps.satMiner = 0;
                                     Memory.rooms[adjacentRoom[i]].creeps.satTransporter = 0;
                                     Memory.rooms[adjacentRoom[i]].creeps.satBuilder = 0;
+                                    Memory.rooms[adjacentRoom[i]].creeps.calvalry = 0;
                                 }
                             }
                         }
@@ -165,6 +182,13 @@ function roomController(room) {
         else if (upgradeCreeps < 1) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (cmNeeded == 1) {
+            spawnRole = 'calvalry';
+            spawnSpecialty = 'calvalry';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }

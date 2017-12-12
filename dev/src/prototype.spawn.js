@@ -76,7 +76,7 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
             for (let i = 0; i < numParts; i++) {
                 body.push(ATTACK);
             }
-            return this.spawnCreep(body, creepName.getName('Cm'), { memory: { role: 'calvalry', task: 'combatMelee' } });
+            return this.spawnCreep(body, creepName.getName('Cm'), { memory: { role: 'calvalry', specialty: specialty, task: 'idle', homeRoom: this.room.name } });
     }
 };
 Object.defineProperty(StructureSpawn.prototype, 'spawnEnabled', {
