@@ -48,7 +48,7 @@ function roomController(room: Room) {
                                         let calvalry = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'calvalry' && !c.memory.targetRoom })
                                         if (calvalry.length > 0) {
                                             for (let j in calvalry) {
-                                                calvalry[j].memory.task = 'Build';
+                                                calvalry[j].memory.task = 'Melee';
                                                 calvalry[j].memory.targetRoom = adjacentRoom[i];
                                                 delete calvalry[j].memory.taskQ;
                                                 delete calvalry[j].memory.state;

@@ -65,7 +65,7 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
             break;
         case 'pikeman':
             body.push(MOVE, MOVE, ATTACK, MOVE, ATTACK, ATTACK);
-            return this.spawnCreep(body, creepName.getName('Ap'), { memory: { role: 'pikeman', task: 'combatMelee' } });
+            return this.spawnCreep(body, creepName.getName('Ap'), { memory: { role: 'pikeman', task: 'Melee' } });
         case 'calvalry':
             energyCap = energyCap - 60;
             numParts = Math.floor(energyCap / 130);
