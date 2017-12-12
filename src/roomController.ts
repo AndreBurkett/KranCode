@@ -19,59 +19,76 @@ function roomController(room: Room) {
     var smNeeded = 0;
     var stNeeded = 0;
 
-    //Send Creeps To Adjacent Rooms
-    if (room.memory.owner === 'Me') {
-        let adjacentRoom = Game.map.describeExits(room.name);
-        for (let i = 1; i <= 7; i = i + 2) {
-            if(adjacentRoom[i]){
-                if(Memory.rooms[adjacentRoom[i]]){
-                    if(Memory.rooms[adjacentRoom[i]].owner === 'Neutral'){
-                        if (Memory.rooms[adjacentRoom[i]].creeps) {
-                            if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < 1) {
-                                let satMiners = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom })
-                                if (satMiners.length > 0) {
-                                    for (let j in satMiners) {
-                                        satMiners[j].memory.task = 'Mine';
-                                        satMiners[j].memory.targetRoom = adjacentRoom[i];
-                                        delete satMiners[j].memory.taskQ;
-                                        delete satMiners[j].memory.state;
-                                        delete satMiners[j].memory.repairTarget;
-                                        Memory.rooms[adjacentRoom[i]].creeps['satMiner']++;
+    //Create Construction Manager
+    if (room.memory.owner != 'Hostile') {
+        var cm = new architect(room);
+        if (spawns.length > 0) {
+            cm.createBunker();
+            cm.createRoads();
+            cm.createControllerContainer();
+        }
+        cm.createSourceContainers();
+
+        //Get Rooms
+        if (room.memory.owner === 'Me') {
+            let adjacentRoom = Game.map.describeExits(room.name);
+            for (let i = 1; i <= 7; i = i + 2) {
+                if (adjacentRoom[i]) {
+                    if (Memory.rooms[adjacentRoom[i]]) {
+                        //Build Highways
+                        if (Memory.rooms[adjacentRoom[i]].owner !== 'Hostile') {
+                            for (let j in Memory.rooms[adjacentRoom[i]].sourceIds) {
+                                cm.createHighway(Memory.rooms[adjacentRoom[i]].sourceIds[j])
+                            }
+                            if (Memory.rooms[adjacentRoom[i]].owner === 'Neutral') {
+                                if (Memory.rooms[adjacentRoom[i]].creeps) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < 1) {
+                                        let satMiners = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom })
+                                        if (satMiners.length > 0) {
+                                            for (let j in satMiners) {
+                                                satMiners[j].memory.task = 'Mine';
+                                                satMiners[j].memory.targetRoom = adjacentRoom[i];
+                                                delete satMiners[j].memory.taskQ;
+                                                delete satMiners[j].memory.state;
+                                                delete satMiners[j].memory.repairTarget;
+                                                Memory.rooms[adjacentRoom[i]].creeps['satMiner']++;
+                                            }
+                                        }
+                                        else {
+                                            smNeeded = 1;
+                                        }
+
+                                    }
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < 1 && Memory.rooms[adjacentRoom[i]].numContainers > 0) {
+                                        let satTransporters = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satTransporter' && !c.memory.targetRoom });
+                                        if (satTransporters.length > 0) {
+                                            for (let j in satTransporters) {
+                                                satTransporters[j].memory.task = 'Transport';
+                                                satTransporters[j].memory.targetRoom = adjacentRoom[i];
+                                                delete satTransporters[j].memory.taskQ;
+                                                delete satTransporters[j].memory.state;
+                                                Memory.rooms[adjacentRoom[i]].creeps['satTransporter']++;
+                                            }
+                                        }
+                                        else {
+                                            stNeeded = 1;
+                                        }
                                     }
                                 }
                                 else {
-                                    smNeeded = 1;
-                                }
-
-                            }
-                            if(Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < 1 && Memory.rooms[adjacentRoom[i]].numContainers > 0){
-                                let satTransporters = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satTransporter' && !c.memory.targetRoom });
-                                if(satTransporters.length > 0){
-                                    for(let j in satTransporters){
-                                        satTransporters[j].memory.task = 'Transport';
-                                        satTransporters[j].memory.targetRoom = adjacentRoom[i];
-                                        delete satTransporters[j].memory.taskQ;
-                                        delete satTransporters[j].memory.state;
-                                        Memory.rooms[adjacentRoom[i]].creeps['satTransporter']++;
-                                    }
-                                }
-                                else{
-                                    stNeeded = 1;
+                                    Memory.rooms[adjacentRoom[i]].creeps = {};
+                                    Memory.rooms[adjacentRoom[i]].creeps.satMiner = 0;
+                                    Memory.rooms[adjacentRoom[i]].creeps.satTransporter = 0;
                                 }
                             }
-                        }
-                        else{
-                            Memory.rooms[adjacentRoom[i]].creeps = {};
-                            Memory.rooms[adjacentRoom[i]].creeps.satMiner = 0;
-                            Memory.rooms[adjacentRoom[i]].creeps.satTransporter = 0;
                         }
                     }
-                }
-                else{
-                    let scoutCreep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'})[0];
-                    if(scoutCreep && scoutCreep.memory && scoutCreep.memory.task){
-                        scoutCreep.memory.task = 'scout';
-                        scoutCreep.memory.targetRoom = adjacentRoom[i];
+                    else {
+                        let scoutCreep = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'pikeman' })[0];
+                        if (scoutCreep && scoutCreep.memory && scoutCreep.memory.task) {
+                            scoutCreep.memory.task = 'scout';
+                            scoutCreep.memory.targetRoom = adjacentRoom[i];
+                        }
                     }
                 }
             }
@@ -102,17 +119,6 @@ function roomController(room: Room) {
 
     for (let s in sources) {
         sources[s].memory.get;
-    }
-
-    //Create Construction Manager
-    if (room.memory.owner != 'Hostile') {
-        var cm = new architect(room);
-        if (spawns.length > 0) {
-            cm.createBunker();
-            cm.createRoads();
-            cm.createControllerContainer();
-        }
-        cm.createSourceContainers();
     }
 
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////

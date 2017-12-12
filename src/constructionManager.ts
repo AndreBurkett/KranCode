@@ -15,21 +15,16 @@ export class architect implements constructionManager {
         for (let i in room.sources) {
             this.sources.push(room.sources[i])
         }
+        //Setup Memory
         if (!this.r.memory.paths) this.r.memory.paths = {};
+        if(!this.r.memory.paths.controllerPath) this.r.memory.paths.controllerPath = {};
+        if(!this.r.memory.paths.spawnToContainer) this.r.memory.paths.spawnToContainer = {};
+        if(!this.r.memory.paths.containerToContainer) this.r.memory.paths.containerToContainer = {};
+        if(!this.r.memory.paths.tick) this.r.memory.paths.tick = 0;
+        if(this.r.memory.paths.ticks > 500) this.r.memory.paths.tick = 0;
     }
     public createRoads() {
-        let start = Game.cpu.getUsed();
-        //Setup Memory
-        if (!this.r.memory.paths)
-            this.r.memory.paths = {};
-        if(!this.r.memory.paths.controllerPath)
-            this.r.memory.paths.controllerPath = {};
-        if(!this.r.memory.paths.spawnToContainer)
-            this.r.memory.paths.spawnToContainer = {};
-        if(!this.r.memory.paths.containerToContainer)
-            this.r.memory.paths.containerToContainer = {};
-        if(!this.r.memory.paths.tick) this.r.memory.paths.tick = 0;
-
+        //let start = Game.cpu.getUsed();
         var container = this.r.find<StructureContainer>(FIND_STRUCTURES, {filter: (s: Structure) => s.structureType === STRUCTURE_CONTAINER})
         var clength = container.length
         var ticks = this.r.memory.paths.tick++;
@@ -117,8 +112,16 @@ export class architect implements constructionManager {
             }
             this.r.memory.paths.containers = clength;
         }
-        if(ticks > 500) this.r.memory.paths.tick = 0;
         //console.log(Game.cpu.getUsed() -start);
+    }
+    public createHighway(sourceId: string){
+        if(this.r.memory.paths.ticks >= 0){
+            var source = Game.getObjectById<Source>(sourceId);
+            var path = PathFinder.search(this.spawns[0].pos, source.pos, {swampCost: 2, roomCallback: this.roomCostMatrix()});
+            for(let i in path){
+                console.log(path.path[i]);
+            }
+        }
     }
     public createSourceContainers(){
         for(let i in this.sources){

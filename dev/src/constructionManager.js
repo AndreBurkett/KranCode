@@ -10,11 +10,6 @@ class architect {
         }
         if (!this.r.memory.paths)
             this.r.memory.paths = {};
-    }
-    createRoads() {
-        let start = Game.cpu.getUsed();
-        if (!this.r.memory.paths)
-            this.r.memory.paths = {};
         if (!this.r.memory.paths.controllerPath)
             this.r.memory.paths.controllerPath = {};
         if (!this.r.memory.paths.spawnToContainer)
@@ -23,6 +18,10 @@ class architect {
             this.r.memory.paths.containerToContainer = {};
         if (!this.r.memory.paths.tick)
             this.r.memory.paths.tick = 0;
+        if (this.r.memory.paths.ticks > 500)
+            this.r.memory.paths.tick = 0;
+    }
+    createRoads() {
         var container = this.r.find(FIND_STRUCTURES, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
         var clength = container.length;
         var ticks = this.r.memory.paths.tick++;
@@ -77,8 +76,15 @@ class architect {
             }
             this.r.memory.paths.containers = clength;
         }
-        if (ticks > 500)
-            this.r.memory.paths.tick = 0;
+    }
+    createHighway(sourceId) {
+        if (this.r.memory.paths.ticks >= 0) {
+            var source = Game.getObjectById(sourceId);
+            var path = PathFinder.search(this.spawns[0].pos, source.pos, { swampCost: 2, roomCallback: this.roomCostMatrix() });
+            for (let i in path) {
+                console.log(path.path[i]);
+            }
+        }
     }
     createSourceContainers() {
         for (let i in this.sources) {
