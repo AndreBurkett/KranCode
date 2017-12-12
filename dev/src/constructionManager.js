@@ -81,7 +81,7 @@ class architect {
         if (this.r.memory.paths.tick >= 0) {
             var source = Game.getObjectById(sourceId);
             if (source) {
-                var path = PathFinder.search(this.spawns[0].pos, source.pos, { swampCost: 2, roomCallback: this.roomCostMatrix() });
+                var path = PathFinder.search(this.spawns[0].pos, source.pos, { swampCost: 1, roomCallback: this.roomCostMatrix() });
                 for (let i in path.path) {
                     Game.rooms[path.path[i].roomName].createConstructionSite(path.path[i], STRUCTURE_ROAD);
                 }
