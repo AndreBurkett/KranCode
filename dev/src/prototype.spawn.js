@@ -35,6 +35,8 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
                 case 'builder':
                     return this.spawnCreep(body, creepName.getName('b'), { memory: { role: role, specialty: specialty, task: 'idle' } });
                     break;
+                case 'satBuilder':
+                    return this.spawnCreep(body, creepName.getName('Lb'), { memory: { role: role, specialty: specialty, task: 'idle', homeRoom: this.room.name } });
                 case 'satMiner':
                     return this.spawnCreep(body, creepName.getName('Lm'), { memory: { role: role, specialty: specialty, task: 'idle' } });
                 case undefined:

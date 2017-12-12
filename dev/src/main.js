@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Task_scout_1 = require("./Task.scout");
+const Task_lrb_1 = require("./Task.lrb");
 const Task_lrm_1 = require("./Task.lrm");
 const task_lrt_1 = require("./task.lrt");
 var creepName = require('./util.nameBuilder');
@@ -42,6 +43,9 @@ module.exports.loop = function () {
         switch (Game.creeps[name].memory.task) {
             case 'build':
                 taskBuild.run(Game.creeps[name]);
+                break;
+            case 'Build':
+                new Task_lrb_1.Build(Game.creeps[name]).run();
                 break;
             case 'combatMelee':
                 combatMelee.run(Game.creeps[name]);

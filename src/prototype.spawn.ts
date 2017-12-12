@@ -36,17 +36,19 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
                     return this.spawnCreep(body, creepName.getName('h'), {memory: {role: role, specialty: specialty, task: 'idle'}});
                     break;
                 case 'builder':
-                    return this.spawnCreep(body, creepName.getName('b'), {memory: {role: role, specialty: specialty, task:'idle'}})
+                    return this.spawnCreep(body, creepName.getName('b'), {memory: {role: role, specialty: specialty, task:'idle'}});
                     break;
+                case 'satBuilder':
+                    return this.spawnCreep(body, creepName.getName('Lb'), {memory: {role: role, specialty: specialty, task:'idle', homeRoom: this.room.name}});
                 case 'satMiner':
-                    return this.spawnCreep(body, creepName.getName('Lm'), {memory: {role: role, specialty: specialty, task:'idle'}})
+                    return this.spawnCreep(body, creepName.getName('Lm'), {memory: {role: role, specialty: specialty, task:'idle'}});
                 case undefined:
-                    return this.spawnCreep(body, creepName.getName('g'), {memory: {role: role, task:'idle'}})
+                    return this.spawnCreep(body, creepName.getName('g'), {memory: {role: role, task:'idle'}});
             }
             break;
         case 'scout':
             body.push(MOVE)
-                return this.spawnCreep(body, creepName.getName('s'), {memory: {role: role, home: this.room.name, task: 'idle'}})
+                return this.spawnCreep(body, creepName.getName('s'), {memory: {role: role, home: this.room.name, task: 'idle'}});
                 break;
         case 'statWorker':
             body.push(MOVE, MOVE,CARRY);

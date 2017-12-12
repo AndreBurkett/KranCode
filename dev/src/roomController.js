@@ -16,6 +16,7 @@ function roomController(room) {
     let hostiles = room.find(FIND_HOSTILE_CREEPS);
     var smNeeded = 0;
     var stNeeded = 0;
+    var sbNeeded = 0;
     if (room.memory.owner != 'Hostile') {
         var cm = new constructionManager_1.architect(room);
         if (spawns.length > 0) {
@@ -64,6 +65,21 @@ function roomController(room) {
                                         }
                                         else {
                                             stNeeded = 1;
+                                        }
+                                    }
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['satBuilder'] < 1) {
+                                        let satBuilder = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satBuilder' && !c.memory.targetRoom });
+                                        if (satBuilder.length > 0) {
+                                            for (let j in satBuilder) {
+                                                satBuilder[j].memory.task = 'Build';
+                                                satBuilder[j].memory.targetRoom = adjacentRoom[i];
+                                                delete satBuilder[j].memory.taskQ;
+                                                delete satBuilder[j].memory.state;
+                                                Memory.rooms[adjacentRoom[i]].creeps['satBuilder']++;
+                                            }
+                                        }
+                                        else {
+                                            sbNeeded = 1;
                                         }
                                     }
                                 }
@@ -169,6 +185,13 @@ function roomController(room) {
         else if (buildCreeps <= sites.length / 20) {
             spawnRole = 'mobileWorker';
             spawnSpecialty = 'builder';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (sbNeeded == 1) {
+            spawnRole = 'mobileWorker';
+            spawnSpecialty = 'satBuilder';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
