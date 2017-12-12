@@ -47,7 +47,7 @@ module.exports.loop = function () {
             case 'Build':
                 new Task_lrb_1.Build(Game.creeps[name]).run();
                 break;
-            case 'combatMelee':
+            case 'Melee':
                 new combat_melee_1.Melee(Game.creeps[name]).run();
                 break;
             case 'deposit':

@@ -59,7 +59,7 @@ module.exports.loop = function()
             case 'Build':
                 new Build(Game.creeps[name]).run();
                 break;
-            case 'combatMelee':
+            case 'Melee':
                 new Melee(Game.creeps[name]).run();
                 break;
             case 'deposit':
