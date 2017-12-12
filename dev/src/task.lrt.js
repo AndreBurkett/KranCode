@@ -66,7 +66,6 @@ class Transport extends Task_1.Task {
                 break;
             case ERR_NOT_ENOUGH_RESOURCES:
                 this.c.memory.state = STATE_MOVING;
-                this.target();
                 break;
             case OK:
                 this.c.memory.state = STATE_MOVING;
@@ -85,6 +84,7 @@ class Transport extends Task_1.Task {
                 if (target)
                     this.c.memory.target = target.id;
                 this.c.memory.state = STATE_WITHDRAW;
+                this.withdraw();
                 break;
             case 'deposit':
                 var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -93,6 +93,7 @@ class Transport extends Task_1.Task {
                 if (target)
                     this.c.memory.target = target.id;
                 this.c.memory.state = STATE_DEPOSIT;
+                this.deposit();
                 break;
         }
     }
@@ -109,15 +110,12 @@ class Transport extends Task_1.Task {
                 break;
             case ERR_INVALID_TARGET:
                 this.c.memory.state = STATE_TARGETING;
-                this.target();
                 break;
             case ERR_NOT_ENOUGH_RESOURCES:
                 this.c.memory.state = STATE_TARGETING;
-                this.target();
                 break;
             case OK:
                 this.c.memory.state = STATE_MOVING;
-                this.Move(this.c.memory.homeRoom);
                 break;
         }
     }
