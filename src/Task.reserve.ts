@@ -31,7 +31,7 @@ export class Reserve extends Task{
         //if(this.c.memory.targetRoom) this.c.moveTo(new RoomPosition(25,25, this.c.memory.targetRoom));
     }
     target(){
-        target = this.c.room.controller
+        var target = this.c.room.controller;
         if(target){
             this.c.memory.target = target.id;
             this.c.memory.state = STATE_RESERVING;

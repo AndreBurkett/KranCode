@@ -31,7 +31,7 @@ class Reserve extends Task_1.Task {
         }
     }
     target() {
-        target = this.c.room.controller;
+        var target = this.c.room.controller;
         if (target) {
             this.c.memory.target = target.id;
             this.c.memory.state = STATE_RESERVING;
