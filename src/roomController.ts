@@ -22,6 +22,24 @@ function roomController(room: Room) {
     var sbNeeded = 0;
     var rNeeded = 0;
 
+    //Get Room Owner
+    if (room.controller) {
+        if(room.controller.level > 0){
+            if(room.controller.my) room.memory.owner = 'Me';
+            else room.memory.owner = 'Hostile'
+        }
+        else room.memory.owner = 'Neutral'
+        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s:Structure) => s.structureType === STRUCTURE_CONTAINER});
+        if(ctrlContainer[0]) ctrlContainer[0].transportTarget = true;
+        for (let i in hostiles) {
+            if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
+                if (room.controller.safeModeAvailable) {
+                    room.controller.activateSafeMode
+                }
+            }
+        }
+    }
+
     //Create Construction Manager
     if (room.memory.owner != 'Hostile') {
         var cm = new architect(room);
@@ -47,76 +65,17 @@ function roomController(room: Room) {
                                 if (Memory.rooms[adjacentRoom[i]].creeps) {
                                     if (Memory.rooms[adjacentRoom[i]].creeps['calvalry'] < 1) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'calvalry','Melee')) cmNeeded = 1;
-                                        /*
-                                        let calvalry = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'calvalry' && !c.memory.targetRoom })
-                                        if (calvalry.length > 0) {
-                                            for (let j in calvalry) {
-                                                calvalry[j].memory.task = 'Melee';
-                                                calvalry[j].memory.targetRoom = adjacentRoom[i];
-                                                delete calvalry[j].memory.taskQ;
-                                                delete calvalry[j].memory.state;
-                                                Memory.rooms[adjacentRoom[i]].creeps['calvalry']++;
-                                            }
-                                        }
-                                        else {
-                                            cmNeeded = 1;
-                                        }*/
                                     }
-
                                     if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < Object.keys(Memory.rooms[adjacentRoom[i]].sourceIds).length) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'satMiner','Mine')) smNeeded = 1;
-                                        /*
-                                        let satMiners = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom })
-                                        if (satMiners.length > 0) {
-                                            for (let j in satMiners) {
-                                                satMiners[j].memory.task = 'Mine';
-                                                satMiners[j].memory.targetRoom = adjacentRoom[i];
-                                                delete satMiners[j].memory.taskQ;
-                                                delete satMiners[j].memory.state;
-                                                delete satMiners[j].memory.repairTarget;
-                                                Memory.rooms[adjacentRoom[i]].creeps['satMiner']++;
-                                            }
-                                        }
-                                        else {
-                                            smNeeded = 1;
-                                        }*/
-
                                     }
                                     if (Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < Object.keys(Memory.rooms[adjacentRoom[i]].sourceIds).length && Memory.rooms[adjacentRoom[i]].numContainers > 0) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'satTransporter','Transport')) stNeeded = 1;
-                                        /*
-                                        let satTransporters = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satTransporter' && !c.memory.targetRoom });
-                                        if (satTransporters.length > 0) {
-                                            for (let j in satTransporters) {
-                                                satTransporters[j].memory.task = 'Transport';
-                                                satTransporters[j].memory.targetRoom = adjacentRoom[i];
-                                                delete satTransporters[j].memory.taskQ;
-                                                delete satTransporters[j].memory.state;
-                                                Memory.rooms[adjacentRoom[i]].creeps['satTransporter']++;
-                                            }
-                                        }
-                                        else {
-                                            stNeeded = 1;
-                                        }*/
                                     }
                                     if (Memory.rooms[adjacentRoom[i]].creeps['satBuilder'] < 1) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'satBuilder','Build')) sbNeeded = 1;
-                                        /*
-                                        let satBuilder = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'satBuilder' && !c.memory.targetRoom })
-                                        if (satBuilder.length > 0) {
-                                            for (let j in satBuilder) {
-                                                satBuilder[j].memory.task = 'Build';
-                                                satBuilder[j].memory.targetRoom = adjacentRoom[i];
-                                                delete satBuilder[j].memory.taskQ;
-                                                delete satBuilder[j].memory.state;
-                                                Memory.rooms[adjacentRoom[i]].creeps['satBuilder']++;
-                                            }
-                                        }
-                                        else {
-                                            sbNeeded = 1;
-                                        }*/
                                     }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[adjacentRoom[i]].controller) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[Memory.rooms.adjacentRoom[i]].controller) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'reserver','Reserve')) rNeeded = 1;
                                     }
                                 }
@@ -157,24 +116,6 @@ function roomController(room: Room) {
         }
         else {
             return 1;
-        }
-    }
-
-
-    if (room.controller) {
-        if(room.controller.level > 0){
-            if(room.controller.my) room.memory.owner = 'Me';
-            else room.memory.owner = 'Hostile'
-        }
-        else room.memory.owner = 'Neutral'
-        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s:Structure) => s.structureType === STRUCTURE_CONTAINER});
-        if(ctrlContainer[0]) ctrlContainer[0].transportTarget = true;
-        for (let i in hostiles) {
-            if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
-                if (room.controller.safeModeAvailable) {
-                    room.controller.activateSafeMode
-                }
-            }
         }
     }
 
@@ -282,7 +223,7 @@ function roomController(room: Room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (upgradeCreeps < 3 || (ctrlContainer[0].store[RESOURCE_ENERGY] > 1500 && upgradeCreeps < 5)) {
+        else if (upgradeCreeps < 3 || (ctrlContainer[0].store[RESOURCE_ENERGY] > 1500 && upgradeCreeps < 4)) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
             for (let i in spawns) {

@@ -19,6 +19,26 @@ function roomController(room) {
     var stNeeded = 0;
     var sbNeeded = 0;
     var rNeeded = 0;
+    if (room.controller) {
+        if (room.controller.level > 0) {
+            if (room.controller.my)
+                room.memory.owner = 'Me';
+            else
+                room.memory.owner = 'Hostile';
+        }
+        else
+            room.memory.owner = 'Neutral';
+        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
+        if (ctrlContainer[0])
+            ctrlContainer[0].transportTarget = true;
+        for (let i in hostiles) {
+            if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
+                if (room.controller.safeModeAvailable) {
+                    room.controller.activateSafeMode;
+                }
+            }
+        }
+    }
     if (room.memory.owner != 'Hostile') {
         var cm = new constructionManager_1.architect(room);
         if (spawns.length > 0) {
@@ -54,7 +74,7 @@ function roomController(room) {
                                         if (getAdjacentRoomCreeps(adjacentRoom[i], 'satBuilder', 'Build'))
                                             sbNeeded = 1;
                                     }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[adjacentRoom[i]].controller) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[Memory.rooms.adjacentRoom[i]].controller) {
                                         if (getAdjacentRoomCreeps(adjacentRoom[i], 'reserver', 'Reserve'))
                                             rNeeded = 1;
                                     }
@@ -95,26 +115,6 @@ function roomController(room) {
         }
         else {
             return 1;
-        }
-    }
-    if (room.controller) {
-        if (room.controller.level > 0) {
-            if (room.controller.my)
-                room.memory.owner = 'Me';
-            else
-                room.memory.owner = 'Hostile';
-        }
-        else
-            room.memory.owner = 'Neutral';
-        var ctrlContainer = room.controller.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType === STRUCTURE_CONTAINER });
-        if (ctrlContainer[0])
-            ctrlContainer[0].transportTarget = true;
-        for (let i in hostiles) {
-            if ((hostiles[i].getActiveBodyparts(ATTACK) > 0 || hostiles[i].getActiveBodyparts(RANGED_ATTACK) > 0) && towers.length < 1) {
-                if (room.controller.safeModeAvailable) {
-                    room.controller.activateSafeMode;
-                }
-            }
         }
     }
     for (let i in towers) {
@@ -217,7 +217,7 @@ function roomController(room) {
                 spawns[i].sCreep(spawnRole);
             }
         }
-        else if (upgradeCreeps < 3 || (ctrlContainer[0].store[RESOURCE_ENERGY] > 1500 && upgradeCreeps < 5)) {
+        else if (upgradeCreeps < 3 || (ctrlContainer[0].store[RESOURCE_ENERGY] > 1500 && upgradeCreeps < 4)) {
             spawnRole = 'statWorker';
             spawnSpecialty = 'upgrader';
             for (let i in spawns) {
