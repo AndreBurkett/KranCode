@@ -37,67 +37,14 @@ function roomController(room) {
                             }
                             if (Memory.rooms[adjacentRoom[i]].owner === 'Neutral') {
                                 if (Memory.rooms[adjacentRoom[i]].creeps) {
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['calvalry'] < 1) {
-                                        let calvalry = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'calvalry' && !c.memory.targetRoom });
-                                        if (calvalry.length > 0) {
-                                            for (let j in calvalry) {
-                                                calvalry[j].memory.task = 'Melee';
-                                                calvalry[j].memory.targetRoom = adjacentRoom[i];
-                                                delete calvalry[j].memory.taskQ;
-                                                delete calvalry[j].memory.state;
-                                                Memory.rooms[adjacentRoom[i]].creeps['calvalry']++;
-                                            }
-                                        }
-                                        else {
-                                            cmNeeded = 1;
-                                        }
-                                    }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['satMiner'] < Object.keys(Memory.rooms[adjacentRoom[i]].sourceIds).length) {
-                                        let satMiners = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satMiner' && !c.memory.targetRoom });
-                                        if (satMiners.length > 0) {
-                                            for (let j in satMiners) {
-                                                satMiners[j].memory.task = 'Mine';
-                                                satMiners[j].memory.targetRoom = adjacentRoom[i];
-                                                delete satMiners[j].memory.taskQ;
-                                                delete satMiners[j].memory.state;
-                                                delete satMiners[j].memory.repairTarget;
-                                                Memory.rooms[adjacentRoom[i]].creeps['satMiner']++;
-                                            }
-                                        }
-                                        else {
-                                            smNeeded = 1;
-                                        }
-                                    }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['satTransporter'] < Object.keys(Memory.rooms[adjacentRoom[i]].sourceIds).length && Memory.rooms[adjacentRoom[i]].numContainers > 0) {
-                                        let satTransporters = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satTransporter' && !c.memory.targetRoom });
-                                        if (satTransporters.length > 0) {
-                                            for (let j in satTransporters) {
-                                                satTransporters[j].memory.task = 'Transport';
-                                                satTransporters[j].memory.targetRoom = adjacentRoom[i];
-                                                delete satTransporters[j].memory.taskQ;
-                                                delete satTransporters[j].memory.state;
-                                                Memory.rooms[adjacentRoom[i]].creeps['satTransporter']++;
-                                            }
-                                        }
-                                        else {
-                                            stNeeded = 1;
-                                        }
-                                    }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['satBuilder'] < 1) {
-                                        let satBuilder = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'satBuilder' && !c.memory.targetRoom });
-                                        if (satBuilder.length > 0) {
-                                            for (let j in satBuilder) {
-                                                satBuilder[j].memory.task = 'Build';
-                                                satBuilder[j].memory.targetRoom = adjacentRoom[i];
-                                                delete satBuilder[j].memory.taskQ;
-                                                delete satBuilder[j].memory.state;
-                                                Memory.rooms[adjacentRoom[i]].creeps['satBuilder']++;
-                                            }
-                                        }
-                                        else {
-                                            sbNeeded = 1;
-                                        }
-                                    }
+                                    if (getAdjacentRoomCreeps(adjacentRoom[i], 'calvalry', 'Melee'))
+                                        cmNeeded = 1;
+                                    if (getAdjacentRoomCreeps(adjacentRoom[i], 'satMiner', 'Mine'))
+                                        smNeeded = 1;
+                                    if (getAdjacentRoomCreeps(adjacentRoom[i], 'satTransporter', 'Transport'))
+                                        stNeeded = 1;
+                                    if (getAdjacentRoomCreeps(adjacentRoom[i], 'satBuilder', 'Build'))
+                                        sbNeeded = 1;
                                 }
                                 else {
                                     Memory.rooms[adjacentRoom[i]].creeps = {};
@@ -119,6 +66,24 @@ function roomController(room) {
                 }
             }
         }
+    }
+    function getAdjacentRoomCreeps(adjacentRoom, creepType, task) {
+        if (Memory.rooms[adjacentRoom].creeps[creepType] < 1) {
+            let creepUnit = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === creepType && !c.memory.targetRoom });
+            if (creepUnit.length > 0) {
+                for (let j in creepUnit) {
+                    creepUnit[j].memory.task = task;
+                    creepUnit[j].memory.targetRoom = adjacentRoom;
+                    delete creepUnit[j].memory.taskQ;
+                    delete creepUnit[j].memory.state;
+                    Memory.rooms[adjacentRoom].creeps[creepType]++;
+                }
+            }
+            else {
+                return 1;
+            }
+        }
+        return 0;
     }
     if (room.controller) {
         if (room.controller.level > 0) {
