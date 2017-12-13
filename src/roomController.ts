@@ -75,7 +75,7 @@ function roomController(room: Room) {
                                     if (Memory.rooms[adjacentRoom[i]].creeps['satBuilder'] < 1) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'satBuilder','Build')) sbNeeded = 1;
                                     }
-                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[Memory.rooms.adjacentRoom[i]].controller) {
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[Memory.rooms.adjacentRoom[i]] && Game.rooms[Memory.rooms.adjacentRoom[i]].controller) {
                                         if(getAdjacentRoomCreeps(adjacentRoom[i],'reserver','Reserve')) rNeeded = 1;
                                     }
                                 }
