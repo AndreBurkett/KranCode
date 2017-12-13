@@ -127,7 +127,7 @@ class Build extends Task_1.Task {
         switch (targetType) {
             case 'withdraw':
                 var target = this.c.pos.findClosestByRange(FIND_STRUCTURES, {
-                    filter: (s) => s.structureType === STRUCTURE_CONTAINER && !s.memory.transportTarget && s.store[RESOURCE_ENERGY] > this.c.carryCapacity
+                    filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > this.c.carryCapacity
                 });
                 if (target) {
                     this.c.memory.target = target.id;
