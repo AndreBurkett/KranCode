@@ -38,6 +38,13 @@ StructureSpawn.prototype.sCreep = function (role, specialty) {
                     return this.spawnCreep(body, creepName.getName('g'), { memory: { role: role, task: 'idle' } });
             }
             break;
+        case 'reserver':
+            energyCap = Math.min(energyCap, 1300);
+            numParts = Math.floor(energyCap / 650);
+            for (let i = 0; i < numParts; i++) {
+                body.push(MOVE, CLAIM);
+            }
+            return this.spawnCreep(body, creepName.getName('R'), { memory: { role: role, specialty: specialty, task: 'idle' } });
         case 'satMiner':
             energyCap = Math.min(energyCap, 950) - 50;
             numParts = Math.floor(energyCap / 150);

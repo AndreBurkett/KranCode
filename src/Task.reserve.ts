@@ -5,7 +5,7 @@ const STATE_MOVING = 1;
 const STATE_TARGETING = 2;
 const STATE_RESERVING = 3;
 
-export class Mine extends Task{
+export class Reserve extends Task{
 
     constructor(c: Creep){
         super(c);

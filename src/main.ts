@@ -1,6 +1,7 @@
 import {Scout} from './Task.scout';
 import {Build} from './Task.lrb';
 import {Mine} from './Task.lrm';
+import {Reserve} from './Task.reserve';
 import {Transport} from './task.lrt';
 import {Melee} from './combat.melee';
 var creepName = require('./util.nameBuilder');
@@ -76,6 +77,9 @@ module.exports.loop = function()
                 break;
             case 'repair':
                 taskRepair.run(Game.creeps[name]);
+                break;
+            case 'Reserve':
+                new Reserve(Game.creeps[name]).run();
                 break;
             case 'scout':
                 new Scout(Game.creeps[name]).run();

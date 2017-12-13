@@ -20,6 +20,7 @@ function roomController(room: Room) {
     var smNeeded = 0;
     var stNeeded = 0;
     var sbNeeded = 0;
+    var rNeeded = 0;
 
     //Create Construction Manager
     if (room.memory.owner != 'Hostile') {
@@ -115,6 +116,9 @@ function roomController(room: Room) {
                                             sbNeeded = 1;
                                         }*/
                                     }
+                                    if (Memory.rooms[adjacentRoom[i]].creeps['reserver'] < 1 && Game.rooms[adjacentRoom[i]].controller) {
+                                        if(getAdjacentRoomCreeps(adjacentRoom[i],'reserver','Reserve')) rNeeded = 1;
+                                    }
                                 }
                                 else {
                                     Memory.rooms[adjacentRoom[i]].creeps = {};
@@ -122,6 +126,7 @@ function roomController(room: Room) {
                                     Memory.rooms[adjacentRoom[i]].creeps.satTransporter = 0;
                                     Memory.rooms[adjacentRoom[i]].creeps.satBuilder = 0;
                                     Memory.rooms[adjacentRoom[i]].creeps.calvalry = 0;
+                                    Memory.rooms[adjacentRoom[i]].creeps.reserver = 0;
                                 }
                             }
                         }
@@ -254,6 +259,13 @@ function roomController(room: Room) {
         else if (sbNeeded == 1){
             spawnRole = 'mobileWorker';
             spawnSpecialty = 'satBuilder';
+            for (let i in spawns) {
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            }
+        }
+        else if (rNeeded == 1){
+            spawnRole = 'reserver';
+            spawnSpecialty = 'reserver';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }

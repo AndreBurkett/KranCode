@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Task_scout_1 = require("./Task.scout");
 const Task_lrb_1 = require("./Task.lrb");
 const Task_lrm_1 = require("./Task.lrm");
+const Task_reserve_1 = require("./Task.reserve");
 const task_lrt_1 = require("./task.lrt");
 const combat_melee_1 = require("./combat.melee");
 var creepName = require('./util.nameBuilder');
@@ -64,6 +65,9 @@ module.exports.loop = function () {
                 break;
             case 'repair':
                 taskRepair.run(Game.creeps[name]);
+                break;
+            case 'Reserve':
+                new Task_reserve_1.Reserve(Game.creeps[name]).run();
                 break;
             case 'scout':
                 new Task_scout_1.Scout(Game.creeps[name]).run();

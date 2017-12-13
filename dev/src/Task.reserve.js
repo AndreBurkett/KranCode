@@ -5,7 +5,7 @@ const STATE_SPAWNING = 0;
 const STATE_MOVING = 1;
 const STATE_TARGETING = 2;
 const STATE_RESERVING = 3;
-class Mine extends Task_1.Task {
+class Reserve extends Task_1.Task {
     constructor(c) {
         super(c);
     }
@@ -54,5 +54,5 @@ class Mine extends Task_1.Task {
         }
     }
 }
-exports.Mine = Mine;
+exports.Reserve = Reserve;
 //# sourceMappingURL=Task.reserve.js.map
