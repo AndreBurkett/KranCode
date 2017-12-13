@@ -129,6 +129,8 @@ class architect {
             this.r.memory.bunker = Game.time;
         if (Game.time - this.r.memory.bunker > 500) {
             let rSpawn = this.spawns[0];
+            let X = rSpawn.pos.x;
+            let Y = rSpawn.pos.y + 2;
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 1, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 2, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x, rSpawn.pos.y - 4, STRUCTURE_ROAD);
@@ -148,6 +150,19 @@ class architect {
             this.r.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y, STRUCTURE_EXTENSION);
             this.r.createConstructionSite(rSpawn.pos.x + 3, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
             this.r.createConstructionSite(rSpawn.pos.x + 4, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 2, Y - 6, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X + 3, Y - 6, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X + 4, Y - 5, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X + 5, Y - 4, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X + 6, Y - 3, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X + 1, Y - 6, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 2, Y - 5, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 3, Y - 5, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 3, Y - 4, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 4, Y - 4, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 4, Y - 3, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 5, Y - 3, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X + 5, Y - 2, STRUCTURE_EXTENSION);
             this.r.createConstructionSite(rSpawn.pos.x - 1, rSpawn.pos.y - 3, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x - 2, rSpawn.pos.y - 2, STRUCTURE_ROAD);
             this.r.createConstructionSite(rSpawn.pos.x - 3, rSpawn.pos.y - 1, STRUCTURE_ROAD);
