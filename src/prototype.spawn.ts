@@ -14,6 +14,7 @@ StructureSpawn.prototype.sCreep = function(role, specialty?){
     var numParts: number;
     switch (role){
         case 'deliveryWorker':
+            energyCap = Math.min(energyCap, 1200);
             numParts = Math.floor(energyCap/150)
             for(let i=0;i<numParts;i++)
                 body.push(CARRY,CARRY,MOVE);

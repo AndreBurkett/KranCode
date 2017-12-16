@@ -222,7 +222,21 @@ export class architect implements constructionManager {
             this.r.createConstructionSite(rSpawn.pos.x - 3, rSpawn.pos.y, STRUCTURE_EXTENSION);
             this.r.createConstructionSite(rSpawn.pos.x - 3, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
             this.r.createConstructionSite(rSpawn.pos.x - 4, rSpawn.pos.y + 1, STRUCTURE_EXTENSION);
-
+            //Top Left Outer Quadrant
+            this.r.createConstructionSite(X-2, Y-6, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X-3, Y-6, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X-4, Y-5, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X-5, Y-4, STRUCTURE_ROAD);
+            this.r.createConstructionSite(X-6, Y-3, STRUCTURE_ROAD);
+            
+            this.r.createConstructionSite(X-1, Y-6, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-2, Y-5, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-3, Y-5, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-3, Y-4, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-4, Y-4, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-4, Y-3, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-5, Y-3, STRUCTURE_EXTENSION);
+            this.r.createConstructionSite(X-5, Y-2, STRUCTURE_EXTENSION);
             //Create Center Block
             this.r.createConstructionSite(rSpawn.pos.x + 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
             this.r.createConstructionSite(rSpawn.pos.x - 1, rSpawn.pos.y + 1, STRUCTURE_TOWER);
