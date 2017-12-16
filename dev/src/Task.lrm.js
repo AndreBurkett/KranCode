@@ -4,7 +4,8 @@ const Task_1 = require("./Task");
 const STATE_SPAWNING = 0;
 const STATE_MOVING = 1;
 const STATE_TARGETING = 2;
-const STATE_WORKING = 3;
+const STATE_BUILDING = 3;
+const STATE_MINING = 4;
 class Mine extends Task_1.Task {
     constructor(c) {
         super(c);
@@ -22,44 +23,81 @@ class Mine extends Task_1.Task {
                 this.Move(this.c.memory.targetRoom);
                 break;
             case STATE_TARGETING:
-                this.target();
+                if (this.c.carry[RESOURCE_ENERGY] == this.c.carryCapacity)
+                    this.target('build');
+                else
+                    this.target('mine');
                 break;
-            case STATE_WORKING:
-                this.work();
+            case STATE_MINING:
+                this.mine();
+                break;
+            case STATE_BUILDING:
+                this.build();
                 break;
         }
     }
-    target() {
-        let minSource = 0;
-        let minWorkers = 99;
-        let source = [];
-        for (let i = 0; i < Object.keys(this.c.room.memory.sourceIds).length; i++) {
-            source[i] = Game.getObjectById(this.c.room.memory.sourceIds[i]);
-            if (minWorkers > source[i].workers) {
-                minWorkers = source[i].workers;
-                minSource = i;
-            }
+    target(targetType) {
+        switch (targetType) {
+            case 'mine':
+                let minSource = 0;
+                let minWorkers = 99;
+                let source = [];
+                for (let i = 0; i < Object.keys(this.c.room.memory.sourceIds).length; i++) {
+                    source[i] = Game.getObjectById(this.c.room.memory.sourceIds[i]);
+                    if (minWorkers > source[i].workers) {
+                        minWorkers = source[i].workers;
+                        minSource = i;
+                    }
+                }
+                this.c.memory.target = source[minSource].id;
+                this.c.memory.state = STATE_MINING;
+                this.mine();
+                break;
+            case 'build':
+                var site = this.c.pos.findInRange(FIND_CONSTRUCTION_SITES, 2, { filter: (s) => s.structureType === STRUCTURE_CONTAINER })[0];
+                if (!site)
+                    site = this.c.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+                if (site) {
+                    this.c.memory.target = site.id;
+                    this.c.memory.state = STATE_BUILDING;
+                    this.build();
+                }
         }
-        this.c.memory.target = source[minSource].id;
-        this.c.memory.state = STATE_WORKING;
     }
-    work() {
+    build() {
+        if (!target)
+            return this.c.memory.state = STATE_TARGETING;
+        switch (this.c.build(target)) {
+            case ERR_NOT_IN_RANGE:
+                this.c.moveTo(target);
+                break;
+            case ERR_NOT_ENOUGH_RESOURCES:
+                this.c.memory.state = STATE_TARGETING;
+                break;
+            case ERR_INVALID_TARGET:
+                this.c.memory.state = STATE_TARGETING;
+        }
+    }
+    mine() {
         var target;
         target = Game.getObjectById(this.c.memory.target);
         if (!target) {
             this.c.memory.state = STATE_TARGETING;
-            this.target();
-        }
-        if (!this.c.memory.taskQ && this.c.carry[RESOURCE_ENERGY] > 0) {
-            if (this.c.pos.findInRange(FIND_STRUCTURES, 3, { filter: (s) => s.structureType == STRUCTURE_CONTAINER }).length > 0)
-                this.c.memory.taskQ = 'deposit';
-            else
-                this.c.memory.taskQ = 'build';
+            return;
         }
         switch (this.c.harvest(target)) {
             case ERR_NOT_IN_RANGE:
                 this.c.moveTo(target);
                 break;
+            case OK:
+                var container = this.c.pos.findInRange(FIND_STRUCTURES, 2, { filter: (s) => s.structureType === STRUCTURE_CONTAINER })[0];
+                if (this.c.carry[RESOURCE_ENERGY] >= this.c.carryCapacity * .75) {
+                    if (container)
+                        this.c.transfer(container, RESOURCE_ENERGY);
+                    else
+                        this.c.memory.state = STATE_TARGETING;
+                    break;
+                }
         }
     }
 }
