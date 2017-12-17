@@ -127,9 +127,9 @@ function roomController(room: Room) {
         sources[s].memory.get;
     }
 
-    setSpawnPriority()
+    //setSpawnPriority()
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////
-    function setSpawnPriority() {
+    //function setSpawnPriority() {
         var spawnRole = 'genWorker';
         var spawnSpecialty;
         var sites = room.find(FIND_CONSTRUCTION_SITES);
