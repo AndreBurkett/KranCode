@@ -63,7 +63,7 @@ export class Mine extends Task {
         }
     }
     build() {
-        var target = this.c.memory.target;
+        var target = Game.getObjectById(this.c.memory.target);
         if (!target) return this.c.memory.state = STATE_TARGETING;
         switch (this.c.build(target)) {
             case ERR_NOT_IN_RANGE:

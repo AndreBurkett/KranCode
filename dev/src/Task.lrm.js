@@ -65,7 +65,7 @@ class Mine extends Task_1.Task {
         }
     }
     build() {
-        var target = this.c.memory.target;
+        var target = Game.getObjectById(this.c.memory.target);
         if (!target)
             return this.c.memory.state = STATE_TARGETING;
         switch (this.c.build(target)) {
