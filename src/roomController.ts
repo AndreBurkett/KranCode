@@ -252,7 +252,7 @@ function roomController(room: Room) {
             }
             else disableSpawning = true;
         }
-    }
+    //}
 
 
     ////////////////////////////////// Task Priority ////////////////////////////////////////////
