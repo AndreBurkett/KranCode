@@ -133,7 +133,7 @@ function roomController(room: Room) {
         var spawnRole = 'genWorker';
         var spawnSpecialty;
         var sites = room.find(FIND_CONSTRUCTION_SITES);
-        let maxMiners = 2 * sourceLen;
+        var maxMiners = 2 * sourceLen;
         let harvesterCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'harvester' }).length;
         let mineCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'miner' && c.ticksToLive > 50 }).length;
         let deliveryCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'deliveryWorker' }).length;
@@ -141,7 +141,7 @@ function roomController(room: Room) {
         let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'mobileWorker' && c.memory.specialty != 'satMiner' }).length
         let roomCreeps = room.find<Creep>(FIND_MY_CREEPS).length;
         let pikeCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'pikeman' }).length;
-        let disableSpawning = false;
+        var disableSpawning = false;
         if (harvesterCreeps < 1) {
             spawnRole = 'mobileWorker';
             spawnSpecialty = 'harvester';
@@ -284,7 +284,7 @@ function roomController(room: Room) {
         let sources = room.find<Source>(FIND_SOURCES);
         let minSource = 0;
         let minWorkers = 99;
-        for(let s in sources){
+        for(let s=0;s<sources.length;s++){
             if(minWorkers > sources[s].workers){
                 minWorkers = sources[s].workers;
                 minSource = s;
@@ -316,7 +316,7 @@ function roomController(room: Room) {
     let harvCreeps = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.taskQ === 'harvest' && c.carry[RESOURCE_ENERGY] === c.carryCapacity}).length;
     AssignQTask('harvest', harvCreeps)
     let hCreeps:number = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'harvest' || c.memory.taskQ === 'harvest'}).length;
-    let specHarvesters = room.find<Creeps>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'harvester' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'withdraw'});
+    let specHarvesters = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'harvester' && c.carry[RESOURCE_ENERGY] === 0 && c.memory.task !== 'withdraw'});
     if (disableSpawning == false && room.energyAvailable != room.energyCapacityAvailable) {
         if (sourceContainerEnergy > 50) {
             for (let i in specHarvesters) {
@@ -397,7 +397,7 @@ function roomController(room: Room) {
     function AssignTask(task: String, maxAssign: number, taskQ?: String, target?: string){
         let creep;
         if(_.contains(['build','mine','repair','upgrade'], task) || _.contains(['build','mine','repair','upgrade'], taskQ))
-            creep = room.find(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
+            creep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.getActiveBodyparts(WORK) > 0 && (c.memory.task === 'idle' || !c.memory.task)});
         else{
             creep = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.task === 'idle' || !c.memory.task});
         }

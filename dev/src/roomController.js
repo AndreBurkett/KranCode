@@ -128,7 +128,7 @@ function roomController(room) {
         var spawnRole = 'genWorker';
         var spawnSpecialty;
         var sites = room.find(FIND_CONSTRUCTION_SITES);
-        let maxMiners = 2 * sourceLen;
+        var maxMiners = 2 * sourceLen;
         let harvesterCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'harvester' }).length;
         let mineCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.specialty === 'miner' && c.ticksToLive > 50 }).length;
         let deliveryCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'deliveryWorker' }).length;
@@ -136,7 +136,7 @@ function roomController(room) {
         let buildCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'mobileWorker' && c.memory.specialty != 'satMiner' }).length;
         let roomCreeps = room.find(FIND_MY_CREEPS).length;
         let pikeCreeps = room.find(FIND_MY_CREEPS, { filter: (c) => c.memory.role === 'pikeman' }).length;
-        let disableSpawning = false;
+        var disableSpawning = false;
         if (harvesterCreeps < 1) {
             spawnRole = 'mobileWorker';
             spawnSpecialty = 'harvester';
@@ -275,7 +275,7 @@ function roomController(room) {
         let sources = room.find(FIND_SOURCES);
         let minSource = 0;
         let minWorkers = 99;
-        for (let s in sources) {
+        for (let s = 0; s < sources.length; s++) {
             if (minWorkers > sources[s].workers) {
                 minWorkers = sources[s].workers;
                 minSource = s;
