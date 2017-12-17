@@ -127,129 +127,131 @@ function roomController(room: Room) {
         sources[s].memory.get;
     }
 
+    setSpawnPriority()
     ////////////////////////////////// Request New Creeps ///////////////////////////////////////
-
-    var spawnRole  = 'genWorker';
-    var spawnSpecialty;
-    var sites = room.find(FIND_CONSTRUCTION_SITES);
-    let maxMiners = 2 * sourceLen;
-    let harvesterCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'harvester'}).length;
-    let mineCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'miner' && c.ticksToLive > 50}).length;
-    let deliveryCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'deliveryWorker'}).length;
-    let upgradeCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.specialty === 'upgrader'}).length;
-    let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'mobileWorker' && c.memory.specialty != 'satMiner'}).length
-    let roomCreeps = room.find<Creep>(FIND_MY_CREEPS).length;
-    let pikeCreeps = room.find<Creep>(FIND_MY_CREEPS, {filter: (c: Creep) => c.memory.role === 'pikeman'}).length;
-    let disableSpawning = false;
-    if(harvesterCreeps < 1){
-        spawnRole = 'mobileWorker';
-        spawnSpecialty = 'harvester';
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole, spawnSpecialty);
-        }
-    }
-    else if (mineCreeps < maxMiners) {
-        spawnRole = 'statWorker';
-        spawnSpecialty = 'miner';
-        for (let i in spawns) {
-            spawns[i].sCreep(spawnRole, spawnSpecialty);
-        }
-    }
-    else if (containers.length > 0) {
-        if (deliveryCreeps < 1 ) {
-            spawnRole = 'deliveryWorker';
+    function setSpawnPriority() {
+        var spawnRole = 'genWorker';
+        var spawnSpecialty;
+        var sites = room.find(FIND_CONSTRUCTION_SITES);
+        let maxMiners = 2 * sourceLen;
+        let harvesterCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'harvester' }).length;
+        let mineCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'miner' && c.ticksToLive > 50 }).length;
+        let deliveryCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'deliveryWorker' }).length;
+        let upgradeCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.specialty === 'upgrader' }).length;
+        let buildCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'mobileWorker' && c.memory.specialty != 'satMiner' }).length
+        let roomCreeps = room.find<Creep>(FIND_MY_CREEPS).length;
+        let pikeCreeps = room.find<Creep>(FIND_MY_CREEPS, { filter: (c: Creep) => c.memory.role === 'pikeman' }).length;
+        let disableSpawning = false;
+        if (harvesterCreeps < 1) {
+            spawnRole = 'mobileWorker';
+            spawnSpecialty = 'harvester';
             for (let i in spawns) {
-                spawns[i].sCreep(spawnRole);
+                spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
         }
-        else if (upgradeCreeps < 1 ) {
+        else if (mineCreeps < maxMiners) {
             spawnRole = 'statWorker';
-            spawnSpecialty = 'upgrader';
+            spawnSpecialty = 'miner';
             for (let i in spawns) {
                 spawns[i].sCreep(spawnRole, spawnSpecialty);
             }
         }
-        else if (cmNeeded == 1){
-            spawnRole = 'calvalry';
-            spawnSpecialty = 'calvalry';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+        else if (containers.length > 0) {
+            if (deliveryCreeps < 1) {
+                spawnRole = 'deliveryWorker';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole);
+                }
             }
-        }
-        else if (smNeeded == 1){
-            spawnRole = 'satMiner';
-            spawnSpecialty = 'satMiner';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            else if (upgradeCreeps < 1) {
+                spawnRole = 'statWorker';
+                spawnSpecialty = 'upgrader';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (stNeeded == 1){
-            spawnRole = 'deliveryWorker';
-            spawnSpecialty = 'satTransporter';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            else if (cmNeeded == 1) {
+                spawnRole = 'calvalry';
+                spawnSpecialty = 'calvalry';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (buildCreeps <= sites.length / 20) {
-            spawnRole = 'mobileWorker';
-            spawnSpecialty = 'builder';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            else if (smNeeded == 1) {
+                spawnRole = 'satMiner';
+                spawnSpecialty = 'satMiner';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (sbNeeded == 1){
-            spawnRole = 'mobileWorker';
-            spawnSpecialty = 'satBuilder';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            else if (stNeeded == 1) {
+                spawnRole = 'deliveryWorker';
+                spawnSpecialty = 'satTransporter';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (rNeeded == 1){
-            spawnRole = 'reserver';
-            spawnSpecialty = 'reserver';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            else if (buildCreeps <= sites.length / 20) {
+                spawnRole = 'mobileWorker';
+                spawnSpecialty = 'builder';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (pikeCreeps < 1){
-            spawnRole = 'pikeman';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole);
+            else if (sbNeeded == 1) {
+                spawnRole = 'mobileWorker';
+                spawnSpecialty = 'satBuilder';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (deliveryCreeps < 4 ) {
-            spawnRole = 'deliveryWorker';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole);
+            else if (rNeeded == 1) {
+                spawnRole = 'reserver';
+                spawnSpecialty = 'reserver';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (upgradeCreeps < 3 || (ctrlContainer[0].store[RESOURCE_ENERGY] > 1500 && upgradeCreeps < 4)) {
-            spawnRole = 'statWorker';
-            spawnSpecialty = 'upgrader';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole, spawnSpecialty);
+            else if (pikeCreeps < 1) {
+                spawnRole = 'pikeman';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole);
+                }
             }
-        }
-        else if (roomCreeps < 10) {
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole);
+            else if (deliveryCreeps < 4) {
+                spawnRole = 'deliveryWorker';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole);
+                }
             }
-        }
-        else disableSpawning = true;
-    }
-    else{
-        if (buildCreeps < sites.length/20) {
-            spawnRole = 'mobileWorker';
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole)
+            else if (upgradeCreeps < 3 || (ctrlContainer[0].store[RESOURCE_ENERGY] > 1500 && upgradeCreeps < 4)) {
+                spawnRole = 'statWorker';
+                spawnSpecialty = 'upgrader';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole, spawnSpecialty);
+                }
             }
-        }
-        else if (roomCreeps < 10) {
-            for (let i in spawns) {
-                spawns[i].sCreep(spawnRole);
+            else if (roomCreeps < 10) {
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole);
+                }
             }
+            else disableSpawning = true;
         }
-        else disableSpawning = true;
+        else {
+            if (buildCreeps < sites.length / 20) {
+                spawnRole = 'mobileWorker';
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole)
+                }
+            }
+            else if (roomCreeps < 10) {
+                for (let i in spawns) {
+                    spawns[i].sCreep(spawnRole);
+                }
+            }
+            else disableSpawning = true;
+        }
     }
 
 
